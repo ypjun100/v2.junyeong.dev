@@ -112,7 +112,7 @@ defaults:
 
 ```yaml
 title: string            # 필수
-date: YYYY-MM-DD HH:MM:SS +0900   # 필수
+date: YYYY-MM-DD HH:MM:SS +0900   # 선택. 없으면 파일명 날짜를 쓴다
 categories: [string]     # post 헤더 메타에 첫 항목 표시
 tags: [string]           # 하단 태그 칩
 summary: [string]        # 선택. 있을 때만 요약 콜아웃 렌더링
@@ -128,8 +128,7 @@ date: YYYY-MM-DD         # 필수 (이관 시 파일명 날짜에서 채움)
 desc: string             # About 목록의 한 줄 설명
 urls:                    # 선택. type은 github|news|website|link|youtube
   - { type: github, name: Github, url: https://... }
-skills:                  # 선택. 스킬 칩
-  - { name: SpringBoot }
+skills: [string]         # 선택. 스킬 칩
 people: [string]         # 선택
 images: [string]         # 선택. 기존 carousels[].images[].image를 평탄화한 경로 배열
 summary: [string]        # 선택
@@ -267,7 +266,8 @@ post.html
 
 - 프로젝트·수상: 파일명의 날짜 접두사를 `date` front matter로 옮기고 파일명은 슬러그만 남긴다. `layout`과 `categories` 줄은 `_config.yml` 기본값이 대신하므로 제거한다.
 - 프로젝트·수상: `carousels[].images[].image`를 `images: [경로]` 배열로 평탄화하고, 본문의 `{% include carousel.html ... %}` 호출을 제거한다. 갤러리는 레이아웃이 그린다.
-- 프로젝트: `skills[]`에서 `name`만 남긴다.
+- 프로젝트: `skills[]`를 이름만 담은 평탄한 문자열 배열로 바꾼다. img.shields.io 뱃지용이던 `color`, `logoColor`, `logoName`은 버린다.
+- 블로그: 21편 중 12편이 `<s>`를 형광펜으로 바꾸는 인라인 `<style>` 블록을 갖고 있다. 이 블록을 제거하고 `s` 스타일을 `_post.scss`에서 한 번만 정의한다. 본문 문장은 건드리지 않는다.
 - 블로그: `pin`, `math`, `mermaid` 등 Chirpy 전용 필드를 제거한다. Chirpy 전용 문법(`{: .prompt-tip }` 등)이 남아 있으면 인용문으로 바꾼다.
 - 전체: 본문의 이미지 경로가 `/imgs/...` 절대 경로인지 확인하고 어긋난 것을 맞춘다.
 

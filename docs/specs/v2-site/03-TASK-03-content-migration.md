@@ -14,15 +14,16 @@ TASK 01.
 
 1. `~/project/blog.junyeong.dev/_posts/*.md` 21개를 `content/_posts/`로 복사한다. 파일명(`YYYY-MM-DD-<slug>.md`)을 바꾸지 않는다. 기존 주소가 슬러그에 묶여 있다.
 2. `pin`, `math`, `mermaid`, `image`를 제거한다. `title`, `date`, `categories`, `tags`만 남긴다. `image`는 Chirpy의 대표 이미지 필드로 v2에서는 쓰지 않는다.
-3. 본문에서 Chirpy 전용 문법(`{: .prompt-tip }`, `{: .prompt-warning }` 등)을 찾아 일반 인용문으로 바꾼다.
-4. `~/project/blog.junyeong.dev/imgs/`를 `imgs/`로 복사한다. 본문이 `/imgs/YYYY-MM-DD/...` 형태로 참조하므로 경로 구조를 그대로 유지한다.
+3. 본문에서 Chirpy 전용 문법(`{: .prompt-tip }`, `{: .prompt-warning }` 등)을 제거한다. 이 지시자는 바로 위 인용문에 붙는 것이라 줄만 지우면 일반 인용문이 된다. 지시자가 인용문 안에 `> {: .prompt-info }` 형태로 들어간 경우도 있으므로 두 형태를 모두 잡는다.
+4. `<s>`를 형광펜으로 바꾸는 인라인 `<style>` 블록을 제거한다. `s` 스타일은 `_post.scss`가 한 번만 정의한다.
+5. `~/project/blog.junyeong.dev/imgs/`를 `imgs/`로 복사한다. 본문이 `/imgs/YYYY-MM-DD/...` 형태로 참조하므로 경로 구조를 그대로 유지한다.
 
 ### 프로젝트 (10편)
 
 1. `~/project/junyeong.dev/_posts/project/*.md`를 `content/_projects/`로 복사한다. `.blank`는 옮기지 않는다.
 2. 파일명 `YYYY-M-D-<slug>.md`에서 날짜 접두사를 떼어 `<slug>.md`로 바꾸고, 뗀 날짜를 `date: YYYY-MM-DD` front matter로 넣는다. 슬러그는 기존 주소(`/project/turtlemq` 등)와 정확히 일치해야 한다.
 3. `layout`, `categories` 줄을 제거한다. `_config.yml` 기본값이 대신한다.
-4. `skills[]`의 각 항목에서 `name`만 남기고 `color`, `logoColor`, `logoName`을 제거한다.
+4. `skills[]`를 이름만 담은 평탄한 문자열 배열로 바꾼다. `color`, `logoColor`, `logoName`은 버린다.
 5. `carousels[].images[].image`를 `images: [경로, ...]` 평탄 배열로 바꾼다.
 6. 본문 첫 줄의 `{% include carousel.html ... %}` 호출을 제거한다. 갤러리는 레이아웃이 렌더링한다.
 7. `desc`, `urls`, `people`은 그대로 둔다.
