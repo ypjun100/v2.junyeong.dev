@@ -1,1 +1,152 @@
-// home
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+// Shared with About
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.intro__headline {
+  margin: 0;
+  font-family: var(--font-content);
+  font-size: 40px;
+  line-height: 1.45;
+  font-weight: 700;
+  color: var(--text-strong);
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+
+.intro__mark {
+  color: var(--accent);
+}
+
+.intro__stats {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--font-ui);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.intro__stat {
+  flex: 1;
+  min-width: 120px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-right: 1px solid var(--border);
+
+  &:last-child {
+    border-right: 0;
+  }
+}
+
+.intro__stat-value {
+  font-family: var(--font-mono);
+  font-size: 19px;
+  color: var(--text-mid);
+}
+
+.intro__stat-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+// Intro copy
+
+.home__about {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 16px;
+  line-height: 1.78;
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    color: var(--text-strong);
+    font-weight: 600;
+  }
+}
+
+// Recent posts
+
+.home__recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.recent {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .recent__title {
+    color: var(--accent);
+  }
+}
+
+.recent__meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted-dim);
+}
+
+.recent__sep {
+  color: var(--sep);
+}
+
+.recent__title {
+  font-size: 16px;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+.recent__excerpt {
+  font-size: 15px;
+  color: var(--muted-excerpt);
+  line-height: 1.65;
+}
+
+@media (max-width: 639px) {
+  .home {
+    gap: 44px;
+  }
+
+  .intro__headline {
+    font-size: 28px;
+  }
+
+  .intro__stats {
+    flex-direction: column;
+  }
+
+  .intro__stat {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}

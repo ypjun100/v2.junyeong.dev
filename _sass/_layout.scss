@@ -121,15 +121,23 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+// A label sitting on its own rule, used by every About section.
+.section-bar {
   padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
 
+// A label paired with a trailing link, used by Home's 최근 글.
 .section-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 22px;
 
   &__more {
     font-family: var(--font-ui);
@@ -142,6 +150,11 @@
       color: var(--accent);
     }
   }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
 }
 
 .site-footer {

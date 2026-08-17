@@ -2,3 +2,46 @@
 layout: page
 title: Home
 ---
+
+<section class="home">
+  {%- include intro-block.html -%}
+
+  <div class="home__about">
+    <p>안녕하세요! 단순히 코드를 작성하는 것을 넘어 비즈니스 기회까지 고민할 수 있는 환경을 지향하는 개발자 <strong>윤준영</strong>입니다. 현재 <strong>에듀테크 기업에서 Express.js와 React.js로 서비스를 개발하고 운영</strong>하고 있습니다.</p>
+    <p>구성원 모두가 함께 성장하는 문화가 곧 서비스 품질을 끌어올린다고 믿습니다. 동료들과 기술적 인사이트와 히스토리를 나누는 시간을 소중하게 생각합니다. 더 자세한 이야기는 <a href="{{ '/about/' | relative_url }}">About</a>을 확인해주세요.</p>
+  </div>
+
+  <div class="home__recent">
+    <div class="section-head">
+      <span class="section-label">최근 글</span>
+      <a class="section-head__more" href="{{ '/posts/' | relative_url }}">전체 보기 →</a>
+    </div>
+
+    <div class="home__recent-list">
+      {%- for post in site.posts limit: 5 %}
+      <a class="recent" href="{{ post.url | relative_url }}">
+        <div class="recent__meta">
+          <span>{{ post.date | date: "%Y.%m.%d" }}</span>
+          {%- if post.categories.size > 0 %}
+          <span class="recent__sep">·</span>
+          <span>{{ post.categories | join: ", " }}</span>
+          {%- endif %}
+        </div>
+        <div class="recent__title">{{ post.title }}</div>
+        {%- comment -%}
+          Jekyll's excerpt is only the first block, which is just the heading text on
+          posts that open with one. Read from the body instead and drop a leading
+          heading so the blurb starts on the first real sentence.
+        {%- endcomment -%}
+        {%- assign lead = post.content | strip_html | strip_newlines | strip -%}
+        {%- assign opener = post.content | strip | slice: 0, 3 -%}
+        {%- if opener == '<h1' or opener == '<h2' or opener == '<h3' or opener == '<h4' or opener == '<h5' or opener == '<h6' -%}
+          {%- assign heading = post.content | split: '</h' | first | split: '>' | last | strip -%}
+          {%- assign lead = lead | remove_first: heading | strip -%}
+        {%- endif -%}
+        <div class="recent__excerpt">{{ lead | truncate: 90 }}</div>
+      </a>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
