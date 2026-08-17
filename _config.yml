@@ -72,5 +72,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - AGENTS.md
+  - CLAUDE.md
   - docs/
   - vendor/
