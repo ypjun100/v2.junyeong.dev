@@ -1,1 +1,212 @@
-// layout
+// Page shell
+// Desktop geometry comes straight from the design source: 940px row, a 168px
+// sticky sidebar, a 620px content column, 76px between them.
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 76px 28px 110px;
+}
+
+.shell__inner {
+  width: 100%;
+  max-width: 940px;
+  display: flex;
+  align-items: flex-start;
+  gap: 76px;
+}
+
+.shell__main {
+  flex: 1;
+  min-width: 0;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+// Sidebar
+
+.sidebar {
+  width: 168px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 76px;
+  font-family: var(--font-ui);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.sidebar__identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.sidebar__avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface);
+  display: block;
+}
+
+.sidebar__names {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sidebar__name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  color: var(--text-strong);
+  text-transform: uppercase;
+}
+
+.sidebar__role {
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 14.5px;
+  margin-top: 4px;
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+    width: fit-content;
+
+    &:hover,
+    &.is-active {
+      color: var(--accent);
+    }
+  }
+}
+
+.sidebar__links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11.5px;
+  margin-top: 8px;
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+    width: fit-content;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}
+
+// Shared section heading, used by Home, About and Posts
+
+.section-label {
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+
+  &__more {
+    font-family: var(--font-ui);
+    font-size: 11.5px;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}
+
+.site-footer {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border-footer);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 11.5px;
+  color: var(--muted-footer);
+}
+
+// Below 900px the sidebar becomes a header row above the content.
+
+@media (max-width: 899px) {
+  .shell {
+    padding: 56px 24px 84px;
+  }
+
+  .shell__inner {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .shell__main {
+    max-width: 100%;
+    gap: 52px;
+  }
+
+  .sidebar {
+    position: static;
+    top: auto;
+    width: 100%;
+    gap: 18px;
+  }
+
+  .sidebar__identity {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .sidebar__nav {
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 0;
+  }
+
+  .sidebar__links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  .shell {
+    padding: 44px 20px 72px;
+  }
+
+  .shell__main {
+    gap: 44px;
+  }
+}

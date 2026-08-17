@@ -3,15 +3,17 @@
   {%- include head.html -%}
   <body>
     <div class="shell">
-      {%- include sidebar.html -%}
+      <div class="shell__inner">
+        {%- include sidebar.html -%}
 
-      <main class="shell__main">
-        {{ content }}
+        <main class="shell__main">
+          {{ content }}
 
-        <footer class="site-footer">
-          <span>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}</span>
-        </footer>
-      </main>
+          <footer class="site-footer">
+            <span>&copy; {{ site.time | date: '%Y' }} {{ site.author.name }}</span>
+          </footer>
+        </main>
+      </div>
     </div>
   </body>
 </html>

@@ -1,1 +1,50 @@
-// base
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+}
+
+body {
+  color: var(--text);
+  font-family: var(--font-content);
+  letter-spacing: var(--tracking);
+  // keep-all stops Korean 어절 from splitting mid-word; break-word still rescues
+  // long unbreakable strings such as URLs.
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--accent-line);
+
+  &:hover {
+    color: var(--accent-hover);
+    text-decoration-color: var(--accent-hover);
+  }
+}
+
+::selection {
+  background: var(--accent-select);
+  color: var(--selection-text);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
