@@ -1,0 +1,25 @@
+{%- comment -%}
+  Reading time counts characters, not words: Korean packs far more meaning per
+  어절 than English does per word, so a word count reads far too fast. 500
+  characters per minute is the usual figure for Korean prose. strip_html keeps
+  markup out of the count, and the trailing plus rounds up and floors at 1분.
+{%- endcomment -%}
+{%- assign chars = content | strip_html | strip_newlines | size -%}
+{%- assign minutes = chars | divided_by: 500 | plus: 1 -%}
+
+<div class="post__meta">
+  <span>{{ page.date | date: "%Y.%m.%d" }}</span>
+  <span class="post__meta-sep">·</span>
+  <span>{{ minutes }}분 소요</span>
+
+  {%- if page.kind == 'blog' and page.categories.size > 0 %}
+  <span class="post__meta-sep">·</span>
+  <span>{{ page.categories | join: ", " }}</span>
+  {%- elsif page.kind == 'project' and page.desc %}
+  <span class="post__meta-sep">·</span>
+  <span>{{ page.desc }}</span>
+  {%- elsif page.kind == 'award' and page.prize %}
+  <span class="post__meta-sep">·</span>
+  <span class="post__meta-prize">{{ page.prize.name }}</span>
+  {%- endif %}
+</div>

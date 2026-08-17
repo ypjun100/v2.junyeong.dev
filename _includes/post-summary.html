@@ -1,0 +1,10 @@
+{%- if page.summary and page.summary.size > 0 %}
+<div class="post__summary">
+  <div class="post__summary-label">요약</div>
+  <ul>
+    {%- for line in page.summary %}
+    <li>{{ line }}</li>
+    {%- endfor %}
+  </ul>
+</div>
+{%- endif -%}

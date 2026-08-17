@@ -1,1 +1,352 @@
-// post
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.post__back {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted-dim);
+  text-decoration: none;
+  width: fit-content;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.post__header {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--border);
+}
+
+.post__title {
+  margin: 0;
+  font-family: var(--font-post-title);
+  font-size: 27px;
+  font-weight: 900;
+  color: var(--text-strong);
+  line-height: 1.42;
+  letter-spacing: -0.015em;
+  text-wrap: pretty;
+}
+
+.post__meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted-dim);
+}
+
+.post__meta-sep {
+  color: var(--sep);
+}
+
+.post__meta-prize {
+  color: var(--accent);
+}
+
+// Summary callout
+
+.post__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+
+  ul {
+    margin: 0;
+    padding-left: 19px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 15.5px;
+    line-height: 1.78;
+    color: var(--text-summary);
+  }
+}
+
+.post__summary-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+// Project and award extras
+
+.post__extras {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: -12px;
+}
+
+.post__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 13.5px;
+}
+
+.post__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted-dim);
+
+  a {
+    text-decoration: none;
+    color: var(--text-mid);
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}
+
+.post__people {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  color: var(--muted-dim);
+}
+
+.link-icon {
+  flex-shrink: 0;
+  display: block;
+}
+
+.post__gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  img {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: block;
+  }
+}
+
+// Tags
+
+.post__tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+}
+
+.post__tag {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  color: var(--muted-tag);
+}
+
+// Rendered markdown
+// Every rule here mirrors an inline style from the design source.
+
+.post__body {
+  font-size: 16.5px;
+  line-height: 1.85;
+  color: var(--text-soft);
+
+  > * {
+    margin: 0 0 20px;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-post-title);
+    color: var(--text-strong);
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    margin: 34px 0 16px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h1,
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+  }
+
+  h3,
+  h4 {
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  h5,
+  h6 {
+    font-size: 15.5px;
+    font-weight: 600;
+  }
+
+  ul,
+  ol {
+    padding-left: 20px;
+
+    li {
+      margin-bottom: 7px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  strong {
+    color: var(--text-mid);
+    font-weight: 600;
+  }
+
+  em {
+    color: var(--text-mid);
+    font-style: normal;
+  }
+
+  // The old blog used <s> as a highlight rather than a strikethrough.
+  s,
+  mark {
+    text-decoration: none;
+    background: var(--accent-soft);
+    color: var(--text-mid);
+    border-radius: 4px;
+    padding: 2px 4px;
+  }
+
+  blockquote {
+    margin: 0 0 20px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    background: var(--surface);
+    color: var(--text-summary);
+    font-size: 15.5px;
+
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  pre {
+    padding: 20px 22px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--text-chip);
+
+    code {
+      padding: 0;
+      background: none;
+      color: inherit;
+      font-size: inherit;
+      word-break: normal;
+    }
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--code-bg);
+    color: var(--accent-code);
+    word-break: break-all;
+  }
+
+  img {
+    display: block;
+    border-radius: 6px;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 34px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    display: block;
+    overflow-x: auto;
+
+    th,
+    td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      background: var(--surface);
+      color: var(--text-mid);
+      font-weight: 600;
+    }
+  }
+
+  // Rouge output, kept close to the design's flat code block.
+  .highlight {
+    .c, .c1, .cm, .cs, .cd { color: var(--muted-dim); font-style: italic; }
+    .k, .kd, .kn, .kp, .kr, .kt, .kc { color: var(--accent); }
+    .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr { color: var(--accent-code); }
+    .n, .na, .nb, .nc, .nd, .nf, .ni, .nl, .nn, .no, .nt, .nv { color: var(--text-mid); }
+    .m, .mi, .mf, .mh, .mo, .il { color: var(--text-mid); }
+    .o, .ow, .p { color: var(--text-chip); }
+  }
+}
+
+@media (max-width: 639px) {
+  .post {
+    gap: 32px;
+  }
+
+  .post__title {
+    font-size: 23px;
+  }
+
+  .post__header {
+    padding-bottom: 24px;
+  }
+
+  .post__body {
+    font-size: 16px;
+  }
+}

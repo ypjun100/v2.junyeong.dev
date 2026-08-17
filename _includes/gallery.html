@@ -1,0 +1,7 @@
+{%- if page.images and page.images.size > 0 %}
+<div class="post__gallery">
+  {%- for image in page.images %}
+  <img src="{{ image | relative_url }}" alt="{{ page.title }}" loading="lazy">
+  {%- endfor %}
+</div>
+{%- endif -%}

@@ -23,7 +23,7 @@ TASK 02, TASK 03.
 4. `_layouts/post.html` — 02-PLAN의 렌더링 흐름대로 구성한다. `page.kind`로 세 종류를 분기한다.
 5. `_includes/post-meta.html` — `YYYY.MM.DD` · 읽기 시간 · 세 번째 항목. 세 번째 항목은 `kind`에 따라 카테고리(blog) / `desc`(project) / `prize.name`(award).
 6. `_includes/post-summary.html` — `page.summary`가 있을 때만 요약 콜아웃을 그린다. 라벨은 `요약`, 강조색 mono. 없으면 아무것도 출력하지 않는다.
-7. `_includes/post-extras.html` — `kind != blog`일 때 수상 등급 배지, 외부 링크 행, 참여자, 스킬 칩을 그린다.
+7. `_includes/post-extras.html` — `kind != blog`일 때 외부 링크 행, 참여자, 스킬 칩을 그린다. 수상 등급은 헤더 메타가 강조색으로 이미 보여주므로 여기서 다시 그리지 않는다.
    - 외부 링크는 `url.type`(`github`, `news`, `website`, `link`, `youtube`)에 맞는 인라인 SVG 아이콘을 붙인다. 아이콘 `fill`은 `currentColor`로 두고 색은 CSS가 정한다.
    - 스킬 칩은 About 기술 스택 칩과 동일한 스타일(`--border-strong`, radius 4px, `--text-chip`)을 재사용한다.
    - 참여자는 사람 아이콘 + 쉼표로 이은 목록, `--muted-dim`.

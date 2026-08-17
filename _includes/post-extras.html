@@ -1,0 +1,31 @@
+{%- if page.kind != 'blog' %}
+{%- if page.urls or page.people or page.skills %}
+<div class="post__extras">
+  {%- if page.urls and page.urls.size > 0 %}
+  <div class="post__links">
+    {%- for url in page.urls %}
+    <span class="post__link">
+      {%- include link-icon.html type=url.type -%}
+      <a href="{{ url.url }}" target="_blank" rel="noopener">{{ url.name }}</a>
+    </span>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+
+  {%- if page.people and page.people.size > 0 %}
+  <div class="post__people">
+    <svg class="link-icon" width="14" height="16" viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+    <span>{{ page.people | join: ", " }}</span>
+  </div>
+  {%- endif %}
+
+  {%- if page.skills and page.skills.size > 0 %}
+  <div class="chips">
+    {%- for skill in page.skills %}
+    <span class="chip">{{ skill }}</span>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+</div>
+{%- endif %}
+{%- endif -%}

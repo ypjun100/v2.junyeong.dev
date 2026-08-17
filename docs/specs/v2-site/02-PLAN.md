@@ -152,7 +152,7 @@ summary: [string]        # 선택
 
 ### 파생 값
 
-- **읽기 시간** — `content | number_of_words`를 분당 500자 기준으로 나눠 올림한다. 한국어 본문에서 `number_of_words`는 공백 단위 어절 수에 가깝게 나오므로 분당 300어절 기준을 쓴다. 1분 미만은 `1분 소요`로 표시한다.
+- **읽기 시간** — 어절이 아니라 글자 수로 센다. 한국어는 어절 하나에 담기는 의미가 영어 단어보다 커서 어절 기준으로 재면 실제보다 훨씬 빠르게 나온다. `content | strip_html | strip_newlines | size`를 분당 500자로 나누고 1을 더해 올림과 1분 하한을 동시에 처리한다. `strip_html`을 빼면 HTML 태그까지 세어 값이 부풀려진다.
 - **Home 최근 글 발췌** — `post.excerpt | strip_html | strip_newlines | truncate: 90`.
 - **Posts 연도 그룹** — `site.posts | group_by_exp: "p", "p.date | date: '%Y'"`, 연도 내림차순.
 
@@ -238,10 +238,9 @@ post.html
  ├─ 뒤로가기 링크        kind == blog ? "← Posts" : "← About"
  ├─ header
  │   ├─ h1  (page.title)
- │   └─ post-meta.html   날짜 · 읽기 시간 · (blog: categories[0] | project: desc | award: prize.name)
+ │   └─ post-meta.html   날짜 · 읽기 시간 · (blog: categories | project: desc | award: prize.name)
  ├─ post-summary.html    page.summary 있을 때만
  ├─ post-extras.html     kind != blog 일 때
- │   ├─ 수상 등급 배지    page.prize
  │   ├─ 외부 링크 행      page.urls
  │   ├─ 참여자           page.people
  │   └─ 스킬 칩          page.skills
@@ -249,6 +248,8 @@ post.html
  ├─ article {{ content }}
  └─ post-tags.html       page.tags 있을 때
 ```
+
+수상 등급은 헤더 메타의 세 번째 항목이 강조색으로 표시하며, 별도의 배지를 두지 않는다. 한 화면에 같은 값을 두 번 그리지 않기 위해서다.
 
 `content` 안의 마크다운은 `_post.scss`가 요소 선택자로 스타일링한다. 시안이 각 요소에 붙여 둔 인라인 스타일을 `h2`, `p`, `pre`, `code`, `ul`, `strong`, `em`, `blockquote`, `img`, `mark`, `table` 선택자로 옮긴다. 기존 글이 `<mark>`와 `>` 인용을 자주 쓰므로 두 요소는 반드시 다크 톤 스타일을 갖는다.
 
