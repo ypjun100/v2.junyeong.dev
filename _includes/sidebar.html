@@ -1,0 +1,28 @@
+{%- assign is_posts = false -%}
+{%- if page.url == '/posts/' or page.kind == 'blog' -%}{%- assign is_posts = true -%}{%- endif -%}
+{%- assign is_about = false -%}
+{%- if page.url == '/about/' or page.kind == 'project' or page.kind == 'award' -%}{%- assign is_about = true -%}{%- endif -%}
+{%- assign is_home = false -%}
+{%- if page.url == '/' -%}{%- assign is_home = true -%}{%- endif -%}
+
+<aside class="sidebar">
+  <div class="sidebar__identity">
+    <img class="sidebar__avatar" src="{{ '/assets/img/avatar.png' | relative_url }}" alt="{{ site.title }}" width="46" height="46">
+    <div class="sidebar__names">
+      <div class="sidebar__name">{{ site.title }}</div>
+      <div class="sidebar__role">{{ site.tagline }}</div>
+    </div>
+  </div>
+
+  <nav class="sidebar__nav">
+    <a href="{{ '/' | relative_url }}"{% if is_home %} class="is-active"{% endif %}>Home</a>
+    <a href="{{ '/about/' | relative_url }}"{% if is_about %} class="is-active"{% endif %}>About</a>
+    <a href="{{ '/posts/' | relative_url }}"{% if is_posts %} class="is-active"{% endif %}>Posts</a>
+  </nav>
+
+  <div class="sidebar__links">
+    <a href="https://github.com/ypjun100" target="_blank" rel="noopener">github ↗</a>
+    <a href="https://www.linkedin.com/in/ypjun100/" target="_blank" rel="noopener">linkedin ↗</a>
+    <a href="mailto:{{ site.author.email }}">email ↗</a>
+  </div>
+</aside>
