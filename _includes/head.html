@@ -4,16 +4,21 @@
 
   {%- seo -%}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   {%- comment -%}
-    Weights are trimmed to the ones the stylesheet actually asks for; each
-    extra weight of a Korean family is a large download. display=swap pairs
-    with the paint gate below: the gate normally hides the swap entirely, and
-    if it times out on a slow link swap still leaves readable text.
+    Fonts are self-hosted from assets/fonts/, built by script/build-fonts.py.
+    Google Fonts splits Korean families into ~90-120 unicode-range chunks each,
+    so a page pulled roughly 40 files across two extra origins. Serving one
+    subset per weight from this origin turns that into a handful of requests on
+    the connection that already delivered the HTML.
+
+    Every page renders all five preloaded faces, so the whole font payload is
+    fetched once and every later page costs nothing. Titles and headings share
+    the body face, which is what keeps the set this small.
   {%- endcomment -%}
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
+  {%- assign always = "nanum-myeongjo-400,nanum-myeongjo-700,ibm-plex-sans-kr-400,ibm-plex-sans-kr-600,ibm-plex-sans-kr-700,ibm-plex-mono-400" | split: "," -%}
+  {%- for font in always -%}
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ '/assets/fonts/' | append: font | append: '.woff2' | relative_url }}">
+  {%- endfor %}
 
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 
