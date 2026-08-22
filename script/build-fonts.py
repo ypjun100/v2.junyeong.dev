@@ -52,7 +52,22 @@ FONTS = [
     ("IBM Plex Mono",     500, "latin"),
 ]
 
-TEMPLATES = ["_includes/*.html", "_layouts/*.html", "index.html", "about.html", "posts.html"]
+# The ui face is only ever applied to the sidebar and to a handful of labels.
+# Everything else in the templates is set in the body face, which carries the
+# full Hangul range, so scraping whole files would bloat the ui subset with
+# characters it never draws. These patterns track the classes that set
+# font-family: var(--font-ui) in _sass/.
+UI_WHOLE_FILES = ["_includes/sidebar.html"]
+UI_ELEMENT_PATTERNS = [
+    r'class="section-label[^"]*"[^>]*>(.*?)<',
+    r'class="section-head__more"[^>]*>(.*?)<',
+    r'class="intro__stat-label"[^>]*>(.*?)<',
+    r'class="chip"[^>]*>(.*?)<',
+]
+UI_SEARCH_FILES = ["_includes/*.html", "_layouts/*.html", "index.html", "about.html", "posts.html"]
+# The sidebar prints these through Liquid, so they never appear as literal text
+# in a template and scraping alone would miss them.
+UI_CONFIG_KEYS = ["title", "tagline"]
 
 
 def in_ks_x_1001(ch):
@@ -72,11 +87,19 @@ REST = [c for c in SYLLABLES if not in_ks_x_1001(c)]
 
 
 def template_hangul():
-    seen = set()
-    for pattern in TEMPLATES:
+    config = (ROOT / "_config.yml").read_text(encoding="utf-8")
+    text = "".join(
+        m.group(1) for key in UI_CONFIG_KEYS
+        for m in [re.search(rf"^{key}:\s*(.+)$", config, re.M)] if m
+    )
+    for name in UI_WHOLE_FILES:
+        text += (ROOT / name).read_text(encoding="utf-8")
+    for pattern in UI_SEARCH_FILES:
         for path in ROOT.glob(pattern):
-            seen |= {c for c in path.read_text(encoding="utf-8") if "가" <= c <= "힣"}
-    return "".join(sorted(seen))
+            body = path.read_text(encoding="utf-8")
+            for element in UI_ELEMENT_PATTERNS:
+                text += "".join(re.findall(element, body, re.S))
+    return "".join(sorted({c for c in text if "가" <= c <= "힣"}))
 
 
 def check_ui_coverage(chars):

@@ -95,7 +95,11 @@ python3 -m venv .venv && .venv/bin/pip install fonttools brotli
 
 본문용 폰트는 `unicode-range`로 두 파일로 나뉜다. KS X 1001 상용 2,350자는 항상 받고, 나머지 8,822자는 그 글자가 페이지에 나올 때만 받는다. 그래서 어떤 글자도 폴백으로 떨어지지 않는다.
 
-UI 폰트(IBM Plex Sans KR)는 템플릿에 적힌 205자로만 잘려 있다. 새 한글 라벨을 넣고 스크립트를 돌리지 않으면 **그 글자만 조용히 다른 서체로 렌더링된다.** 스크립트가 라벨 글자 수를 출력하니 값이 늘었는지 확인한다.
+UI 폰트(IBM Plex Sans KR)는 그 서체가 실제로 그리는 29자로만 잘려 있다. 대상은 사이드바 전체와 `section-label`·`section-head__more`·`intro__stat-label`·`chip` 요소이며, 스크립트가 이 클래스들만 훑는다. 본문은 `--font-content`로 그려지므로 글 내용이나 경력 설명 같은 긴 한글은 여기 들어가지 않는다.
+
+**UI 영역에 새 한글 라벨을 넣고 스크립트를 돌리지 않으면 그 글자만 조용히 다른 서체로 렌더링된다.** 스크립트가 서브셋 글자 수를 출력하니 값이 늘었는지 확인한다.
+
+라벨을 Liquid로 출력하는 경우(`{{ site.title }}` 등)는 템플릿에 리터럴이 없어 스크래핑에 잡히지 않는다. `UI_CONFIG_KEYS`에 해당 `_config.yml` 키를 추가해야 한다. 새 UI 클래스를 만들었다면 `UI_ELEMENT_PATTERNS`에도 추가한다.
 
 ## 하지 말 것
 
