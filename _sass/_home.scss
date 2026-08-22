@@ -53,11 +53,16 @@
 .intro__stat-value {
   font-family: var(--font-mono);
   font-size: 19px;
+  // Explicit, because 2년 resolves its Hangul through a fallback face whose
+  // metrics differ from IBM Plex Mono. Without this the first cell's line box
+  // is a different height and drags its label out of line with the others.
+  line-height: 1.35;
   color: var(--text-mid);
 }
 
 .intro__stat-label {
   font-size: 11px;
+  line-height: 1.4;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
