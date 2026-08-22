@@ -184,8 +184,12 @@
     padding: 56px 24px 84px;
   }
 
+  // stretch, not the flex-start inherited from the desktop row: in a column
+  // flex-start sizes children to their content and pins them left, which left
+  // the content narrower than the sidebar with dead space down the right.
   .shell__inner {
     flex-direction: column;
+    align-items: stretch;
     gap: 40px;
   }
 
