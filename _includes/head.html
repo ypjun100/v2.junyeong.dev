@@ -6,7 +6,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@400;500;600;700;900&display=swap">
+  {%- comment -%}
+    display=optional, not swap: the browser keeps the fallback for this paint
+    rather than reflowing to the webfont mid-view. Removes the flash on reload.
+  {%- endcomment -%}
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@400;500;600;700;900&display=optional">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@400;500;600;700;900&display=optional">
 
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   {%- feed_meta -%}

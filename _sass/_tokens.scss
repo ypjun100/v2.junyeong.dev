@@ -40,9 +40,11 @@
   --selection-text: #eef2f6;
 
   // Type
-  --font-ui: "IBM Plex Sans KR", sans-serif;
-  --font-content: "Nanum Myeongjo", serif;
-  --font-post-title: "Noto Serif KR", serif;
+  // Fallbacks name real Korean faces so the pre-webfont paint under
+  // display=optional stays close instead of dropping to Times.
+  --font-ui: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-content: "Nanum Myeongjo", AppleMyungjo, Batang, serif;
+  --font-post-title: "Noto Serif KR", AppleMyungjo, Batang, serif;
   --font-mono: "IBM Plex Mono", monospace;
   --tracking: 0.015em;
 }
