@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Years of experience on the home page is derived from site.time, which is
+  # frozen at build time. Rebuilding monthly keeps it from going stale between
+  # pushes. GitHub suspends cron on repositories with no activity for 60 days.
+  schedule:
+    - cron: "0 18 1 * *"  # 1st of each month, 03:00 KST
 
 permissions:
   contents: read

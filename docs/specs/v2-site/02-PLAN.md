@@ -154,6 +154,7 @@ summary: [string]        # 선택
 
 - **읽기 시간** — 어절이 아니라 글자 수로 센다. 한국어는 어절 하나에 담기는 의미가 영어 단어보다 커서 어절 기준으로 재면 실제보다 훨씬 빠르게 나온다. `content | strip_html | strip_newlines | size`를 분당 500자로 나누고 1을 더해 올림과 1분 하한을 동시에 처리한다. `strip_html`을 빼면 HTML 태그까지 세어 값이 부풀려진다.
 - **Home 최근 글 발췌** — `post.excerpt | strip_html | strip_newlines | truncate: 90`.
+- **경력 연차** — 시작일 2024-09-01을 1년차로 두고 기념일마다 올라간다. 곧 완료 연수 + 1이며, `site.time`의 `%m%d`를 정수로 비교해 올해 기념일이 지났는지 판단한다. 표기는 `년차`가 아니라 `년`이다. `site.time`은 빌드 시각이므로 워크플로에 월 1회 예약 실행을 걸어 값이 묵지 않게 한다.
 - **Posts 연도 그룹** — `site.posts | group_by_exp: "p", "p.date | date: '%Y'"`, 연도 내림차순.
 
 ## 고정 문구의 위치
@@ -206,7 +207,8 @@ summary: [string]        # 선택
 | `--font-ui` | `'IBM Plex Sans KR', sans-serif` | 사이드바, 지표 라벨 |
 | `--font-content` | `'Nanum Myeongjo', serif` | 본문 전반, Home/About 제목 |
 | `--font-post-title` | `'Nanum Myeongjo', serif` | 글 제목, heading |
-| `--font-mono` | `'IBM Plex Mono', monospace` | 날짜, 지표 값, 코드 |
+| `--font-mono` | `'IBM Plex Mono', monospace` | 날짜, 메타, 코드 |
+| `--font-mono-ko` | `'IBM Plex Mono', 'IBM Plex Sans KR', …` | 숫자 뒤에 한글 단위가 붙는 지표 값 |
 | `--tracking` | `0.015em` | 전역 자간 |
 
 링크는 `text-decoration-color: rgba(111,216,140,0.45)`, `text-underline-offset: 3px`. `::selection`은 `background: rgba(111,216,140,0.28); color: #eef2f6`.
