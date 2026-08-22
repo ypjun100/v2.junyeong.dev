@@ -44,7 +44,9 @@
   // display=optional stays close instead of dropping to Times.
   --font-ui: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-content: "Nanum Myeongjo", AppleMyungjo, Batang, serif;
-  --font-post-title: "Noto Serif KR", AppleMyungjo, Batang, serif;
+  // Titles and headings share the body face. Nanum Myeongjo ships 400 and 700
+  // only, so the heaviest heading is 700 rather than the 900 of the mockup.
+  --font-post-title: "Nanum Myeongjo", AppleMyungjo, Batang, serif;
   --font-mono: "IBM Plex Mono", monospace;
   --tracking: 0.015em;
 }
