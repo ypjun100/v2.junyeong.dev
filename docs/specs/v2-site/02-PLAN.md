@@ -169,7 +169,6 @@ summary: [string]        # 선택
 | 소개 문단 2개 | `index.html` | Home |
 | 경력 1건과 성과 3건 | `about.html` | About |
 | 기술 스택 칩 | `about.html` | About |
-| 활동 이력 4건 | `about.html` | About |
 
 사이트 제목, 설명, 저자, 이메일은 `_config.yml`에 둔다. SEO 태그와 피드 플러그인이 그곳에서 읽어 가므로 템플릿과는 소비자가 다르다. 사이드바에서 이름과 이메일을 쓸 때는 `site.author`를 참조해 `_config.yml`과 어긋나지 않게 한다.
 
@@ -191,7 +190,7 @@ summary: [string]        # 선택
 | `--text-soft` | `#aab3bf` | 글 본문 |
 | `--text-summary` | `#a7b0bc` | 요약 콜아웃 |
 | `--text-chip` | `#9aa4b1` | 칩, 코드 블록 |
-| `--text-list` | `#929ba8` | 활동 불릿, Posts 인트로 |
+| `--text-list` | `#929ba8` | Posts 인트로 |
 | `--text-lead` | `#98a2af` | 경력 요약 문단 |
 | `--text-detail` | `#838d9a` | 경력 성과 불릿 |
 | `--muted` | `#6b7583` | 섹션 라벨, 보조 텍스트 |

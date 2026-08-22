@@ -13,10 +13,6 @@
     gap: 18px;
   }
 
-  &--loose {
-    gap: 30px;
-  }
-
   &--career {
     gap: 26px;
   }
@@ -212,42 +208,6 @@
   white-space: nowrap;
 }
 
-// Activities
-
-.activity {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.activity__head {
-  display: flex;
-  gap: 12px;
-  align-items: baseline;
-}
-
-.activity__year {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: var(--muted-dim);
-}
-
-.activity__org {
-  font-size: 15.5px;
-  font-weight: 600;
-  color: var(--text-strong);
-}
-
-.activity__points {
-  margin: 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--text-list);
-}
 
 @media (max-width: 639px) {
   .about {
