@@ -62,7 +62,6 @@ UI_ELEMENT_PATTERNS = [
     r'class="section-label[^"]*"[^>]*>(.*?)<',
     r'class="section-head__more"[^>]*>(.*?)<',
     r'class="intro__stat-label"[^>]*>(.*?)<',
-    r'class="intro__stat-value"[^>]*>(.*?)<',
     r'class="chip"[^>]*>(.*?)<',
 ]
 UI_SEARCH_FILES = ["_includes/*.html", "_layouts/*.html", "index.html", "about.html", "posts.html"]

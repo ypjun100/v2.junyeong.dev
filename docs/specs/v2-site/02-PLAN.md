@@ -207,8 +207,8 @@ summary: [string]        # 선택
 | `--font-ui` | `'IBM Plex Sans KR', sans-serif` | 사이드바, 지표 라벨 |
 | `--font-content` | `'Nanum Myeongjo', serif` | 본문 전반, Home/About 제목 |
 | `--font-post-title` | `'Nanum Myeongjo', serif` | 글 제목, heading |
-| `--font-mono` | `'IBM Plex Mono', monospace` | 날짜, 메타, 코드 |
-| `--font-mono-ko` | `'IBM Plex Mono', 'IBM Plex Sans KR', …` | 숫자 뒤에 한글 단위가 붙는 지표 값 |
+| `--font-mono` | `'IBM Plex Mono', monospace` | 숫자·라틴만 있는 날짜, 코드 |
+| `--font-mono-mixed` | `monospace` | 숫자와 한글이 한 줄에 같이 오는 메타 행 |
 | `--tracking` | `0.015em` | 전역 자간 |
 
 링크는 `text-decoration-color: rgba(111,216,140,0.45)`, `text-underline-offset: 3px`. `::selection`은 `background: rgba(111,216,140,0.28); color: #eef2f6`.
@@ -225,6 +225,8 @@ Google Fonts는 한글 패밀리를 유니코드 범위별 90~120개 조각으�
 - **ui** — 사이드바와 몇몇 라벨만 그리는 폰트. 글자 집합이 확정되어 있어 그 글자로만 자른다. 스크립트는 `--font-ui`를 쓰는 클래스만 훑고, Liquid로 주입되는 값은 `_config.yml`에서 따로 읽는다. UI 영역에 새 한글 라벨을 추가하면 스크립트를 다시 돌려야 한다.
 
 제목과 heading은 본문과 같은 Nanum Myeongjo를 쓴다. 그 덕에 모든 페이지가 동일한 6개 파일(847KB)만 쓰고, 첫 방문 이후에는 폰트 요청이 발생하지 않는다. Nanum Myeongjo는 400과 700만 제공하므로 글 제목은 시안의 900이 아니라 700이다.
+
+IBM Plex Mono에는 한글이 없고 IBM Plex 계열에 Mono 한글판도 없다. 그래서 숫자와 한글이 한 줄에 같이 오는 메타 행은 IBM Plex Mono를 쓰지 않고 시스템 `monospace` 하나로 넘긴다. 섞어 쓰면 한 줄이 두 서체로 쪼개져 보인다. 숫자나 라틴만 있는 날짜와 코드 블록은 계속 IBM Plex Mono를 쓴다.
 
 한국어 줄바꿈은 브라우저 기본값을 쓴다. `word-break`를 지정하지 않으므로 글자 단위로 끊긴다. `overflow-wrap: break-word`는 긴 URL이 컨테이너를 밀어내는 것만 막는다.
 

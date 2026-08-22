@@ -49,10 +49,13 @@
   // Titles and headings share the body face. Nanum Myeongjo ships 400 and 700
   // only, so the heaviest heading is 700 rather than the 900 of the mockup.
   --font-post-title: "Nanum Myeongjo", AppleMyungjo, Batang, serif;
+  // IBM Plex Mono has no Hangul and there is no Plex Mono Korean, so the few
+  // Korean words that sit in mono rows -- 분 소요, category and tag names --
+  // fall through to whatever monospace face the reader's system provides.
   --font-mono: "IBM Plex Mono", monospace;
-  // IBM Plex Mono carries no Hangul. Where a mono figure sits next to a Korean
-  // unit, this stack keeps the digits monospaced and hands the Hangul to the UI
-  // face instead of whatever monospace font the system happens to pick.
-  --font-mono-ko: "IBM Plex Mono", "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  // Rows that put figures next to Korean. Pairing IBM Plex Mono with a Hangul
+  // fallback splits one line across two faces, so these hand the whole row to
+  // the system mono and stay internally consistent instead.
+  --font-mono-mixed: monospace;
   --tracking: 0.015em;
 }
