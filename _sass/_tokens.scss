@@ -50,5 +50,9 @@
   // only, so the heaviest heading is 700 rather than the 900 of the mockup.
   --font-post-title: "Nanum Myeongjo", AppleMyungjo, Batang, serif;
   --font-mono: "IBM Plex Mono", monospace;
+  // IBM Plex Mono carries no Hangul. Where a mono figure sits next to a Korean
+  // unit, this stack keeps the digits monospaced and hands the Hangul to the UI
+  // face instead of whatever monospace font the system happens to pick.
+  --font-mono-ko: "IBM Plex Mono", "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --tracking: 0.015em;
 }
