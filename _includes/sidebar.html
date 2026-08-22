@@ -20,9 +20,23 @@
     <a href="{{ '/posts/' | relative_url }}"{% if is_posts %} class="is-active"{% endif %}>Posts</a>
   </nav>
 
+  {%- comment -%}
+    Each link carries both forms. The wide column shows the wordmark; once the
+    sidebar folds into a header row the icon takes over, which is what keeps the
+    row beside the profile card on a phone. aria-label covers the icon-only state.
+  {%- endcomment -%}
   <div class="sidebar__links">
-    <a href="https://github.com/ypjun100" target="_blank" rel="noopener">github ↗</a>
-    <a href="https://www.linkedin.com/in/ypjun100/" target="_blank" rel="noopener">linkedin ↗</a>
-    <a href="mailto:{{ site.author.email }}">email ↗</a>
+    <a href="https://github.com/ypjun100" aria-label="github" target="_blank" rel="noopener">
+      <span class="sidebar__link-text">github ↗</span>
+      <svg class="sidebar__link-icon" width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-2.92-.88-2.92-2.89 0-.86.31-1.56.82-2.11-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a5.5 5.5 0 0 1 2 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.55.82 1.25.82 2.11 0 2.02-1.15 2.69-2.93 2.89.3.26.56.76.56 1.54 0 1.1-.01 1.99-.01 2.26 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/ypjun100/" aria-label="linkedin" target="_blank" rel="noopener">
+      <span class="sidebar__link-text">linkedin ↗</span>
+      <svg class="sidebar__link-icon" width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3.4 2.1a1.4 1.4 0 1 1 0 2.8 1.4 1.4 0 0 1 0-2.8ZM2.2 6h2.4v7.9H2.2V6Zm4 0h2.3v1.1c.32-.6 1.1-1.25 2.27-1.25 1.62 0 2.83.96 2.83 3.3v4.75h-2.4V9.5c0-1.05-.38-1.66-1.24-1.66-.72 0-1.16.48-1.35.95-.07.17-.09.4-.09.63v4.48H6.2V6Z"/></svg>
+    </a>
+    <a href="mailto:{{ site.author.email }}" aria-label="email">
+      <span class="sidebar__link-text">email ↗</span>
+      <svg class="sidebar__link-icon" width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9.5" rx="1.4"/><path d="m2.2 4.6 5.8 4.2 5.8-4.2"/></svg>
+    </a>
   </div>
 </aside>
