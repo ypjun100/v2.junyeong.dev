@@ -60,6 +60,8 @@ bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-miss
 
 `title`, `date`가 필수이고 `prize: {name, type}`가 추가된다. `prize.name`은 헤더 메타에 강조색으로 표시된다. `people`, `urls`, `images`, `summary`는 프로젝트와 같다.
 
+**작성 중인 글** — 아직 공개하지 않을 글은 `content/_posts/`에 그대로 두고 `.gitignore`에 경로를 적는다. 로컬 `jekyll serve`에서는 보이지만 저장소와 배포본에는 들어가지 않는다. 공개할 때 `.gitignore`에서 그 줄을 지운다. 이 때문에 워킹 트리의 글 수가 저장소의 글 수보다 많을 수 있다.
+
 ## 주소
 
 | 종류 | 주소 |
@@ -88,5 +90,5 @@ bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-miss
 
 1. `bundle exec jekyll build --strict_front_matter`가 경고 없이 통과한다.
 2. `htmlproofer`가 통과한다.
-3. 세 컬렉션의 파일 개수와 `_site/posts`·`_site/project`·`_site/prize`의 페이지 개수가 일치한다. `collections_dir` 설정이 어긋나도 빌드는 성공하므로 이 대조가 유일한 방어선이다.
+3. 세 컬렉션의 파일 개수와 `_site/posts`·`_site/project`·`_site/prize`의 페이지 개수가 일치한다. `collections_dir` 설정이 어긋나도 빌드는 성공하므로 이 대조가 유일한 방어선이다. 배포본 기준 개수는 `git ls-files content/_posts | wc -l`로 센다. 로컬에는 `.gitignore`로 제외한 작성 중인 글이 섞여 있다.
 4. 375px, 768px, 1280px에서 Home·About·Posts·글 상세를 눈으로 확인한다.

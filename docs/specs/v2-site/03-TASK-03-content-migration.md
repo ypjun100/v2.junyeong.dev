@@ -2,7 +2,7 @@
 
 ## 목표
 
-블로그 21편, 프로젝트 10편, 수상 경력 6편과 이미지 에셋을 v2 저장소로 옮기고 front matter를 02-PLAN의 스키마로 정규화한다.
+블로그 19편, 프로젝트 10편, 수상 경력 6편과 이미지 에셋을 v2 저장소로 옮기고 front matter를 02-PLAN의 스키마로 정규화한다.
 
 ## 선행
 
@@ -10,13 +10,15 @@ TASK 01.
 
 ## 작업
 
-### 블로그 (21편)
+### 블로그 (19편)
 
-1. `~/project/blog.junyeong.dev/_posts/*.md` 21개를 `content/_posts/`로 복사한다. 파일명(`YYYY-MM-DD-<slug>.md`)을 바꾸지 않는다. 기존 주소가 슬러그에 묶여 있다.
+1. `~/project/blog.junyeong.dev/_posts/*.md` 21개 중 작성이 끝난 19개를 `content/_posts/`로 복사한다. 파일명(`YYYY-MM-DD-<slug>.md`)을 바꾸지 않는다. 기존 주소가 슬러그에 묶여 있다.
 2. `pin`, `math`, `mermaid`, `image`를 제거한다. `title`, `date`, `categories`, `tags`만 남긴다. `image`는 Chirpy의 대표 이미지 필드로 v2에서는 쓰지 않는다.
 3. 본문에서 Chirpy 전용 문법(`{: .prompt-tip }`, `{: .prompt-warning }` 등)을 제거한다. 이 지시자는 바로 위 인용문에 붙는 것이라 줄만 지우면 일반 인용문이 된다. 지시자가 인용문 안에 `> {: .prompt-info }` 형태로 들어간 경우도 있으므로 두 형태를 모두 잡는다.
 4. `<s>`를 형광펜으로 바꾸는 인라인 `<style>` 블록을 제거한다. `s` 스타일은 `_post.scss`가 한 번만 정의한다.
 5. `~/project/blog.junyeong.dev/imgs/`를 `imgs/`로 복사한다. 본문이 `/imgs/YYYY-MM-DD/...` 형태로 참조하므로 경로 구조를 그대로 유지한다.
+
+저자가 아직 쓰고 있는 두 편은 저장소에 넣지 않는다. `2026-03-21-FSD.md`와 `2026-04-25-생애-첫-미국-여행기-2.md`이며, 워킹 트리에는 두고 `.gitignore`로 제외해 로컬에서만 미리 볼 수 있게 한다. 글이 완성되면 `.gitignore`의 해당 줄을 지우는 것으로 공개된다.
 
 ### 프로젝트 (10편)
 
@@ -38,15 +40,15 @@ TASK 01.
 
 ## 검증
 
-- `content/_posts` 21개, `content/_projects` 10개, `content/_awards` 6개.
+- `content/_posts` 19개, `content/_projects` 10개, `content/_awards` 6개.
 - 슬러그 대조 — `content/_projects`의 파일명 10개가 `lawy, turtlemq, recap, wavetimer, gomoku-ai, receipt, tape, reminder, spinmaze, doosong`와 일치한다.
-- `bundle exec jekyll build --strict_front_matter` 성공. 빌드 후 `_site/posts` 21개, `_site/project` 10개, `_site/prize` 6개를 센다. `collections_dir` 설정이 잘못되면 빌드는 성공하면서 목록만 비므로 개수 확인이 유일한 방어선이다.
+- `bundle exec jekyll build --strict_front_matter` 성공. 빌드 후 `_site/posts` 19개, `_site/project` 10개, `_site/prize` 6개를 센다. `collections_dir` 설정이 잘못되면 빌드는 성공하면서 목록만 비므로 개수 확인이 유일한 방어선이다.
 - 본문에서 참조하는 모든 `/imgs/...` 경로가 실제 파일로 존재한다.
 
 ## 커밋
 
 이관 단위로 세 번에 나눈다.
 
-- `content: migrate 21 blog posts from blog.junyeong.dev`
+- `content: migrate 19 blog posts from blog.junyeong.dev`
 - `content: migrate 10 projects and 6 awards from junyeong.dev`
 - `content: migrate image assets for posts, projects, and awards`

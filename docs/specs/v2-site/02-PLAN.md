@@ -25,7 +25,7 @@ implement 단계에서 원본이 다시 필요하면 `DesignSync` 도구로 읽�
 ├── AGENTS.md
 ├── CLAUDE.md
 ├── content/                     # collections_dir. 글 3종이 여기 모인다
-│   ├── _posts/                  # 블로그 21편
+│   ├── _posts/                  # 블로그 19편
 │   ├── _projects/               # 프로젝트 10편
 │   └── _awards/                 # 수상 경력 6편
 ├── _layouts/
@@ -268,7 +268,7 @@ post.html
 - 프로젝트·수상: 파일명의 날짜 접두사를 `date` front matter로 옮기고 파일명은 슬러그만 남긴다. `layout`과 `categories` 줄은 `_config.yml` 기본값이 대신하므로 제거한다.
 - 프로젝트·수상: `carousels[].images[].image`를 `images: [경로]` 배열로 평탄화하고, 본문의 `{% include carousel.html ... %}` 호출을 제거한다. 갤러리는 레이아웃이 그린다.
 - 프로젝트: `skills[]`를 이름만 담은 평탄한 문자열 배열로 바꾼다. img.shields.io 뱃지용이던 `color`, `logoColor`, `logoName`은 버린다.
-- 블로그: 21편 중 12편이 `<s>`를 형광펜으로 바꾸는 인라인 `<style>` 블록을 갖고 있다. 이 블록을 제거하고 `s` 스타일을 `_post.scss`에서 한 번만 정의한다. 본문 문장은 건드리지 않는다.
+- 블로그: 19편 중 11편이 `<s>`를 형광펜으로 바꾸는 인라인 `<style>` 블록을 갖고 있다. 이 블록을 제거하고 `s` 스타일을 `_post.scss`에서 한 번만 정의한다. 본문 문장은 건드리지 않는다.
 - 블로그: `pin`, `math`, `mermaid` 등 Chirpy 전용 필드를 제거한다. Chirpy 전용 문법(`{: .prompt-tip }` 등)이 남아 있으면 인용문으로 바꾼다.
 - 전체: 본문의 이미지 경로가 `/imgs/...` 절대 경로인지 확인하고 어긋난 것을 맞춘다.
 
