@@ -18,7 +18,7 @@ TASK 01.
    - `img { max-width: 100%; }`, `overflow-wrap: anywhere`
 3. `_includes/head.html`
    - `<meta charset>`, viewport, `{% seo %}`, 피드 링크
-   - Google Fonts preconnect + IBM Plex Mono / IBM Plex Sans KR / Noto Serif KR / Nanum Myeongjo 한 줄 요청
+   - `assets/fonts/`의 자체 호스팅 woff2 preload. 02-PLAN의 폰트 배송 절 참조
    - `assets/css/main.scss` 링크
 4. `_includes/sidebar.html` — 아바타(46px 원형), 이름, 직함, Home / About / Posts 링크, 외부 링크(GitHub · LinkedIn · 이메일). 문구는 마크업에 직접 적는다. 이름과 이메일만 `site.author`를 참조해 `_config.yml`과 어긋나지 않게 한다. 활성 링크 판정은 `page.url`과 `page.kind` 기준.
 5. `_layouts/default.html` — `<html lang="ko">` + head + 셸 컨테이너 + 사이드바 + `{{ content }}` + 푸터(`© {{ site.time | date: '%Y' }} Junyeong Yun`).

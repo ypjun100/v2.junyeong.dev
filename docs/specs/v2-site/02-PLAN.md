@@ -203,13 +203,26 @@ summary: [string]        # 선택
 | `--accent-code` | `#9fe6b4` | 인라인 코드 글자 |
 | `--font-ui` | `'IBM Plex Sans KR', sans-serif` | 사이드바, 지표 라벨 |
 | `--font-content` | `'Nanum Myeongjo', serif` | 본문 전반, Home/About 제목 |
-| `--font-post-title` | `'Noto Serif KR', serif` | 글 제목, h2 |
+| `--font-post-title` | `'Nanum Myeongjo', serif` | 글 제목, heading |
 | `--font-mono` | `'IBM Plex Mono', monospace` | 날짜, 지표 값, 코드 |
 | `--tracking` | `0.015em` | 전역 자간 |
 
 링크는 `text-decoration-color: rgba(111,216,140,0.45)`, `text-underline-offset: 3px`. `::selection`은 `background: rgba(111,216,140,0.28); color: #eef2f6`.
 
-폰트는 시안과 동일하게 Google Fonts(IBM Plex Mono, IBM Plex Sans KR, Noto Serif KR, Nanum Myeongjo)에서 불러온다. 시안 head에 있는 나머지 폰트 링크는 프로퍼티 패널의 선택지용이므로 싣지 않는다.
+## 폰트 배송
+
+폰트는 `assets/fonts/`에서 자체 호스팅하고 `script/build-fonts.py`가 서브셋을 생성한다. Google Fonts는 쓰지 않는다.
+
+Google Fonts는 한글 패밀리를 유니코드 범위별 90~120개 조각으로 쪼개 서빙한다. 한국어 문장은 음절이 한글 영역 전체에 흩어져 있어서 한 페이지가 40개 가까운 파일을 외부 출처 두 곳에서 받아 온다. 자체 호스팅은 이를 웨이트당 파일 하나로 바꾸고, HTML을 이미 내려받은 같은 연결에서 처리한다.
+
+서브셋은 역할에 따라 두 방식을 쓴다.
+
+- **content** — `content/`의 글을 그리는 폰트. 어떤 글자가 나올지 미리 알 수 없으므로 현대 한글 음절 전체를 담고 `unicode-range`로 둘로 나눈다. 한국어 산문을 사실상 전부 덮는 KS X 1001 상용 2,350자는 항상 받고, 나머지 8,822자는 해당 글자가 페이지에 실제로 나올 때만 받는다. 그래서 누락되는 글자가 없다.
+- **ui** — 템플릿에 적힌 라벨만 그리는 폰트. 글자 집합이 확정되어 있어 그 글자로만 자른다. 템플릿에 새 한글 라벨을 추가하면 스크립트를 다시 돌려야 한다.
+
+제목과 heading은 본문과 같은 Nanum Myeongjo를 쓴다. 그 덕에 모든 페이지가 동일한 6개 파일(847KB)만 쓰고, 첫 방문 이후에는 폰트 요청이 발생하지 않는다. Nanum Myeongjo는 400과 700만 제공하므로 글 제목은 시안의 900이 아니라 700이다.
+
+한국어 줄바꿈은 브라우저 기본값을 쓴다. `word-break`를 지정하지 않으므로 글자 단위로 끊긴다. `overflow-wrap: break-word`는 긴 URL이 컨테이너를 밀어내는 것만 막는다.
 
 ## 레이아웃과 반응형
 

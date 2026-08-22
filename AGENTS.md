@@ -23,7 +23,8 @@ bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-miss
 | `_layouts/` | `default`(셸), `page`(Home·About·Posts), `post`(글 3종 공용) |
 | `_includes/` | 사이드바, 소개 블록, 글 상세 부속 조각 |
 | `_sass/` | `_tokens.scss`가 색·타이포를 정의하고 나머지가 소비한다 |
-| `assets/` | CSS 진입점, 아바타 |
+| `assets/` | CSS 진입점, 아바타, 자체 호스팅 폰트 |
+| `script/` | 폰트 서브셋 생성 스크립트. 사이트 빌드와는 무관하다 |
 | `imgs/` | 글이 참조하는 이미지 |
 | `docs/specs/` | 작업 스펙. 사이트에는 배포되지 않는다 |
 
@@ -79,11 +80,28 @@ bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-miss
 
 시각 기준은 Claude Design 프로젝트 `73d527ff-67e3-41c5-8af1-2401d3b37e1c`의 `Junyeong Site.dc.html`이며 `DesignSync` 도구로 읽을 수 있다. 시안에 없는 화면 폭 대응은 `_sass/_layout.scss`의 900px·640px 브레이크포인트를 따른다.
 
+## 폰트
+
+폰트는 `assets/fonts/`에서 자체 호스팅한다. Google Fonts는 쓰지 않는다. `_sass/_fonts.scss`는 생성 파일이므로 직접 고치지 않는다.
+
+서브셋을 다시 만들어야 하는 경우는 두 가지다. **템플릿에 새 한글 라벨을 추가했을 때**, 그리고 **폰트나 웨이트를 바꿨을 때**다. 글을 추가할 때는 다시 만들 필요가 없다 — 본문용 폰트는 현대 한글 음절 전체를 담고 있다.
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install fonttools brotli
+.venv/bin/python script/build-fonts.py
+```
+
+원본 TTF는 스크립트가 내려받고 저장소에 넣지 않는다. 생성물인 `assets/fonts/*.woff2`와 `_sass/_fonts.scss`는 커밋한다.
+
+본문용 폰트는 `unicode-range`로 두 파일로 나뉜다. KS X 1001 상용 2,350자는 항상 받고, 나머지 8,822자는 그 글자가 페이지에 나올 때만 받는다. 그래서 어떤 글자도 폴백으로 떨어지지 않는다.
+
+UI 폰트(IBM Plex Sans KR)는 템플릿에 적힌 205자로만 잘려 있다. 새 한글 라벨을 넣고 스크립트를 돌리지 않으면 **그 글자만 조용히 다른 서체로 렌더링된다.** 스크립트가 라벨 글자 수를 출력하니 값이 늘었는지 확인한다.
+
 ## 하지 말 것
 
 - 목록을 템플릿에 하드코딩하지 않는다. 목록은 항상 컬렉션에서 나온다.
 - 글 본문을 HTML로 옮기지 않는다.
-- npm이나 번들러 같은 빌드 툴체인을 도입하지 않는다.
+- npm이나 번들러 같은 빌드 툴체인을 도입하지 않는다. `script/build-fonts.py`는 사이트 빌드가 아니라 에셋 준비용이며 배포 경로에 들어가지 않는다.
 - `_site/`를 커밋하지 않는다.
 
 ## 변경 후 확인
