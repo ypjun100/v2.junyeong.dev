@@ -5,6 +5,18 @@
   {%- seo -%}
 
   {%- comment -%}
+    Favicon set carried over from blog.junyeong.dev. Theme colours are the site
+    background rather than Chirpy's light default, since this site is dark only.
+  {%- endcomment -%}
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicons/favicon-32x32.png' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/img/favicons/favicon-16x16.png' | relative_url }}">
+  <link rel="shortcut icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/favicons/apple-touch-icon.png' | relative_url }}">
+  <link rel="manifest" href="{{ '/assets/img/favicons/site.webmanifest' | relative_url }}">
+  <meta name="msapplication-config" content="{{ '/assets/img/favicons/browserconfig.xml' | relative_url }}">
+  <meta name="theme-color" content="#0e1117">
+
+  {%- comment -%}
     Fonts are self-hosted from assets/fonts/, built by script/build-fonts.py.
     Google Fonts splits Korean families into ~90-120 unicode-range chunks each,
     so a page pulled roughly 40 files across two extra origins. Serving one
