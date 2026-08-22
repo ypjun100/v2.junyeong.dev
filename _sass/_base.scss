@@ -13,9 +13,8 @@ body {
   color: var(--text);
   font-family: var(--font-content);
   letter-spacing: var(--tracking);
-  // keep-all stops Korean 어절 from splitting mid-word; break-word still rescues
-  // long unbreakable strings such as URLs.
-  word-break: keep-all;
+  // Korean breaks at any character, as the browser default does. break-word is
+  // kept only to rescue long unbreakable strings such as URLs.
   overflow-wrap: break-word;
 }
 
