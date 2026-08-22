@@ -7,11 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   {%- comment -%}
-    display=optional, not swap: the browser keeps the fallback for this paint
-    rather than reflowing to the webfont mid-view. Removes the flash on reload.
+    display=block holds text back until the webfont is ready rather than
+    painting a fallback first. swap flashed mid-view; optional was worse still,
+    locking the first page to the fallback while later pages used the webfont,
+    so type and spacing changed as you navigated. Weights are trimmed to the
+    ones the stylesheet actually asks for -- each extra weight of a Korean
+    family is a large download.
   {%- endcomment -%}
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@400;500;600;700;900&display=optional">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@400;500;600;700;900&display=optional">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@600;700;900&display=block">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;600;700&family=Nanum+Myeongjo:wght@400;700&family=Noto+Serif+KR:wght@600;700;900&display=block">
 
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   {%- feed_meta -%}
