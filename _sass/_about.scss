@@ -16,6 +16,115 @@
   &--loose {
     gap: 30px;
   }
+
+  &--career {
+    gap: 26px;
+  }
+}
+
+// Career
+
+.career__role {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.career__heading {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.career__company {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.career__position {
+  font-size: 14px;
+  color: var(--muted-desc);
+}
+
+.career__period {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted-dim);
+}
+
+.career__lead {
+  margin: 8px 0 0;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--text-lead);
+}
+
+.career__items {
+  display: flex;
+  flex-direction: column;
+}
+
+.career-item {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border-footer);
+
+  &:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.career-item__title {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.5;
+
+  // The mockup marks each item with a small accent triangle. Neither webfont
+  // carries U+25B8, so it is drawn rather than typed; the top margin drops it
+  // onto the optical centre of the first line when the title wraps.
+  &::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0;
+    height: 0;
+    margin-top: 0.42em;
+    border-left: 5px solid var(--accent);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+}
+
+.career-item__points {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-detail);
+
+  li {
+    text-wrap: pretty;
+  }
+
+  strong {
+    color: var(--text-mid);
+    font-weight: 600;
+  }
 }
 
 // Skill chips, reused by the post layout
