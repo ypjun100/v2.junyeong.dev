@@ -35,7 +35,7 @@ implement 단계에서 원본이 다시 필요하면 `DesignSync` 도구로 읽�
 ├── _includes/
 │   ├── head.html
 │   ├── sidebar.html             # 아바타 · 이름 · 직함 · 화면 이동 · 외부 링크
-│   ├── intro-block.html         # 대표 문구 · 지표 3칸 (Home/About 공용)
+│   ├── intro-block.html         # 대표 문구 · 지표 2칸 (Home/About 공용)
 │   ├── post-meta.html           # 날짜 · 읽기 시간 · 카테고리
 │   ├── post-summary.html        # 요약 콜아웃 (front matter에 summary가 있을 때만)
 │   ├── post-extras.html         # 스킬 칩 · 참여자 · 외부 링크 · 수상 등급
@@ -166,7 +166,7 @@ summary: [string]        # 선택
 | 문구 | 적히는 곳 | 나오는 화면 |
 | --- | --- | --- |
 | 아바타, 이름, 직함, 화면 이동, 외부 링크 | `_includes/sidebar.html` | 전체 |
-| 대표 문구, 지표 3칸 | `_includes/intro-block.html` | Home, About |
+| 대표 문구, 지표 2칸 | `_includes/intro-block.html` | Home, About |
 | 소개 문단 2개 | `index.html` | Home |
 | 경력 1건과 성과 3건 | `about.html` | About |
 | 기술 스택 칩 | `about.html` | About |
@@ -184,7 +184,8 @@ summary: [string]        # 선택
 | `--code-bg` | `#171c24` | 인라인 코드 배경 |
 | `--border` | `#1e242e` | 구분선, 카드 테두리 |
 | `--border-strong` | `#232a35` | 칩 테두리 |
-| `--border-footer` | `#1a202a` | 푸터 상단선 |
+| `--border-footer` | `#1a202a` | 푸터 상단선, 경력 성과 구분선 |
+| `--border-divider` | `#2a323e` | 지표 행 세로 구분선 |
 | `--text` | `#b3bcc8` | 본문 기본 |
 | `--text-strong` | `#eaeff5` | 제목, 강조 |
 | `--text-mid` | `#dbe2ea` | 목록 항목 제목, 지표 값 |

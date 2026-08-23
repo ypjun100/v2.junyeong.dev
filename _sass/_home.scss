@@ -30,33 +30,30 @@
 .intro__stats {
   display: flex;
   flex-wrap: wrap;
+  gap: 12px 26px;
   font-family: var(--font-ui);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
 }
 
 .intro__stat {
-  flex: 1;
-  min-width: 120px;
-  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  border-right: 1px solid var(--border);
+  gap: 6px;
+}
 
-  &:last-child {
-    border-right: 0;
-  }
+.intro__stat-divider {
+  width: 1px;
+  height: 26px;
+  align-self: center;
+  background: var(--border-divider);
 }
 
 .intro__stat-value {
   font-family: var(--font-mono);
-  font-size: 19px;
+  font-size: 15px;
   // Explicit, because 2년 resolves its Hangul through a fallback face whose
-  // metrics differ from IBM Plex Mono. Without this the first cell's line box
-  // is a different height and drags its label out of line with the others.
-  line-height: 1.35;
+  // metrics differ from IBM Plex Mono. Without this the two cells end up
+  // different heights and their values stop lining up.
+  line-height: 1.4;
   color: var(--text-mid);
 }
 
@@ -140,16 +137,4 @@
     font-size: 28px;
   }
 
-  .intro__stats {
-    flex-direction: column;
-  }
-
-  .intro__stat {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
-
-    &:last-child {
-      border-bottom: 0;
-    }
-  }
 }

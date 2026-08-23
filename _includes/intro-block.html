@@ -2,33 +2,31 @@
   <h1 class="intro__headline">코드를 넘어<br>비즈니스를 연결합니다<span class="intro__mark">.</span></h1>
 
   <div class="intro__stats">
-    {%- comment -%}
-      Counted the way 연차 is: the first day on the job is year one and it
-      steps up on every anniversary, so it is completed calendar years plus one.
-      Displayed as 년 rather than 년차. Comparing MMDD as an integer decides
-      whether this year's anniversary has passed yet.
-      site.time is the build time, not the visit time -- the scheduled run in
-      .github/workflows/pages.yml is what keeps it current.
-    {%- endcomment -%}
-    {%- assign career_start_year = 2024 -%}
-    {%- assign career_start_mmdd = 901 -%}
-    {%- assign career_years = site.time | date: "%Y" | plus: 0 | minus: career_start_year -%}
-    {%- assign today_mmdd = site.time | date: "%m%d" | plus: 0 -%}
-    {%- if today_mmdd < career_start_mmdd -%}
-      {%- assign career_years = career_years | minus: 1 -%}
-    {%- endif -%}
-    {%- assign career_years = career_years | plus: 1 -%}
     <div class="intro__stat">
-      <div class="intro__stat-value">{{ career_years }}년</div>
-      <div class="intro__stat-label">경력</div>
+      <span class="intro__stat-label">경력</span>
+      {%- comment -%}
+        Counted the way 연차 is: the first day on the job is year one and it
+        steps up on every anniversary, so it is completed calendar years plus one.
+        Displayed as 년 rather than 년차. Comparing MMDD as an integer decides
+        whether this year's anniversary has passed yet. site.time is the build
+        time -- the scheduled run in .github/workflows/pages.yml keeps it current.
+      {%- endcomment -%}
+      {%- assign career_start_year = 2024 -%}
+      {%- assign career_start_mmdd = 901 -%}
+      {%- assign career_years = site.time | date: "%Y" | plus: 0 | minus: career_start_year -%}
+      {%- assign today_mmdd = site.time | date: "%m%d" | plus: 0 -%}
+      {%- if today_mmdd < career_start_mmdd -%}
+        {%- assign career_years = career_years | minus: 1 -%}
+      {%- endif -%}
+      {%- assign career_years = career_years | plus: 1 -%}
+      <span class="intro__stat-value">{{ career_years }}년</span>
     </div>
+
+    <span class="intro__stat-divider" aria-hidden="true"></span>
+
     <div class="intro__stat">
-      <div class="intro__stat-value">Node · JS/TS</div>
-      <div class="intro__stat-label">주요 스택</div>
-    </div>
-    <div class="intro__stat">
-      <div class="intro__stat-value">Backend · Infra</div>
-      <div class="intro__stat-label">관심 분야</div>
+      <span class="intro__stat-label">관심 분야</span>
+      <span class="intro__stat-value">Backend · Infra</span>
     </div>
   </div>
 </div>
