@@ -1,0 +1,75 @@
+{%- comment -%}
+  Opens any image in the article at viewport size. The markup is inert until the
+  script wires it up, so with JavaScript off the images simply stay inline rather
+  than becoming dead links.
+{%- endcomment -%}
+<div class="lightbox" data-lightbox hidden>
+  <button class="lightbox__close" type="button" data-lightbox-close aria-label="닫기">
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="m1.5 1.5 12 12m0-12-12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  (function () {
+    var box = document.querySelector("[data-lightbox]");
+    var article = document.querySelector(".post");
+    if (!box || !article) return;
+
+    // Built here rather than in the markup: an img with no src is invalid, and
+    // the link checker rightly flags it on every page.
+    var full = document.createElement("img");
+    full.className = "lightbox__image";
+    full.alt = "";
+    box.appendChild(full);
+
+    var close = box.querySelector("[data-lightbox-close]");
+    var opener = null;
+
+    // Body images and both shapes the carousel can take.
+    var SOURCES = ".post__body img, .shots__frame img, .shots--single img";
+
+    function open(img) {
+      full.src = img.currentSrc || img.src;
+      full.alt = img.alt || "";
+      box.hidden = false;
+      // Keep the page from scrolling behind the overlay.
+      document.documentElement.style.overflow = "hidden";
+      opener = img;
+      close.focus();
+    }
+
+    function shut() {
+      box.hidden = true;
+      full.removeAttribute("src");
+      document.documentElement.style.overflow = "";
+      if (opener) {
+        // Hand focus back to where it came from, for keyboard and screen readers.
+        opener.setAttribute("tabindex", "-1");
+        opener.focus();
+        opener = null;
+      }
+    }
+
+    article.addEventListener("click", function (e) {
+      var img = e.target.closest ? e.target.closest(SOURCES) : null;
+      if (!img || !article.contains(img)) return;
+      // Leave images the author wrapped in a link alone.
+      if (img.closest("a")) return;
+      open(img);
+    });
+
+    close.addEventListener("click", shut);
+    box.addEventListener("click", function (e) {
+      // Anywhere but the image itself closes.
+      if (e.target === full) return;
+      shut();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!box.hidden && e.key === "Escape") shut();
+    });
+
+    article.querySelectorAll(SOURCES).forEach(function (img) {
+      if (!img.closest("a")) img.classList.add("is-zoomable");
+    });
+  })();
+</script>

@@ -250,6 +250,58 @@
   }
 }
 
+// Image lightbox
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: var(--overlay);
+  cursor: zoom-out;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.lightbox__image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  cursor: default;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-chip);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent-border);
+  }
+}
+
+.is-zoomable {
+  cursor: zoom-in;
+}
+
 // Rendered markdown
 // Every rule here mirrors an inline style from the design source.
 
