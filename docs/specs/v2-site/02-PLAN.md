@@ -27,7 +27,7 @@ implement 단계에서 원본이 다시 필요하면 `DesignSync` 도구로 읽�
 ├── content/                     # collections_dir. 글 3종이 여기 모인다
 │   ├── _posts/                  # 블로그 19편 (+ 작성 중 2편은 .gitignore)
 │   ├── _projects/               # 프로젝트 6편
-│   └── _awards/                 # 수상 경력 6편
+│   └── _awards/                 # 수상 경력 4편
 ├── _layouts/
 │   ├── default.html             # <html> 셸 + 사이드바 + 본문 슬롯 + 푸터
 │   ├── page.html                # Home/About/Posts 공용

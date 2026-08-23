@@ -45,7 +45,7 @@ TASK 01.
 - `bundle exec jekyll build --strict_front_matter` 성공. 빌드 후 `_site/posts` 19개, `_site/project` 10개, `_site/prize` 6개를 센다. `collections_dir` 설정이 잘못되면 빌드는 성공하면서 목록만 비므로 개수 확인이 유일한 방어선이다.
 - 본문에서 참조하는 모든 `/imgs/...` 경로가 실제 파일로 존재한다.
 
-이 문서는 이관 시점의 기록이다. 이후 저자가 프로젝트 4편(Receipt, TAPE, SPINMAZE, 두송중학교 앱)을 지웠으므로 현재 저장소의 개수는 여기 적힌 값과 다르다.
+이 문서는 이관 시점의 기록이다. 이후 저자가 프로젝트 4편(Receipt, TAPE, SPINMAZE, 두송중학교 앱)과 수상 경력 2편(2024 사회문제해결 자원봉사 해커톤, 2023 캡스톤디자인 및 AI 해커톤 경진대회)을 지웠으므로 현재 저장소의 개수는 여기 적힌 값과 다르다.
 
 ## 커밋
 
