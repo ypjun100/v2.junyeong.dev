@@ -206,8 +206,10 @@
 }
 
 .shots__nav {
-  width: 26px;
-  height: 26px;
+  // Larger than the mockup's 26px for an easier target; the chevron inside
+  // stays at its drawn size.
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
