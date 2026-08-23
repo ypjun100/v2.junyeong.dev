@@ -40,20 +40,25 @@ implement 단계에서 원본이 다시 필요하면 `DesignSync` 도구로 읽�
 │   ├── post-summary.html        # 요약 콜아웃 (front matter에 summary가 있을 때만)
 │   ├── post-header-meta.html    # 기술 스택 · 수상 · 링크 라벨 그리드
 │   ├── carousel.html            # 스크롤 스냅 이미지 캐러셀
+│   ├── lightbox.html            # 본문·캐러셀 이미지 확대 모달
 │   └── post-tags.html
 ├── _sass/
+│   ├── _fonts.scss              # 폰트 서브셋 선언 (생성 파일)
 │   ├── _tokens.scss             # CSS 커스텀 프로퍼티 전체
+│   ├── _mixins.scss             # rem 변환, hover·불릿 공용 믹스인
 │   ├── _base.scss               # reset, 타이포, a/::selection
 │   ├── _layout.scss             # 셸 그리드, 사이드바, 반응형 브레이크포인트
 │   ├── _home.scss
 │   ├── _about.scss
 │   ├── _post-list.scss          # Posts 목록
-│   └── _post.scss               # 글 상세
+│   ├── _post.scss               # 글 상세
+│   └── _mobile-type.scss        # 640px 미만 글자 크기 보정
 ├── assets/
 │   ├── css/main.scss
-│   ├── js/nav.js                # 현재 경로 기준 nav 활성 표시 보조
-│   └── img/avatar.png
+│   ├── fonts/                   # 자체 호스팅 woff2
+│   └── img/avatar.jpg
 ├── imgs/                        # 글이 참조하는 이미지 (기존 경로 유지)
+├── script/                      # 폰트 서브셋 생성, 사진 게인맵 제거
 ├── index.html                   # Home
 ├── about.html                   # About
 └── posts.html                   # Posts (permalink: /posts/)
@@ -150,7 +155,7 @@ summary: [string]        # 선택
 
 ### 파생 값
 
-- **읽기 시간** — 어절이 아니라 글자 수로 센다. 한국어는 어절 하나에 담기는 의미가 영어 단어보다 커서 어절 기준으로 재면 실제보다 훨씬 빠르게 나온다. `content | strip_html | strip_newlines | size`를 분당 500자로 나누고 1을 더해 올림과 1분 하한을 동시에 처리한다. `strip_html`을 빼면 HTML 태그까지 세어 값이 부풀려진다.
+- **읽기 시간** — 어절이 아니라 글자 수로 센다. 한국어는 어절 하나에 담기는 의미가 영어 단어보다 커서 어절 기준으로 재면 실제보다 훨씬 빠르게 나온다. `content | strip_html | strip_newlines | size`로 센 뒤 499를 더하고 500으로 정수 나눗셈해 올림한다. `at_least: 1`로 1분 하한을 둔다. 정확히 500자의 배수도 과대 계산하지 않으며, `strip_html`을 빼면 HTML 태그까지 세어 값이 부풀려진다.
 - **Home 최근 글 발췌** — `post.excerpt | strip_html | strip_newlines | truncate: 90`.
 - **경력 연차** — 시작일을 1년차로 두고 기념일마다 올라간다. 곧 완료 연수 + 1이며, 표기는 `년차`가 아니라 `년`이다. 시작일은 `_config.yml`의 `career_start` 한 곳에 있고 Liquid와 스크립트가 같이 읽는다.
 
@@ -182,6 +187,7 @@ summary: [string]        # 선택
 | 토큰 | 값 | 용도 |
 | --- | --- | --- |
 | `--bg` | `#0e1117` | 페이지 배경 |
+| `--overlay` | `rgba(8,10,14,0.94)` | 이미지 확대 배경·닫기 버튼 |
 | `--surface` | `#11151c` | 요약 콜아웃, 코드 블록 배경 |
 | `--code-bg` | `#171c24` | 인라인 코드 배경 |
 | `--border` | `#1e242e` | 구분선, 카드 테두리 |
@@ -205,7 +211,10 @@ summary: [string]        # 선택
 | `--accent` | `#6fd88c` | 강조, 링크 |
 | `--accent-hover` | `#9aebae` | 링크 호버 |
 | `--accent-code` | `#9fe6b4` | 인라인 코드 글자 |
+| `--accent-line` | `rgba(111,216,140,0.45)` | 링크 밑줄 |
+| `--accent-select` | `rgba(111,216,140,0.28)` | 텍스트 선택 배경 |
 | `--accent-border` | `rgba(111,216,140,0.4)` | 개요 블록 세로선, 캐러셀 버튼 호버 |
+| `--selection-text` | `#eef2f6` | 선택된 텍스트 |
 | `--dot-idle` | `#2f3743` | 캐러셀 비활성 점 |
 | `--font-ui` | `'IBM Plex Sans KR', sans-serif` | 사이드바, 지표 라벨 |
 | `--font-content` | `'Nanum Myeongjo', serif` | 본문 전반, Home/About 제목 |
@@ -214,7 +223,9 @@ summary: [string]        # 선택
 | `--font-mono-mixed` | `monospace` | 숫자와 한글이 한 줄에 같이 오는 메타 행 |
 | `--tracking` | `0.015em` | 전역 자간 |
 
-링크는 `text-decoration-color: rgba(111,216,140,0.45)`, `text-underline-offset: 3px`. `::selection`은 `background: rgba(111,216,140,0.28); color: #eef2f6`.
+링크는 `--accent-line`, 텍스트 선택은 `--accent-select`와 `--selection-text`를 쓴다. 색상 리터럴은 `_tokens.scss` 밖에 두지 않는다.
+
+길이는 디자인 값을 px 단위로 읽을 수 있게 적되 `_sass/_mixins.scss`의 `rem()`으로 감싸 출력한다. 글자뿐 아니라 여백과 상자도 독자의 기본 글자 크기를 따라간다. 1px 선, 테두리 반경, 밑줄 두께처럼 선으로 기능하는 값만 px로 유지한다. 브레이크포인트는 같은 이유로 em을 쓴다.
 
 ## 폰트 배송
 
@@ -231,7 +242,7 @@ Google Fonts는 한글 패밀리를 유니코드 범위별 90~120개 조각으�
 
 IBM Plex Mono에는 한글이 없고 IBM Plex 계열에 Mono 한글판도 없다. 그래서 숫자와 한글이 한 줄에 같이 오는 메타 행은 IBM Plex Mono를 쓰지 않고 시스템 `monospace` 하나로 넘긴다. 섞어 쓰면 한 줄이 두 서체로 쪼개져 보인다. 숫자나 라틴만 있는 날짜와 코드 블록은 계속 IBM Plex Mono를 쓴다.
 
-한국어 줄바꿈은 브라우저 기본값을 쓴다. `word-break`를 지정하지 않으므로 글자 단위로 끊긴다. `overflow-wrap: break-word`는 긴 URL이 컨테이너를 밀어내는 것만 막는다.
+본문은 `word-break: break-all`로 한글과 라틴 문자열 모두 글자 단위로 끊고 `overflow-wrap: break-word`를 보조로 둔다. 코드 블록은 토큰 중간을 끊으면 내용이 달라지므로 `word-break: normal`로 되돌리고 가로 스크롤을 쓴다. WebKit에서 `text-wrap: pretty`와 `break-all`을 함께 쓰면 단어 중간 끊기를 피하면서 우측이 크게 비므로, `pretty`는 제목류에만 둔다.
 
 ## 레이아웃과 반응형
 
@@ -240,8 +251,8 @@ IBM Plex Mono에는 한글이 없고 IBM Plex 계열에 Mono 한글판도 없다
 브레이크포인트는 세 단계로 둔다.
 
 - **`>= 900px`** — 시안 그대로.
-- **`< 900px`** — 사이드바를 본문 위로 올리고 `sticky` 해제. 아바타·이름·직함을 가로로 배치하고 화면 이동 링크를 가로 한 줄로 편다. 외부 링크도 가로 배치. 셸 `gap`을 `40px`로 줄인다.
-- **`< 640px`** — 컨테이너 패딩 `48px 20px 72px`. Home/About 대표 문구 `40px → 28px`. 지표 박스는 세로 스택으로 바꾸고 `border-right` 대신 `border-bottom`을 쓴다. 수상 경력 행(날짜·제목·등급)은 세로 스택으로 바꿔 등급을 제목 아래에 둔다. 프로젝트 행도 이름·설명 세로 스택으로 바꾼다. 글 제목 `27px → 23px`, 본문 `16.5px → 16px`.
+- **`< 900px`** — 소스에서는 `56.1875em`으로 적는다. 사이드바를 본문 위로 올리고 `sticky` 해제. 아바타·이름·직함을 가로로 배치하고 화면 이동 링크와 외부 링크를 가로로 편다. 셸 `gap`을 `40px`로 줄인다.
+- **`< 640px`** — 소스에서는 `39.9375em`으로 적는다. 컨테이너 패딩 `48px 20px 72px`, 대표 문구 28px, 글 제목 23px를 기준으로 잡고 `_mobile-type.scss`가 모바일 타이포를 1.08배 키운다. 읽는 텍스트는 16.5px 상한을 두되 제목은 위계를 유지하도록 상한에서 제외한다. 지표 박스와 프로젝트·수상 행은 세로 스택으로 바꾼다.
 
 가로 스크롤 방지를 위해 코드 블록은 `overflow-x: auto`, 긴 URL 등에는 `overflow-wrap: anywhere`, 이미지는 `max-width: 100%`를 적용한다.
 
@@ -251,7 +262,7 @@ IBM Plex Mono에는 한글이 없고 IBM Plex 계열에 Mono 한글판도 없다
 
 목록 `/posts/`와 개별 글 `/posts/:title/`은 같은 접두사를 공유하지만 충돌하지 않는다. `_site/posts/index.html`과 `_site/posts/<slug>/index.html`이 나란히 생성되며 Jekyll 4.3.3에서 경고가 나오지 않는 것을 확인했다.
 
-`assets/js/nav.js`는 Liquid로 해결되지 않는 보조 동작만 담당한다. 현재는 좁은 화면에서의 사이드바 토글 정도이며, JS가 없어도 모든 콘텐츠가 읽히도록 만든다.
+활성 메뉴는 Liquid만으로 판정하고 현재 링크에 `aria-current="page"`를 붙인다. 사이드바는 CSS만으로 접히므로 별도 내비게이션 스크립트가 없다.
 
 ## `post.html` 렌더링 흐름
 
@@ -291,10 +302,10 @@ post.html                       kind == blog        kind == project / award
 
 | 대상 | 원본 | 목적지 | 개수 |
 | --- | --- | --- | --- |
-| 블로그 글 | `~/project/blog.junyeong.dev/_posts/*.md` | `content/_posts/` | 21 |
+| 블로그 글 | `~/project/blog.junyeong.dev/_posts/*.md` | `content/_posts/` | 19 |
 | 블로그 이미지 | `~/project/blog.junyeong.dev/imgs/` | `imgs/` | 원본 경로 유지 |
-| 프로젝트 | `~/project/junyeong.dev/_posts/project/*.md` | `content/_projects/` | 10 |
-| 수상 경력 | `~/project/junyeong.dev/_posts/prize/*.md` | `content/_awards/` | 6 |
+| 프로젝트 | `~/project/junyeong.dev/_posts/project/*.md` | `content/_projects/` | 6 |
+| 수상 경력 | `~/project/junyeong.dev/_posts/prize/*.md` | `content/_awards/` | 4 |
 | 포트폴리오 이미지 | `~/project/junyeong.dev/imgs/{project,prize}/` | `imgs/{project,prize}/` | 원본 경로 유지 |
 
 이관 시 각 파일에 적용할 변환:
@@ -311,7 +322,7 @@ post.html                       kind == blog        kind == project / award
 정적 사이트라 단위 테스트 프레임워크를 두지 않는다. 대신 빌드 시점 검증을 자동화한다.
 
 - `bundle exec jekyll build --strict_front_matter` — front matter 파싱 오류를 빌드 실패로 만든다.
-- `bundle exec htmlproofer _site --disable-external` — 내부 링크와 이미지 참조 중 깨진 것을 잡는다. 외부 링크는 네트워크 의존성 때문에 CI에서 끈다.
+- `bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-missing-alt` — 내부 링크와 이미지 참조 중 깨진 것을 잡는다. 외부 링크는 네트워크 의존성 때문에 끄고, 기존 글의 alt 누락은 별도 이관 부채로 둔다.
 - 개수 대조 — 빌드 후 `_site` 안의 `project/`, `prize/`, `posts/` 디렉터리 항목 수가 각 컬렉션의 파일 수와 일치하는지 확인한다. 배포본 기준 개수는 `git ls-files`로 센다.
 - 반응형 육안 확인 — 375px, 768px, 1280px 폭에서 Home / About / Posts / 글 상세 네 화면.
 
