@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .about {
   display: flex;
   flex-direction: column;
@@ -163,8 +165,10 @@
   text-decoration: none;
   color: var(--text-mid);
 
-  &:hover .project-row__name {
-    color: var(--accent);
+  @include hover {
+    .project-row__name {
+      color: var(--accent);
+    }
   }
 }
 
@@ -211,7 +215,7 @@
   color: var(--text-mid);
   text-decoration: none;
 
-  &:hover {
+  @include hover {
     color: var(--accent);
   }
 }

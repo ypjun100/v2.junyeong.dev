@@ -2,6 +2,8 @@
 // Desktop geometry comes straight from the design source: 940px row, a 168px
 // sticky sidebar, a 620px content column, 76px between them.
 
+@use "mixins" as *;
+
 .shell {
   min-height: 100vh;
   display: flex;
@@ -87,8 +89,13 @@
     text-decoration: none;
     width: fit-content;
 
-    &:hover,
+    // is-active marks the current page, so it stays put on touch; only the
+    // hover half is gated.
     &.is-active {
+      color: var(--accent);
+    }
+
+    @include hover {
       color: var(--accent);
     }
   }
@@ -108,7 +115,7 @@
     display: flex;
     align-items: center;
 
-    &:hover {
+    @include hover {
       color: var(--accent);
     }
   }
@@ -153,7 +160,7 @@
     text-decoration: none;
     white-space: nowrap;
 
-    &:hover {
+    @include hover {
       color: var(--accent);
     }
   }

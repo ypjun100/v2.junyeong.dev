@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .post {
   display: flex;
   flex-direction: column;
@@ -13,7 +15,7 @@
   text-decoration: none;
   width: fit-content;
 
-  &:hover {
+  @include hover {
     color: var(--accent);
   }
 }
@@ -223,7 +225,7 @@
   color: var(--muted-tag);
   cursor: pointer;
 
-  &:hover {
+  @include hover {
     color: var(--accent);
     border-color: var(--accent-border);
   }
@@ -318,7 +320,7 @@
   color: var(--text-chip);
   cursor: pointer;
 
-  &:hover {
+  @include hover {
     color: var(--accent);
     border-color: var(--accent-border);
   }

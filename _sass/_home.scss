@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .home {
   display: flex;
   flex-direction: column;
@@ -97,8 +99,10 @@
   text-decoration: none;
   color: inherit;
 
-  &:hover .recent__title {
-    color: var(--accent);
+  @include hover {
+    .recent__title {
+      color: var(--accent);
+    }
   }
 }
 

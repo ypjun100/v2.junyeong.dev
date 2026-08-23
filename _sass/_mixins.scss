@@ -1,0 +1,18 @@
+// Hover styles, but only where hovering is a thing the device can do.
+//
+// A tap on a touch screen leaves :hover applied to whatever was tapped until
+// something else is tapped. On a phone that means the carousel's next button
+// stays lit in the accent colour after the reader uses it, and the only way to
+// clear it is to tap elsewhere -- it reads as a stuck selection rather than a
+// button that was pressed.
+//
+// hover: hover keeps these rules off the devices that cannot clear them. It
+// also means touch gets no press feedback from colour alone, which is fine
+// here: every hover target either navigates or visibly moves something.
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}

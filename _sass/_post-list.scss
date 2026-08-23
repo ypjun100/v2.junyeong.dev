@@ -1,3 +1,5 @@
+@use "mixins" as *;
+
 .posts {
   display: flex;
   flex-direction: column;
@@ -33,7 +35,7 @@
   text-decoration: none;
   color: var(--text-mid);
 
-  &:hover {
+  @include hover {
     color: var(--accent);
   }
 }
