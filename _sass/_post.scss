@@ -456,12 +456,26 @@
       padding-bottom: 12px;
       border-bottom: 1px solid var(--border);
       margin: 40px 0 22px;
+
+      // This rule outranks the blog block's :first-child reset, so the leading
+      // heading kept its 40px on top of the article's own 40px gap and the
+      // carousel sat twice as far from the overview as the mockup has it.
+      &:first-child {
+        margin-top: 0;
+      }
     }
 
     h2:has(+ blockquote) {
-      font-family: var(--font-mono);
-      font-size: 11px;
+      // mono-mixed, not mono: the label is Korean and IBM Plex Mono has no
+      // Hangul, so it would fall through to the system face anyway.
+      font-family: var(--font-mono-mixed);
+      // Larger than the mockup's 11px, which read too small once the label sat
+      // on the system mono rather than IBM Plex Mono.
+      font-size: 13px;
       font-weight: 400;
+      // The heading rule sets 1.4; the mockup leaves it at normal, and the
+      // taller box was padding the gap below the label.
+      line-height: normal;
       color: var(--accent);
       padding-bottom: 0;
       border-bottom: 0;
@@ -484,6 +498,13 @@
       line-height: 1.85;
       color: var(--text-soft);
       text-wrap: pretty;
+
+      // The paragraph inside is not a child of .post__body, so the reset there
+      // never reached it and it kept the UA's 1em top margin -- which is what
+      // was widening this gap, not the padding.
+      > * {
+        margin: 0;
+      }
     }
 
     h3 {
