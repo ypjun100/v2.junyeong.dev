@@ -20,7 +20,7 @@ images:
 > 사법 취약계층을 위한 판결 예측 웹 서비스입니다. 교통사고에 대한 정보를 텍스트 형태로 입력하면 딥러닝을 통해 텍스트를 분석하여 징역, 집행유예 여부, 벌금을 예측합니다. 또한, 판결문에서 핵심 문장만 추출하여 사용자에게 제공하는 판결문 요약 기능을 제공합니다.
 
 ## 개발 내용
-<img src="/imgs/project/lawy/architecture.png" style="object-fit: cover; margin-bottom: 0;"/>
+<img src="/imgs/project/lawy/architecture.png"/>
 
 ### 서비스 아키텍처 설계
 * Java를 기반한 백엔드 시스템과 Python을 기반한 딥러닝 모델 간의 연동이 필요했음
@@ -44,4 +44,4 @@ images:
 * **Selenium 라이브러리**를 이용하여 판결문 제공 서비스에서 판결문 37,000개를 수집함
 * 판결문을 80번 크롤링 할 때마다 캡챠 인증이 발생하는 것을 해결하기 위해 2개의 계정으로 80번마다 계정을 바꿔서 한 번에 총 160개의 판결문을 가져올 수 있도록 구현함
 * 수집된 데이터를 모델의 입력으로 사용하기 위해 아래의 데이터 전처리 작업을 수행함
-  <img src="/imgs/project/lawy/data_preprocessing.png" style="object-fit: cover; margin-bottom: 0;"/> -->
+  <img src="/imgs/project/lawy/data_preprocessing.png"/> -->
