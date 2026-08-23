@@ -698,5 +698,14 @@
         margin-bottom: 0;
       }
     }
+
+    // A part is an item title with the bullet list under it, so a list with
+    // another title right after it is the seam between two parts -- and it opens
+    // wider than the 20px that separates a title from its own bullets, so the
+    // parts read as separate blocks. Only there: the last list in a section is
+    // followed by the next section's label, which brings its own 40px.
+    h3 + ul:has(+ h3) {
+      margin-bottom: rem(32px);
+    }
   }
 }
