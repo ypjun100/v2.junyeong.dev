@@ -117,7 +117,6 @@
   font-size: 16px;
   line-height: 1.7;
   color: var(--text-list);
-  text-wrap: pretty;
 }
 
 .meta-grid {
@@ -579,6 +578,9 @@
 
 // Project and award bodies
 //
+// Body copy here carries no text-wrap: pretty -- see the break-all note in
+// _base.scss.
+//
 // The mockup shapes these as a 설명 callout followed by a 개발 내용 section of
 // marked items. The migrated markdown already has exactly that shape -- an h2
 // with a blockquote under it, then an h2 with h3 items -- so it is styled where
@@ -640,7 +642,6 @@
       font-size: 16.5px;
       line-height: 1.85;
       color: var(--text-soft);
-      text-wrap: pretty;
 
       // Carries its own left rule; the bar from the general blockquote would
       // double it.
@@ -692,7 +693,6 @@
 
       li {
         margin-bottom: 0;
-        text-wrap: pretty;
       }
     }
   }

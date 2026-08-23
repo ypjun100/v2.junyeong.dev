@@ -16,6 +16,14 @@ body {
   // break-all everywhere: lines wrap between any two characters. Korean already
   // behaved this way; Latin words now break mid-word too. Code blocks opt back
   // out in _post.scss, since breaking a token there changes what it says.
+  //
+  // This does not mix with text-wrap: pretty on body copy. WebKit optimises the
+  // whole paragraph for pretty and penalises breaking inside a word, but break-all
+  // makes every character boundary a legal break -- so the optimiser spends that
+  // freedom avoiding mid-word breaks and the text reads like keep-all, ragged down
+  // the right edge on a phone. Chrome only reworks the last few lines, so it never
+  // showed up on desktop. pretty is kept on headings, where the lines are few and
+  // not breaking a title mid-word is the point.
   word-break: break-all;
   overflow-wrap: break-word;
 }

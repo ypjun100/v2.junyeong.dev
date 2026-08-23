@@ -119,9 +119,7 @@
   line-height: 1.8;
   color: var(--text-soft);
 
-  li {
-    text-wrap: pretty;
-  }
+  // No text-wrap: pretty on these -- see the break-all note in _base.scss.
 
   strong {
     color: var(--text-mid);
