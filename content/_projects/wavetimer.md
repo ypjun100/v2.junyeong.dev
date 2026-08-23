@@ -4,8 +4,6 @@ date: 2023-03-30
 desc: 파동 효과를 활용한 웹 Pomodoro 타이머
 skills:
 - React
-people:
-- 개인 프로젝트
 urls:
 - type: website
   name: wavetimer

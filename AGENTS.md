@@ -51,16 +51,14 @@ bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-miss
 | `title` | 필수 | 프로젝트 이름 |
 | `date` | 필수 | `YYYY-MM-DD`. About 목록 정렬 기준 |
 | `desc` | 필수 | About 목록과 헤더 메타에 쓰이는 한 줄 설명 |
-| `role` | 선택 | 문자열 배열. 헤더의 `담당` 행에 ` · `로 이어 표시 |
 | `skills` | 선택 | 문자열 배열. 헤더의 `기술 스택` 행에 ` · `로 이어 표시 |
-| `people` | 선택 | 문자열 배열. **현재 화면에 표시되지 않는다** |
 | `urls` | 선택 | `{name, url}` 배열. 헤더의 `링크` 행. `type`은 지금 쓰이지 않는다 |
 | `images` | 선택 | 경로 배열. 헤더 아래. 1장이면 그냥 이미지, 2장 이상이면 캐러셀 |
 | `summary` | 선택 | 블로그와 동일 |
 
 **수상 경력** — `content/_awards/<슬러그>.md`
 
-`title`, `date`가 필수이고 `prize: {name, type}`가 추가된다. `prize.name`은 헤더의 `수상` 행에 나온다. `urls`, `images`, `summary`는 프로젝트와 같다. `desc`, `role`, `skills`는 쓰지 않는다.
+`title`, `date`가 필수이고 `prize: {name, type}`가 추가된다. `prize.name`은 헤더의 `수상` 행에 나온다. `urls`, `images`, `summary`는 프로젝트와 같다. `desc`와 `skills`는 쓰지 않는다.
 
 **프로젝트와 수상 경력 본문의 구조가 스타일과 맞물려 있다.** 시안이 요구하는 두 덩어리를 마크다운 구조에서 그대로 읽어 내기 때문이다.
 

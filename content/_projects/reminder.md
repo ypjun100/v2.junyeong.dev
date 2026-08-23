@@ -5,10 +5,6 @@ desc: 버릇 교정을 도와주는 머신러닝 기반 IOT 디바이스
 skills:
 - Tensorflow
 - Arduino
-people:
-- 머신러닝 엔지니어 1명
-- 아두이노 개발 1명
-- 앱 개발 1명
 images:
 - "/imgs/project/reminder/reminder1.jpg"
 - "/imgs/project/reminder/reminder2.jpg"

@@ -5,10 +5,6 @@ desc: 텍스트 요약을 위한 Java 라이브러리
 skills:
 - Java
 - SpringBoot
-people:
-- 라이브러리 제작 2명
-- 프론트엔드 엔지니어 1명
-- 디스코드 봇 제작 1명
 urls:
 - type: youtube
   name: 시연영상

@@ -5,10 +5,6 @@
 {%- if page.kind != 'blog' %}
 <div class="meta-grid">
   {%- if page.kind == 'project' %}
-    {%- if page.role %}
-  <div class="meta-grid__label">담당</div>
-  <div class="meta-grid__value">{{ page.role | join: " · " }}</div>
-    {%- endif %}
     {%- if page.skills and page.skills.size > 0 %}
   <div class="meta-grid__label">기술 스택</div>
   <div class="meta-grid__value">{{ page.skills | join: " · " }}</div>

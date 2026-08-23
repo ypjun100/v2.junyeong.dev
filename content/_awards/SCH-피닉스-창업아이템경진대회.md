@@ -4,10 +4,6 @@ date: 2019-11-05
 prize:
   name: 대상
   type: gold
-people:
-- 비속어 필터링 구현 1명
-- 기획 1명
-- 마케터 1명
 urls:
 - type: youtube
   name: 프로젝트 소개 영상

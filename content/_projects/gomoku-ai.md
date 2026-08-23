@@ -4,8 +4,6 @@ date: 2022-11-16
 desc: Minimax 알고리즘을 기반한 오목 AI 앱
 skills:
 - iOS
-people:
-- 개인 프로젝트
 urls:
 - type: github
   name: Github

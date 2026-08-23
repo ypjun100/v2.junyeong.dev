@@ -2,16 +2,9 @@
 title: Lawy
 date: 2023-11-23
 desc: 교통사고 사건정보 텍스트를 기반한 형량 예측 웹서비스
-role:
-- 서비스 아키텍처 설계
-- 백엔드 개발
-- 데이터 수집 및 전처리
 skills:
 - SpringBoot
 - Tensorflow
-people:
-- 백엔드 엔지니어 1명
-- 머신러닝 엔지니어 1명
 urls:
 - type: github
   name: Github

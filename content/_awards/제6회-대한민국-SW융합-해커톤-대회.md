@@ -4,11 +4,6 @@ date: 2019-09-01
 prize:
   name: 우수상
   type: silver
-people:
-- 비속어 필터링 구현 1명
-- 기획 1명
-- 백엔드 1명
-- 앱 개발 1명
 urls:
 - type: website
   name: 학과 홍보 게시글

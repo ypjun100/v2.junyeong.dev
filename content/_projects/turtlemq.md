@@ -4,8 +4,6 @@ date: 2023-11-01
 desc: WebSocket을 기반한 메시지 브로커
 skills:
 - SpringBoot
-people:
-- 개인 프로젝트
 urls:
 - type: github
   name: Github

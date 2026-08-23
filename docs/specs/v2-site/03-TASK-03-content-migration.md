@@ -28,7 +28,7 @@ TASK 01.
 4. `skills[]`를 이름만 담은 평탄한 문자열 배열로 바꾼다. `color`, `logoColor`, `logoName`은 버린다.
 5. `carousels[].images[].image`를 `images: [경로, ...]` 평탄 배열로 바꾼다.
 6. 본문 첫 줄의 `{% include carousel.html ... %}` 호출을 제거한다. 갤러리는 레이아웃이 렌더링한다.
-7. `desc`, `urls`, `people`은 그대로 둔다.
+7. `desc`, `urls`는 그대로 둔다. `people`은 이관 당시 유지했으나 이후 표시하지 않기로 하여 제거했다.
 
 ### 수상 경력 (6편)
 

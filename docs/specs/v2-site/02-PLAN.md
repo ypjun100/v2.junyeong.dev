@@ -38,7 +38,7 @@ implement 단계에서 원본이 다시 필요하면 `DesignSync` 도구로 읽�
 │   ├── intro-block.html         # 대표 문구 · 지표 2칸 (Home/About 공용)
 │   ├── post-meta.html           # 날짜 · 읽기 시간 · 카테고리
 │   ├── post-summary.html        # 요약 콜아웃 (front matter에 summary가 있을 때만)
-│   ├── post-header-meta.html    # 담당 · 기술 스택 · 수상 · 링크 라벨 그리드
+│   ├── post-header-meta.html    # 기술 스택 · 수상 · 링크 라벨 그리드
 │   ├── carousel.html            # 스크롤 스냅 이미지 캐러셀
 │   └── post-tags.html
 ├── _sass/
@@ -128,9 +128,7 @@ date: YYYY-MM-DD         # 필수 (이관 시 파일명 날짜에서 채움)
 desc: string             # About 목록의 한 줄 설명
 urls:                    # 선택. type은 github|news|website|link|youtube
   - { type: github, name: Github, url: https://... }
-role: [string]           # 선택. 헤더의 담당 행
 skills: [string]         # 선택. 헤더의 기술 스택 행
-people: [string]         # 선택
 images: [string]         # 선택. 기존 carousels[].images[].image를 평탄화한 경로 배열
 summary: [string]        # 선택
 ```
@@ -143,7 +141,6 @@ date: YYYY-MM-DD         # 필수
 prize:                   # 필수
   name: string           # 우수상, 대상, 총장상, 장관상
   type: gold|silver|bronze
-people: [string]         # 선택
 urls: [...]              # 선택. 프로젝트와 동일 형식
 images: [string]         # 선택
 summary: [string]        # 선택
@@ -266,7 +263,7 @@ post.html                       kind == blog        kind == project / award
  │   ├─ h1                      page.title          page.title
  │   ├─ post__desc              —                   page.desc (project)
  │   ├─ post-meta.html          날짜·읽기시간·분류   —
- │   └─ post-header-meta.html   —                   담당·기술 스택·수상·링크
+ │   └─ post-header-meta.html   —                   기술 스택·수상·링크
  ├─ post-summary.html           page.summary 있을 때만
  ├─ carousel.html               —                   page.images 있을 때만
  ├─ post__body {{ content }}    일반 제목 크기       개요 블록 + 항목 섹션
@@ -285,7 +282,7 @@ post.html                       kind == blog        kind == project / award
 
 본문은 마크다운 구조를 그대로 읽어 시안의 두 덩어리를 만든다. `h2:has(+ blockquote)`로 개요 블록을, 나머지 `h2`로 섹션 라벨을, `h3`와 뒤따르는 목록으로 항목을 구성한다. 콘텐츠를 front matter로 옮기지 않아도 되고 문구를 문자열로 비교하지도 않는다. 이 규칙은 `.post--project`와 `.post--award`에만 걸리며 블로그 글은 일반 제목 크기를 유지한다.
 
-`people`은 시안 헤더에 없어 현재 표시되지 않는다. 데이터는 front matter에 남아 있다.
+헤더는 시안에 있는 행만 그린다. 프로젝트는 `기술 스택`과 `링크`, 수상 경력은 `수상`과 `링크`다. 시안의 `담당` 행과 기존 사이트의 참여자 표시는 두지 않으며, 대응하는 `role`·`people` 필드도 없다.
 
 `content` 안의 마크다운은 `_post.scss`가 요소 선택자로 스타일링한다. 시안이 각 요소에 붙여 둔 인라인 스타일을 `h2`, `p`, `pre`, `code`, `ul`, `strong`, `em`, `blockquote`, `img`, `mark`, `table` 선택자로 옮긴다. 기존 글이 `<mark>`와 `>` 인용을 자주 쓰므로 두 요소는 반드시 다크 톤 스타일을 갖는다.
 
