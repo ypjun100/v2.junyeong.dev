@@ -13,8 +13,10 @@ body {
   color: var(--text);
   font-family: var(--font-content);
   letter-spacing: var(--tracking);
-  // Korean breaks at any character, as the browser default does. break-word is
-  // kept only to rescue long unbreakable strings such as URLs.
+  // break-all everywhere: lines wrap between any two characters. Korean already
+  // behaved this way; Latin words now break mid-word too. Code blocks opt back
+  // out in _post.scss, since breaking a token there changes what it says.
+  word-break: break-all;
   overflow-wrap: break-word;
 }
 
