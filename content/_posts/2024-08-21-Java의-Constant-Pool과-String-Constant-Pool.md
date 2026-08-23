@@ -34,7 +34,7 @@ _그럼 시작해보자!_
 
 ## Constant Pool
 
-Java의 컴파일 타임 이후에 생성되는 클래스 파일(`.class`) 내에는 바이트코드[^fn-bytecode]와 Constant Pool이 저장된다. 이때 코드에서 사용된 문자열 혹은 숫자 리터럴의 경우 바이트코드에 저장되기에는 용량이 크기 때문에, 이를 별도의 장소인 Constant Pool에 저장하게 된다. 즉, <s>Constant Pool은 이렇게 바이트코드에 탑재되기엔 용량이 큰 리터럴(상수) 데이터가 저장되는 공간</s>으로, 바이트코드에서는 Constant Pool 내의 데이터를 참조하게 된다.
+Java의 컴파일 타임 이후에 생성되는 클래스 파일(`.class`) 내에는 바이트코드[^fn-bytecode]와 Constant Pool이 저장된다. 이때 코드에서 사용된 문자열 혹은 숫자 리터럴의 경우 바이트코드에 저장되기에는 용량이 크기 때문에, 이를 별도의 장소인 Constant Pool에 저장하게 된다. 즉, **Constant Pool은 이렇게 바이트코드에 탑재되기엔 용량이 큰 리터럴(상수) 데이터가 저장되는 공간**으로, 바이트코드에서는 Constant Pool 내의 데이터를 참조하게 된다.
 
 > **Constant Pool에 저장되는 데이터 유형**
 > * 숫자 리터럴
@@ -46,7 +46,7 @@ Java의 컴파일 타임 이후에 생성되는 클래스 파일(`.class`) 내�
 
 ### Constant Pool 테이블
 
-Constant Pool은 <s>바이트코드에서 데이터를 참조하기 쉽도록 컴파일러에 의해 테이블 형태로 아래와 같이 클래스 파일 내부에 저장되는데, 이를 Constant Pool 테이블이라고 한다.</s> 그리고 이 테이블 내에는 해당 클래스 파일에서 사용되는 리터럴 데이터와 참조 정보들이 저장된다.
+Constant Pool은 **바이트코드에서 데이터를 참조하기 쉽도록 컴파일러에 의해 테이블 형태로 아래와 같이 클래스 파일 내부에 저장되는데, 이를 Constant Pool 테이블이라고 한다.** 그리고 이 테이블 내에는 해당 클래스 파일에서 사용되는 리터럴 데이터와 참조 정보들이 저장된다.
 
 ```
 Constant pool:
@@ -89,7 +89,7 @@ Constant pool:
 <img src="/imgs/2024-08-21/jvm-memory-structure-old.png"/>
 _Java 8 이전의 JVM 메모리 구조<br>[https://8iggy.tistory.com/229](https://8iggy.tistory.com/229){:target="_blank"}_
 
-런타임 시점에 클래스 로더[^fn-classloader]는 리터럴 및 참조 정보 데이터를 참조하기 위해 Constant Pool 테이블에 저장된 데이터들을 Runtime Constant Pool에 저장한다. 여기서 살짝 헷갈릴 수도 있는데 간단하게, 컴파일 타임에 생성된 <s>Constant Pool 테이블을 가지고 런타임에서 Runtime Constant Pool을 생성한다고 보면 된다.</s> 이때 Runtime Constant Pool은 Constant Pool 테이블과 마찬가지로 클래스별로 다른 풀이 생성되며, 생성된 풀을 통해 JVM은 클래스에서 사용되는 리터럴, 메서드 및 클래스에 대한 실제 메모리 주소를 찾아 이를 참조하게 된다.
+런타임 시점에 클래스 로더[^fn-classloader]는 리터럴 및 참조 정보 데이터를 참조하기 위해 Constant Pool 테이블에 저장된 데이터들을 Runtime Constant Pool에 저장한다. 여기서 살짝 헷갈릴 수도 있는데 간단하게, 컴파일 타임에 생성된 **Constant Pool 테이블을 가지고 런타임에서 Runtime Constant Pool을 생성한다고 보면 된다.** 이때 Runtime Constant Pool은 Constant Pool 테이블과 마찬가지로 클래스별로 다른 풀이 생성되며, 생성된 풀을 통해 JVM은 클래스에서 사용되는 리터럴, 메서드 및 클래스에 대한 실제 메모리 주소를 찾아 이를 참조하게 된다.
 
 Runtime Constant Pool은 JVM 메모리 구조 중에 메서드 영역(Metaspace 영역)에 생성되며, 프로그램이 종료될 때까지 메모리에 유지된다. Java 8 이전에 Runtime Constant Pool은 Permanent Heap 영역에 저장되었으나, 해당 영역의 경우 Heap 영역과 달리 동적으로 사이즈를 늘리거나 줄일 수 없는 고정 크기를 할당받기 때문에 런타임 중에 Permanent Heap의 메모리 부족으로 OOM(Out of Memory) 문제가 발생되는 경우가 잦았다.
 
@@ -157,7 +157,7 @@ Constant Pool 테이블을 보면 특이한 점이 있는데, 코드에서는 "H
 <img src="/imgs/2024-08-21/strings-in-memory.png"/>
 _문자열 리터럴 관점의 JVM 메모리 구조<br>[https://deveric.tistory.com/123](https://deveric.tistory.com/123){:target="_blank"}_
 
-그리고 이러한 결과는 JVM 메모리 구조 상으로도 일치하는 결과이다. JVM의 Heap 메모리에는 문자열 리터럴을 저장하기 위한 String Constant Pool이라는 영역이 따로 존재하며, 클래스 내의 문자열 객체는 String Constant Pool 내에 저장된 리터럴을 참조하게 된다. <s>이 과정에서 동일한 문자열 리터럴은 저장 공간의 낭비를 방지하기 위해 풀 내에 단 하나의 리터럴만 생성되기 때문에 str1과 str2가 동일한 참조를 가질 수 있었던 것이다.</s>
+그리고 이러한 결과는 JVM 메모리 구조 상으로도 일치하는 결과이다. JVM의 Heap 메모리에는 문자열 리터럴을 저장하기 위한 String Constant Pool이라는 영역이 따로 존재하며, 클래스 내의 문자열 객체는 String Constant Pool 내에 저장된 리터럴을 참조하게 된다. **이 과정에서 동일한 문자열 리터럴은 저장 공간의 낭비를 방지하기 위해 풀 내에 단 하나의 리터럴만 생성되기 때문에 str1과 str2가 동일한 참조를 가질 수 있었던 것이다.**
 
 > Java 8 이전에는 String Constant Pool과 Runtime Constant Pool이 동일하게 Permanent Heap 영역에 저장됐으나, Java 8 이후부터 Runtime Constant Pool이 메서드 영역으로 이전됐기 때문에 이제는 이 둘을 구분하여 설명한다.
 
@@ -179,7 +179,7 @@ class HelloWorld {
 }
 ```
 
-이때 주의해야 할 점은 문자열 객체의 생성 방식에 따라 문자열 리터럴이 String Constant Pool에 저장될 수도 있고, Heap 영역에 저장될 수도 있다는 것이다. 위 코드에서 `str1`과 `str2`가 참조하고 있는 리터럴의 경우 String Constant Pool에 저장이 되지만, `str3`과 `str4`와 같이 <s>생성자를 이용한 문자열 리터럴은 String Constant Pool이 아닌 보통 객체를 생성할 때와 마찬가지로 Heap 영역에 저장된다.</s>
+이때 주의해야 할 점은 문자열 객체의 생성 방식에 따라 문자열 리터럴이 String Constant Pool에 저장될 수도 있고, Heap 영역에 저장될 수도 있다는 것이다. 위 코드에서 `str1`과 `str2`가 참조하고 있는 리터럴의 경우 String Constant Pool에 저장이 되지만, `str3`과 `str4`와 같이 **생성자를 이용한 문자열 리터럴은 String Constant Pool이 아닌 보통 객체를 생성할 때와 마찬가지로 Heap 영역에 저장된다.**
 
 따라서, `str1`과 `str3`을 비교하는 연산에서 `str1`의 리터럴은 String Constant Pool에 저장되지만, `str3`의 리터럴은 Heap에 저장되기 때문에 두 객체를 비교하는 연산에서 `false`를 반환하는 것이다. 그리고 생성자를 이용한 문자열 리터럴의 경우 동일한 문자열을 가지는 경우에도 리터럴이 Heap 영역에 따로 저장되기 때문에, `str3`과 `str4`를 비교하는 연산에서 `false`를 반환하는 것을 확인할 수 있다.
 
@@ -191,7 +191,7 @@ class HelloWorld {
 
 이번 글에서는 '동일한 문자열 리터럴을 갖는 객체는 동일한 레퍼런스를 참고한다.'라는 주제를 바탕으로, 주제의 근간이 되는 Constant Pool으로부터 시작하여, 컴파일 시점에 바이트코드에 삽입될 수 없는 리터럴과 참조 정보들을 저장하기 위한 Constant Pool 테이블을 알아보고, 런타임 시점에 이 테이블의 데이터가 그대로 Runtime Constant Pool로 옮겨진다는 사실을 알게 되었다.
 
-이때 문자열 리터럴의 경우 Heap 영역 내에 존재하는 String Constant Pool 내에 따로 저장되며, 풀 내에 동일한 문자열 리터럴은 저장 공간의 낭비를 막기 위해 단 하나만 존재한다는 것 또한 알게 되었다. 그리고 이를 통해 <s>동일한 문자열 리터럴을 갖는 객체는 String Constant Pool 내의 동일한 문자열 리터럴을 참조하기 때문에 동일한 레퍼런스를 참조하게 된다는</s> 결론을 얻게 되었다.
+이때 문자열 리터럴의 경우 Heap 영역 내에 존재하는 String Constant Pool 내에 따로 저장되며, 풀 내에 동일한 문자열 리터럴은 저장 공간의 낭비를 막기 위해 단 하나만 존재한다는 것 또한 알게 되었다. 그리고 이를 통해 **동일한 문자열 리터럴을 갖는 객체는 String Constant Pool 내의 동일한 문자열 리터럴을 참조하기 때문에 동일한 레퍼런스를 참조하게 된다는** 결론을 얻게 되었다.
 
 여태까지 그래왔듯이 프로그래밍 언어는 시간이 흐를수록 개발자가 프로그래밍 언어의 내부 구현까지 공부할 필요가 없도록 변화될 것이다. 어쩌면 이러한 흐름은 개발자가 좀 더 편하게 개발하고 빠르게 프로덕트를 구현할 수 있다는 이점이 있었기에 그 흐름을 그대로 유지할 수 있었을 것이다. 그리고 나 또한 이번 글을 통해서 코드를 작성하는 실력이 늘기를 바라거나 이를 읽는 독자의 코드 실력이 늘 것이라고 기대하진 않는다.
 
