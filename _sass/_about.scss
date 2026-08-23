@@ -1,0 +1,259 @@
+@use "mixins" as *;
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: rem(54px);
+}
+
+.about__section {
+  display: flex;
+  flex-direction: column;
+  gap: rem(22px);
+
+  &--tight {
+    gap: rem(18px);
+  }
+
+  &--career {
+    gap: rem(26px);
+  }
+}
+
+// Career
+
+.career__role {
+  display: flex;
+  flex-direction: column;
+  gap: rem(8px);
+}
+
+.career__heading {
+  display: flex;
+  gap: rem(12px);
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.career__company {
+  font-size: rem(16.5px);
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.career__position {
+  font-size: rem(14px);
+  color: var(--muted-desc);
+}
+
+.career__period {
+  font-family: var(--font-mono-mixed);
+  font-size: rem(11.5px);
+  color: var(--muted-dim);
+}
+
+.career__lead {
+  margin: rem(8px) 0 0;
+  font-size: rem(15.5px);
+  line-height: 2;
+  color: var(--text-soft);
+}
+
+.career__items {
+  display: flex;
+  flex-direction: column;
+}
+
+.career-item {
+  display: flex;
+  flex-direction: column;
+  // Wider than the mockup's 9px: the marked title reads as a heading for the
+  // list under it, and needed more air to sit apart from it.
+  gap: rem(13px);
+  padding: rem(18px) 0;
+  border-top: 1px solid var(--border-footer);
+
+  &:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.career-item__title {
+  position: relative;
+  padding-left: rem(14px); // rem(5px) marker + the rem(9px) that used to be the flex gap
+  font-size: rem(15px);
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.5;
+
+  // The mockup marks each item with a small accent triangle. Neither webfont
+  // carries U+25B8, so it is drawn rather than typed; the top margin drops it
+  // onto the optical centre of the first line when the title wraps.
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.42em;
+    width: 0;
+    height: 0;
+    border-left: rem(5px) solid var(--accent);
+    border-top: rem(4px) solid transparent;
+    border-bottom: rem(4px) solid transparent;
+  }
+}
+
+.career-item__points {
+  margin: 0;
+  @include marker-bullet;
+  display: flex;
+  flex-direction: column;
+  // Matches the bullets under 개발 내용 in a project body, which the mockup's
+  // 14.5px / 1.65 read tighter than. The three values move together -- size,
+  // leading and item gap -- so they are kept next to each other here and in
+  // the h3 + ul rule in _post.scss.
+  gap: rem(8px);
+  font-size: rem(15.5px);
+  line-height: 1.8;
+  color: var(--text-soft);
+
+  // No text-wrap: pretty on these -- see the break-all note in _base.scss.
+
+  strong {
+    color: var(--text-mid);
+    font-weight: 600;
+  }
+}
+
+// Skill chips, reused by the post layout
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(7px);
+  font-size: rem(12px);
+}
+
+.chip {
+  font-family: var(--font-ui);
+  padding: rem(5px) rem(10px);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  color: var(--text-chip);
+}
+
+.about__list {
+  display: flex;
+  flex-direction: column;
+  gap: rem(16px);
+
+  &--awards {
+    gap: rem(14px);
+  }
+}
+
+// Projects
+
+.project-row {
+  display: flex;
+  gap: rem(14px);
+  align-items: baseline;
+  text-decoration: none;
+  color: var(--text-mid);
+
+  @include hover {
+    .project-row__name {
+      color: var(--accent);
+    }
+  }
+}
+
+.project-row__name {
+  font-size: rem(15.5px);
+  font-weight: 600;
+  color: inherit;
+  min-width: rem(96px);
+}
+
+.project-row__desc {
+  font-size: rem(15.5px);
+  color: var(--muted-desc);
+}
+
+// Awards
+
+.award-row {
+  display: flex;
+  gap: rem(16px);
+  // Baseline, not centre. Nanum Myeongjo declares sTypoLineGap 256 and both
+  // faces set USE_TYPO_METRICS, so centring the boxes pulls the baselines 1.6px
+  // apart; sharing a baseline is exact. The smaller items are then lifted,
+  // because on a shared baseline their optical centres still sit below the
+  // title's -- measured against the '한' glyph bounds, 1.8px for the 11.5px
+  // date and 1.3px for the 12px grade.
+  align-items: baseline;
+}
+
+.award-row__date {
+  font-family: var(--font-mono);
+  font-size: rem(11.5px);
+  line-height: 1.5;
+  color: var(--muted-dim);
+  min-width: rem(78px);
+  position: relative;
+  top: rem(-1.8px);
+}
+
+.award-row__title {
+  flex: 1;
+  font-size: rem(15.5px);
+  line-height: 1.5;
+  color: var(--text-mid);
+  text-decoration: none;
+
+  @include hover {
+    color: var(--accent);
+  }
+}
+
+.award-row__prize {
+  font-size: rem(12px);
+  color: var(--accent);
+  white-space: nowrap;
+  position: relative;
+  top: rem(-1.3px);
+}
+
+
+@media (max-width: 39.9375em) {
+  .about {
+    gap: rem(44px);
+  }
+
+  .project-row {
+    flex-direction: column;
+    gap: rem(5px);
+  }
+
+  .project-row__name {
+    min-width: 0;
+  }
+
+  .award-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(5px);
+  }
+
+  .award-row__date {
+    min-width: 0;
+  }
+
+  .award-row__title {
+    flex: none;
+  }
+}

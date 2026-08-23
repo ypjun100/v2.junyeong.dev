@@ -1,0 +1,78 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {%- seo -%}
+
+  {%- comment -%}
+    Favicon set carried over from blog.junyeong.dev. Theme colours are the site
+    background rather than Chirpy's light default, since this site is dark only.
+  {%- endcomment -%}
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicons/favicon-32x32.png' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/img/favicons/favicon-16x16.png' | relative_url }}">
+  <link rel="shortcut icon" href="{{ '/assets/img/favicons/favicon.ico' | relative_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/img/favicons/apple-touch-icon.png' | relative_url }}">
+  <link rel="manifest" href="{{ '/assets/img/favicons/site.webmanifest' | relative_url }}">
+  <meta name="msapplication-config" content="{{ '/assets/img/favicons/browserconfig.xml' | relative_url }}">
+  <meta name="theme-color" content="#0e1117">
+
+  {%- comment -%}
+    Fonts are self-hosted from assets/fonts/, built by script/build-fonts.py.
+    Google Fonts splits Korean families into ~90-120 unicode-range chunks each,
+    so a page pulled roughly 40 files across two extra origins. Serving one
+    subset per weight from this origin turns that into a handful of requests on
+    the connection that already delivered the HTML.
+
+    Every page renders all five preloaded faces, so the whole font payload is
+    fetched once and every later page costs nothing. Titles and headings share
+    the body face, which is what keeps the set this small.
+  {%- endcomment -%}
+  {%- assign always = "nanum-myeongjo-400,nanum-myeongjo-700,ibm-plex-sans-kr-400,ibm-plex-sans-kr-600,ibm-plex-sans-kr-700,ibm-plex-mono-400" | split: "," -%}
+  {%- for font in always -%}
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="{{ '/assets/fonts/' | append: font | append: '.woff2' | relative_url }}">
+  {%- endfor %}
+
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
+  {%- comment -%}
+    Hold the first paint until webfonts are ready so the page arrives as one
+    frame instead of layout first and text second. The class is added by script,
+    so with JavaScript off nothing is ever hidden. The 2s race keeps a slow
+    connection from staring at a blank page.
+  {%- endcomment -%}
+  <style>.fonts-pending body { visibility: hidden; }</style>
+  <script>
+    (function () {
+      var el = document.documentElement;
+      el.classList.add("fonts-pending");
+
+      var done = false;
+      function reveal() {
+        if (done) return;
+        done = true;
+        el.classList.remove("fonts-pending");
+      }
+
+      // Hard cap, so a slow or failed font load never leaves a blank page.
+      setTimeout(reveal, 2000);
+
+      // Wait for the document to be parsed first: fonts only start loading once
+      // there is laid-out text using them, and document.fonts.ready can resolve
+      // early when nothing has been requested yet.
+      function waitForFonts() {
+        if (document.fonts) {
+          document.fonts.ready.then(reveal);
+        } else {
+          reveal();
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", waitForFonts);
+      } else {
+        waitForFonts();
+      }
+    })();
+  </script>
+  {%- feed_meta -%}
+</head>

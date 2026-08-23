@@ -1,0 +1,47 @@
+---
+layout: page
+title: Home
+---
+
+<section class="home">
+  {%- include intro-block.html -%}
+
+  <div class="home__about">
+      <p>안녕하세요! 기술의 새로움보다 해결하려는 문제와 사용자·비즈니스의 맥락에 맞는 선택을 중요하게 생각하는 개발자 윤준영입니다. <strong>현재 <a href="https://goorm.co" target="_blank" rel="noopener">goorm</a>에서 풀스택 엔지니어로 일하며 개발자 채용·평가 플랫폼 <a href="https://devth.io" target="_blank" rel="noopener">Devth</a>를 개발하고 있습니다.</strong></p>
+      <p><strong>좋은 선택은 충분한 맥락과 경험이 공유될 때 만들어진다고 믿습니다.</strong> 동료들과 기술적 인사이트와 의사결정의 배경을 나누며, 함께 더 나은 답을 찾아가는 문화를 소중하게 생각합니다. 더 자세한 이야기는 <a href="{{ '/about/' | relative_url }}">About</a>에서 확인해 주세요.</p>
+  </div>
+
+  <div class="home__recent">
+    <div class="section-head">
+      <span class="section-label">최근 글</span>
+      <a class="section-head__more" href="{{ '/posts/' | relative_url }}">전체 보기 →</a>
+    </div>
+
+    <div class="home__recent-list">
+      {%- for post in site.posts limit: 5 %}
+      <a class="recent" href="{{ post.url | relative_url }}">
+        <div class="recent__meta">
+          <span>{{ post.date | date: "%Y.%m.%d" }}</span>
+          {%- if post.categories.size > 0 %}
+          <span class="recent__sep">·</span>
+          <span>{{ post.categories | join: ", " }}</span>
+          {%- endif %}
+        </div>
+        <div class="recent__title">{{ post.title }}</div>
+        {%- comment -%}
+          Jekyll's excerpt is only the first block, which is just the heading text on
+          posts that open with one. Read from the body instead and drop a leading
+          heading so the blurb starts on the first real sentence.
+        {%- endcomment -%}
+        {%- assign lead = post.content | strip_html | strip_newlines | strip -%}
+        {%- assign opener = post.content | strip | slice: 0, 3 -%}
+        {%- if opener == '<h1' or opener == '<h2' or opener == '<h3' or opener == '<h4' or opener == '<h5' or opener == '<h6' -%}
+          {%- assign heading = post.content | split: '</h' | first | split: '>' | last | strip -%}
+          {%- assign lead = lead | remove_first: heading | strip -%}
+        {%- endif -%}
+        <div class="recent__excerpt">{{ lead | truncate: 90 }}</div>
+      </a>
+      {%- endfor %}
+    </div>
+  </div>
+</section>

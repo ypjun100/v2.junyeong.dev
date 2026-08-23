@@ -1,0 +1,22 @@
+---
+layout: page
+title: Posts
+permalink: /posts/
+---
+
+<section class="posts">
+  <p class="posts__intro">개발하며 배운 것들, 그리고 그 사이의 일상을 기록합니다.</p>
+
+  {%- assign years = site.posts | group_by_exp: "post", "post.date | date: '%Y'" -%}
+  {%- for year in years %}
+  <div class="posts__year">
+    <div class="posts__year-label">{{ year.name }}</div>
+    {%- for post in year.items %}
+    <a class="post-row" href="{{ post.url | relative_url }}">
+      <span class="post-row__date">{{ post.date | date: "%m.%d" }}</span>
+      <span class="post-row__title">{{ post.title }}</span>
+    </a>
+    {%- endfor %}
+  </div>
+  {%- endfor %}
+</section>

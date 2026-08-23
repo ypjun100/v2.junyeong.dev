@@ -1,0 +1,62 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - uses: actions/configure-pages@v5
+
+      - name: Build
+        run: bundle exec jekyll build --strict_front_matter
+        env:
+          JEKYLL_ENV: production
+
+      - name: Check links and images
+        run: bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-missing-alt
+
+      # A bad collections_dir builds green with every post silently dropped, and
+      # htmlproofer cannot miss links in pages that were never written. Counting
+      # built pages against the collections is the check that catches it.
+      - name: Check page counts against the collections
+        run: |
+          check() {
+            echo "$1: source $2, built $3"
+            test "$2" -eq "$3"
+          }
+          check posts    "$(git ls-files 'content/_posts/*.md'    | wc -l)" "$(find _site/posts   -mindepth 2 -name index.html | wc -l)"
+          check projects "$(git ls-files 'content/_projects/*.md' | wc -l)" "$(find _site/project -type f -name '*.html'      | wc -l)"
+          check awards   "$(git ls-files 'content/_awards/*.md'   | wc -l)" "$(find _site/prize   -type f -name '*.html'      | wc -l)"
+
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

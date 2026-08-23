@@ -1,0 +1,83 @@
+# Site
+title: 윤준영
+tagline: 풀스택 엔지니어
+description: >-
+  새로움보다 적합함을 선택하는 개발자 윤준영의 포트폴리오와 기술 블로그입니다.
+url: https://v2.junyeong.dev
+baseurl: ""
+lang: ko-KR
+timezone: Asia/Seoul
+
+# First day on the job. Read by the intro block for the 경력 figure, both for
+# the server-rendered fallback and for the script that recomputes it on view.
+career_start: 2024-09-01
+
+author:
+  name: Junyeong Yun
+  email: ypjun100@gmail.com
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Content
+# collections_dir must not start with an underscore. Jekyll skips underscore-prefixed
+# directories when walking the source tree, which silently drops every post in _posts
+# while collections still build. See docs/specs/v2-site/02-PLAN.md.
+collections_dir: content
+
+collections:
+  projects:
+    output: true
+    permalink: /project/:name
+  awards:
+    output: true
+    permalink: /prize/:name
+
+permalink: /posts/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      kind: blog
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: post
+      kind: project
+  - scope:
+      path: ""
+      type: awards
+    values:
+      layout: post
+      kind: award
+
+# Build
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+sass:
+  style: compressed
+  sourcemap: never
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - AGENTS.md
+  - CLAUDE.md
+  - docs/
+  - script/
+  - vendor/

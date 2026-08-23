@@ -1,0 +1,52 @@
+<div class="intro">
+  <h1 class="intro__headline">새로움보다<br>적합함을 선택합니다<span class="intro__mark">.</span></h1>
+
+  <div class="intro__stats">
+    <div class="intro__stat">
+      <span class="intro__stat-label">경력</span>
+      {%- comment -%}
+        연차 counts the first day on the job as year one and steps up on every
+        anniversary, so it is completed calendar years plus one.
+
+        Rendered here from site.time so the figure is never blank, then corrected
+        by the script below against the reader's own clock -- site.time is the
+        build time and would otherwise sit still until the next deploy.
+      {%- endcomment -%}
+      {%- assign start_year = site.career_start | date: "%Y" | plus: 0 -%}
+      {%- assign start_mmdd = site.career_start | date: "%m%d" | plus: 0 -%}
+      {%- assign career_years = site.time | date: "%Y" | plus: 0 | minus: start_year -%}
+      {%- comment -%} Liquid cannot evaluate a filter chain inside if, so compare an assigned value. {%- endcomment -%}
+      {%- assign today_mmdd = site.time | date: "%m%d" | plus: 0 -%}
+      {%- if today_mmdd < start_mmdd -%}
+        {%- assign career_years = career_years | minus: 1 -%}
+      {%- endif -%}
+      <span class="intro__stat-value" data-career-start="{{ site.career_start | date: '%Y-%m-%d' }}">{{ career_years | plus: 1 }}년</span>
+    </div>
+
+    <span class="intro__stat-divider" aria-hidden="true"></span>
+
+    <div class="intro__stat">
+      <span class="intro__stat-label">관심 분야</span>
+      <span class="intro__stat-value">Backend · Infra</span>
+    </div>
+  </div>
+</div>
+
+{%- comment -%}
+  Recompute the 경력 figure against the reader's clock. Same rule as the Liquid
+  above, so the number only changes when the build was made before an
+  anniversary the reader has already passed.
+{%- endcomment -%}
+<script>
+  (function () {
+    var el = document.querySelector("[data-career-start]");
+    if (!el) return;
+    var parts = el.getAttribute("data-career-start").split("-");
+    var startYear = +parts[0], startMonth = +parts[1], startDay = +parts[2];
+    var now = new Date();
+    var years = now.getFullYear() - startYear;
+    var month = now.getMonth() + 1;
+    if (month < startMonth || (month === startMonth && now.getDate() < startDay)) years -= 1;
+    el.textContent = years + 1 + "년";
+  })();
+</script>

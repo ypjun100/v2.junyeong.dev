@@ -1,0 +1,143 @@
+{%- if page.images and page.images.size > 1 %}
+{%- comment -%}
+  A scroll-snap track rather than a transform the script owns, so the images stay
+  swipeable and reachable with the keyboard when the script never runs. The
+  buttons and dots only drive and mirror the scroll position, and they wrap.
+
+  The track's height follows the image on screen. Letting it take the tallest
+  image instead leaves the shorter ones floating above dead space -- 2.6px in one
+  set here, 975px in another -- and object-fit: cover would crop the odd one out
+  to nothing. Without the script the track falls back to the tallest image.
+
+  Chevrons are drawn, not typed: the ‹ › glyphs sit about 1.4px below the centre
+  of a flex-centred button, and geometry avoids depending on font metrics.
+{%- endcomment -%}
+<div class="shots" data-shots>
+  <div class="shots__track" data-shots-track tabindex="0">
+    {%- for image in page.images %}
+    <div class="shots__frame">
+      <img src="{{ image | relative_url }}" alt="{{ page.title }}" loading="lazy">
+    </div>
+    {%- endfor %}
+  </div>
+
+  <div class="shots__controls">
+    <button class="shots__nav" type="button" data-shots-prev aria-label="이전 이미지">
+      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M6 1 1.5 6 6 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="shots__dots">
+      {%- for image in page.images %}
+      <button class="shots__dot" type="button" data-shots-dot aria-label="{{ forloop.index }}번 이미지"></button>
+      {%- endfor %}
+    </div>
+    <button class="shots__nav" type="button" data-shots-next aria-label="다음 이미지">
+      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="m1 1 4.5 5L1 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.querySelector("[data-shots]");
+    if (!root) return;
+    var track = root.querySelector("[data-shots-track]");
+    var dots = [].slice.call(root.querySelectorAll("[data-shots-dot]"));
+    if (!track || dots.length < 2) return;
+
+    function index() {
+      return Math.round(track.scrollLeft / track.clientWidth);
+    }
+    var frames = [].slice.call(root.querySelectorAll(".shots__frame"));
+
+    function paint() {
+      var at = index();
+      dots.forEach(function (dot, i) {
+        dot.classList.toggle("is-active", i === at);
+        dot.setAttribute("aria-current", i === at ? "true" : "false");
+      });
+      var img = frames[at] && frames[at].firstElementChild;
+      if (img && img.offsetHeight) track.style.height = img.offsetHeight + "px";
+    }
+    function go(to) {
+      // Wrap, so the ends are reachable in one click from either side.
+      var n = dots.length;
+      var target = ((to % n) + n) % n;
+      owned = true;
+      track.scrollTo({ left: target * track.clientWidth, behavior: "smooth" });
+    }
+
+    // Until the reader takes hold of the track, it belongs at the first image.
+    //
+    // The browser disagrees. It persists the scroll offset of scrollable
+    // elements and re-applies it at moments there is no dependable hook for:
+    // after load, out of the back/forward cache, and again whenever focus lands
+    // on a frame. Pinning the position at a few named moments missed some of
+    // them, so this does not try to predict the moment -- it undoes any scroll
+    // the reader did not ask for.
+    //
+    // The tell is simple: a scroll with a finger down on the track is a swipe,
+    // and one with nothing touching it is the browser.
+    var owned = false;
+    var touching = false;
+
+    track.addEventListener("touchstart", function () {
+      touching = true;
+    }, { passive: true });
+    ["touchend", "touchcancel"].forEach(function (type) {
+      track.addEventListener(type, function () {
+        // Momentum and the snap settle carry on after the finger leaves, and a
+        // quick flick can land its first scroll there. Hold the session open a
+        // moment so that still counts as the reader's.
+        setTimeout(function () { touching = false; }, 400);
+      }, { passive: true });
+    });
+    ["wheel", "keydown"].forEach(function (type) {
+      track.addEventListener(type, function () { owned = true; }, { passive: true });
+    });
+
+    function reset() {
+      if (owned) return;
+      track.scrollLeft = 0;
+      paint();
+    }
+
+    dots.forEach(function (dot, i) {
+      dot.addEventListener("click", function () { go(i); });
+    });
+    root.querySelector("[data-shots-prev]").addEventListener("click", function () {
+      go(index() - 1);
+    });
+    root.querySelector("[data-shots-next]").addEventListener("click", function () {
+      go(index() + 1);
+    });
+    track.addEventListener("scroll", function () {
+      if (touching) owned = true;
+      else if (!owned && track.scrollLeft !== 0) track.scrollLeft = 0;
+      paint();
+    }, { passive: true });
+    window.addEventListener("resize", paint);
+    // offsetHeight is 0 until an image has decoded, so measure again as they land.
+    frames.forEach(function (frame) {
+      var img = frame.firstElementChild;
+      if (img && !img.complete) img.addEventListener("load", paint);
+    });
+
+    reset();
+    // Restoration lands after this inline script has run, so take the position
+    // back once the page settles and again whenever it returns from the cache.
+    window.addEventListener("load", reset);
+    window.addEventListener("pageshow", function (e) {
+      if (e.persisted) {
+        owned = false;
+        reset();
+      }
+    });
+  })();
+</script>
+
+{%- elsif page.images and page.images.size == 1 %}
+{%- comment -%} One image needs no track and no controls. {%- endcomment -%}
+<div class="shots shots--single">
+  <img src="{{ page.images[0] | relative_url }}" alt="{{ page.title }}" loading="lazy">
+</div>
+{%- endif -%}

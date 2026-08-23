@@ -1,0 +1,62 @@
+// Design tokens extracted from the Claude Design source (Junyeong Site.dc.html).
+// Nothing outside this file may use a literal color value.
+
+:root {
+  // Surfaces
+  --bg: #0e1117;
+  --overlay: rgba(8, 10, 14, 0.94);
+  --surface: #11151c;
+  --code-bg: #171c24;
+
+  // Borders
+  --border: #1e242e;
+  --border-strong: #232a35;
+  --border-footer: #1a202a;
+  --border-divider: #2a323e;
+  --dot-idle: #2f3743;
+
+  // Text
+  --text: #b3bcc8;
+  --text-strong: #eaeff5;
+  --text-mid: #dbe2ea;
+  --text-soft: #aab3bf;
+  --text-summary: #a7b0bc;
+  --text-chip: #9aa4b1;
+  --text-list: #929ba8;
+
+  // Muted
+  --muted: #6b7583;
+  --muted-dim: #5f6875;
+  --muted-excerpt: #78818e;
+  --muted-desc: #868f9c;
+  --muted-tag: #7b8492;
+  --muted-footer: #4f5866;
+  --sep: #3d4552;
+
+  // Accent
+  --accent: #6fd88c;
+  --accent-hover: #9aebae;
+  --accent-code: #9fe6b4;
+  --accent-line: rgba(111, 216, 140, 0.45);
+  --accent-select: rgba(111, 216, 140, 0.28);
+  --accent-border: rgba(111, 216, 140, 0.4);
+  --selection-text: #eef2f6;
+
+  // Type
+  // Fallbacks name real Korean faces so the pre-webfont paint under
+  // display=optional stays close instead of dropping to Times.
+  --font-ui: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-content: "Nanum Myeongjo", AppleMyungjo, Batang, serif;
+  // Titles and headings share the body face. Nanum Myeongjo ships 400 and 700
+  // only, so the heaviest heading is 700 rather than the 900 of the mockup.
+  --font-post-title: "Nanum Myeongjo", AppleMyungjo, Batang, serif;
+  // IBM Plex Mono has no Hangul and there is no Plex Mono Korean, so the few
+  // Korean words that sit in mono rows -- 분 소요, category and tag names --
+  // fall through to whatever monospace face the reader's system provides.
+  --font-mono: "IBM Plex Mono", monospace;
+  // Rows that put figures next to Korean. Pairing IBM Plex Mono with a Hangul
+  // fallback splits one line across two faces, so these hand the whole row to
+  // the system mono and stay internally consistent instead.
+  --font-mono-mixed: monospace;
+  --tracking: 0.015em;
+}

@@ -1,0 +1,150 @@
+@use "mixins" as *;
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: rem(56px);
+}
+
+// Shared with About
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: rem(26px);
+}
+
+.intro__headline {
+  margin: 0;
+  font-family: var(--font-content);
+  font-size: rem(40px);
+  line-height: 1.45;
+  font-weight: 700;
+  color: var(--text-strong);
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+
+.intro__mark {
+  color: var(--accent);
+}
+
+.intro__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(12px) rem(26px);
+  font-family: var(--font-ui);
+}
+
+.intro__stat {
+  display: flex;
+  flex-direction: column;
+  gap: rem(6px);
+}
+
+.intro__stat-divider {
+  width: 1px; // a rule, not a box -- stays a hairline at any text size
+  height: rem(26px);
+  align-self: center;
+  background: var(--border-divider);
+}
+
+.intro__stat-value {
+  font-family: var(--font-mono);
+  font-size: rem(15px);
+  // Explicit, because 2년 resolves its Hangul through a fallback face whose
+  // metrics differ from IBM Plex Mono. Without this the two cells end up
+  // different heights and their values stop lining up.
+  line-height: 1.4;
+  color: var(--text-mid);
+}
+
+.intro__stat-label {
+  font-size: rem(11px);
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+// Intro copy
+
+.home__about {
+  display: flex;
+  flex-direction: column;
+  gap: rem(20px);
+  // A half step smaller than the body default and matched to the About career
+  // summary. The colour is the body default.
+  font-size: rem(15.5px);
+  line-height: 2;
+  color: var(--text-soft);
+
+  p {
+    margin: 0;
+  }
+
+  // Same emphasis as the About career points and article bodies.
+  strong {
+    color: var(--text-mid);
+    font-weight: 600;
+  }
+}
+
+// Recent posts
+
+.home__recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: rem(26px);
+}
+
+.recent {
+  display: flex;
+  flex-direction: column;
+  gap: rem(7px);
+  text-decoration: none;
+  color: inherit;
+
+  @include hover {
+    .recent__title {
+      color: var(--accent);
+    }
+  }
+}
+
+.recent__meta {
+  display: flex;
+  gap: rem(10px);
+  align-items: center;
+  flex-wrap: wrap;
+  font-family: var(--font-mono-mixed);
+  font-size: rem(11.5px);
+  color: var(--muted-dim);
+}
+
+.recent__sep {
+  color: var(--sep);
+}
+
+.recent__title {
+  font-size: rem(16px);
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+.recent__excerpt {
+  font-size: rem(15px);
+  color: var(--muted-excerpt);
+  line-height: 1.65;
+}
+
+@media (max-width: 39.9375em) {
+  .home {
+    gap: rem(44px);
+  }
+
+  .intro__headline {
+    font-size: rem(28px);
+  }
+
+}

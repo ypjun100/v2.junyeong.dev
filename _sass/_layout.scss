@@ -1,0 +1,258 @@
+// Page shell
+// Desktop geometry comes straight from the design source: 940px row, a 168px
+// sticky sidebar, a 620px content column, 76px between them.
+
+@use "mixins" as *;
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: rem(76px) rem(28px) rem(110px);
+}
+
+.shell__inner {
+  width: 100%;
+  max-width: rem(940px);
+  display: flex;
+  align-items: flex-start;
+  gap: rem(76px);
+}
+
+.shell__main {
+  flex: 1;
+  min-width: 0;
+  max-width: rem(620px);
+  display: flex;
+  flex-direction: column;
+  gap: rem(64px);
+}
+
+// Sidebar
+
+.sidebar {
+  width: rem(168px);
+  flex-shrink: 0;
+  position: sticky;
+  top: rem(76px);
+  font-family: var(--font-ui);
+  display: flex;
+  flex-direction: column;
+  gap: rem(22px);
+}
+
+.sidebar__identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: rem(22px);
+}
+
+.sidebar__avatar {
+  width: rem(46px);
+  height: rem(46px);
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface);
+  display: block;
+}
+
+.sidebar__names {
+  display: flex;
+  flex-direction: column;
+  gap: rem(5px);
+}
+
+.sidebar__name {
+  font-size: rem(14px);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  color: var(--text-strong);
+  text-transform: uppercase;
+}
+
+.sidebar__role {
+  font-size: rem(11.5px);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: rem(7px);
+  font-size: rem(14.5px);
+  margin-top: rem(4px);
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+    width: fit-content;
+
+    // is-active marks the current page, so it stays put on touch; only the
+    // hover half is gated.
+    &.is-active {
+      color: var(--accent);
+    }
+
+    @include hover {
+      color: var(--accent);
+    }
+  }
+}
+
+.sidebar__links {
+  display: flex;
+  flex-direction: column;
+  gap: rem(6px);
+  font-size: rem(11.5px);
+  margin-top: rem(8px);
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+
+    @include hover {
+      color: var(--accent);
+    }
+  }
+}
+
+.sidebar__link-icon {
+  display: none;
+  flex-shrink: 0;
+}
+
+// Shared section heading, used by Home, About and Posts
+
+.section-label {
+  font-family: var(--font-ui);
+  font-size: rem(11.5px);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+// A label sitting on its own rule, used by every About section.
+.section-bar {
+  padding-bottom: rem(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+// A label paired with a trailing link, used by Home's 최근 글.
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: rem(16px);
+  padding-bottom: rem(14px);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: rem(22px);
+
+  &__more {
+    font-family: var(--font-ui);
+    font-size: rem(11.5px);
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+
+    @include hover {
+      color: var(--accent);
+    }
+  }
+}
+
+
+.site-footer {
+  margin-top: rem(24px);
+  padding-top: rem(22px);
+  border-top: 1px solid var(--border-footer);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: rem(16px);
+  flex-wrap: wrap;
+  font-size: rem(11.5px);
+  color: var(--muted-footer);
+}
+
+// Below 900px the sidebar becomes a header row above the content.
+
+@media (max-width: 56.1875em) {
+  .shell {
+    padding: rem(56px) rem(24px) rem(84px);
+  }
+
+  // stretch, not the flex-start inherited from the desktop row: in a column
+  // flex-start sizes children to their content and pins them left, which left
+  // the content narrower than the sidebar with dead space down the right.
+  .shell__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: rem(40px);
+  }
+
+  .shell__main {
+    max-width: 100%;
+    gap: rem(52px);
+  }
+
+  // The profile card and the outbound links share the first line at opposite
+  // edges, and the page nav drops to a full-width row beneath. Sequenced with
+  // order so the desktop column keeps the markup order it reads best in.
+  .sidebar {
+    position: static;
+    top: auto;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: rem(16px);
+  }
+
+  .sidebar__identity {
+    order: 1;
+    flex-direction: row;
+    align-items: center;
+    gap: rem(12px);
+    min-width: 0;
+  }
+
+  .sidebar__links {
+    order: 2;
+    flex-direction: row;
+    gap: rem(14px);
+    margin-top: 0;
+  }
+
+  .sidebar__nav {
+    order: 3;
+    flex: 1 1 100%;
+    flex-direction: row;
+    gap: rem(18px);
+    margin-top: 0;
+  }
+
+  .sidebar__link-text {
+    display: none;
+  }
+
+  .sidebar__link-icon {
+    display: block;
+  }
+}
+
+@media (max-width: 39.9375em) {
+  .shell {
+    padding: rem(44px) rem(20px) rem(72px);
+  }
+
+  .shell__main {
+    gap: rem(44px);
+  }
+}

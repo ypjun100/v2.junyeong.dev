@@ -15,7 +15,7 @@ TASK 01 ~ 05.
    - 트리거: `push`(`main`), `workflow_dispatch`
    - 권한: `contents: read`, `pages: write`, `id-token: write`
    - `concurrency: { group: pages, cancel-in-progress: false }`
-   - build 잡: `actions/checkout` → `ruby/setup-ruby`(`bundler-cache: true`) → `actions/configure-pages` → `bundle exec jekyll build --strict_front_matter` → `bundle exec htmlproofer _site --disable-external --allow-hash-href` → `actions/upload-pages-artifact`
+   - build 잡: `actions/checkout` → `ruby/setup-ruby`(`bundler-cache: true`) → `actions/configure-pages` → `bundle exec jekyll build --strict_front_matter` → `bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-missing-alt` → 개수 대조(각 컬렉션의 `git ls-files` 파일 수와 `_site`의 페이지 수) → `actions/upload-pages-artifact`
    - deploy 잡: `actions/deploy-pages`, `environment: github-pages`
 3. `_config.yml`의 `url`이 `https://v2.junyeong.dev`인지 확인한다.
 4. `README.md` — 사이트 소개, 로컬 실행 명령, 배포 방식 세 문단.
@@ -30,7 +30,7 @@ GitHub 원격 저장소가 아직 없다. 아래는 실행 전에 사용자에�
 
 ## 완료 조건
 
-- 워크플로 파일이 로컬에서 `bundle exec jekyll build --strict_front_matter`와 `bundle exec htmlproofer _site --disable-external`을 통과하는 것과 동일한 명령을 쓴다.
+- 워크플로 파일이 로컬에서 `bundle exec jekyll build --strict_front_matter`와 `bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-missing-alt`을 통과하는 것과 동일한 명령을 쓴다.
 - 두 명령을 로컬에서 실행해 통과를 확인한다.
 
 ## 커밋

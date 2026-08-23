@@ -1,0 +1,161 @@
+{%- comment -%}
+  Opens any image in the article at viewport size, carrying its caption along.
+  The markup is inert until the script wires it up, so with JavaScript off the
+  images simply stay inline rather than becoming dead links.
+{%- endcomment -%}
+<div class="lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="이미지 확대 보기" hidden>
+  <button class="lightbox__close" type="button" data-lightbox-close aria-label="닫기">
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="m1.5 1.5 12 12m0-12-12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+  <figure class="lightbox__figure" data-lightbox-figure>
+    <figcaption class="lightbox__caption" data-lightbox-caption hidden></figcaption>
+  </figure>
+</div>
+
+<script>
+  (function () {
+    var box = document.querySelector("[data-lightbox]");
+    var article = document.querySelector(".post");
+    if (!box || !article) return;
+
+    var figure = box.querySelector("[data-lightbox-figure]");
+    var caption = box.querySelector("[data-lightbox-caption]");
+    var close = box.querySelector("[data-lightbox-close]");
+
+    // Built here rather than in the markup: an img with no src is invalid, and
+    // the link checker rightly flags it on every page.
+    var full = document.createElement("img");
+    full.className = "lightbox__image";
+    full.alt = "";
+    figure.insertBefore(full, caption);
+
+    var opener = null;
+
+    // Focus has to move into the overlay when it opens, but a mouse user should
+    // not be handed a focus ring for it. Track how the page was last driven and
+    // let the class below suppress the ring only in the pointer case; a keyboard
+    // user still sees where focus went.
+    var viaKeyboard = false;
+    document.addEventListener("keydown", function () { viaKeyboard = true; }, true);
+    document.addEventListener("pointerdown", function () { viaKeyboard = false; }, true);
+
+    // Body images and both shapes the carousel can take.
+    var SOURCES = ".post__body img, .shots__frame img, .shots--single img";
+
+    function captionFor(img) {
+      // The convention the posts are written against: the emphasis right after
+      // an image is its caption. Carousel images come from front matter and
+      // have none.
+      var next = img.nextElementSibling;
+      return next && next.tagName === "EM" ? next.innerHTML : "";
+    }
+
+    function open(img) {
+      full.src = img.currentSrc || img.src;
+      full.alt = img.alt || "";
+      var text = captionFor(img);
+      caption.innerHTML = text;
+      caption.hidden = !text;
+      box.hidden = false;
+      // Keep the page from scrolling behind the overlay.
+      document.documentElement.style.overflow = "hidden";
+      opener = img;
+      box.classList.toggle("is-pointer-opened", !viaKeyboard);
+      close.focus();
+    }
+
+    function shut() {
+      var pointerSession = box.classList.contains("is-pointer-opened");
+      box.hidden = true;
+      full.removeAttribute("src");
+      caption.innerHTML = "";
+      document.documentElement.style.overflow = "";
+      box.classList.remove("is-pointer-opened");
+      if (opener) {
+        // Hand focus back to where it came from, for keyboard and screen readers.
+        // preventScroll because the image is already on screen -- the reader just
+        // closed the overlay over it -- and focusing a carousel frame without it
+        // scrolls the track to that frame.
+        //
+        // In a pointer session the handback must not paint a focus ring on the
+        // image. Escape counts as keyboard interaction to the browser's own
+        // focus-visible heuristic, so click-to-open plus Escape-to-close would
+        // ring the image the reader was just looking at. The class holds the
+        // ring off only until focus moves on; a keyboard session keeps it,
+        // since the ring is how that reader sees where they are.
+        if (pointerSession) {
+          var img = opener;
+          img.classList.add("is-pointer-refocus");
+          img.addEventListener("blur", function () {
+            img.classList.remove("is-pointer-refocus");
+          }, { once: true });
+        }
+        opener.focus({ preventScroll: true });
+        opener = null;
+      }
+    }
+
+    article.addEventListener("click", function (e) {
+      var img = e.target.closest ? e.target.closest(SOURCES) : null;
+      if (!img || !article.contains(img)) return;
+      // Leave images the author wrapped in a link alone.
+      if (img.closest("a")) return;
+      open(img);
+    });
+
+    close.addEventListener("click", shut);
+    box.addEventListener("click", function (e) {
+      // The image and the caption are inert -- the caption so its links still
+      // work. Anywhere else closes.
+      if (e.target === full || caption.contains(e.target)) return;
+      shut();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (box.hidden) return;
+
+      if (e.key === "Escape") {
+        shut();
+        return;
+      }
+
+      // Keep keyboard focus inside the modal. Captions may contain links, so
+      // collect the live set each time rather than assuming the close button is
+      // the overlay's only control.
+      if (e.key === "Tab") {
+        var focusable = Array.prototype.slice.call(
+          box.querySelectorAll("button:not([disabled]), a[href], [tabindex]:not([tabindex=\"-1\"])")
+        ).filter(function (node) {
+          return !node.hidden && node.getClientRects().length > 0;
+        });
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (!first) {
+          e.preventDefault();
+          close.focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    article.querySelectorAll(SOURCES).forEach(function (img) {
+      if (img.closest("a")) return;
+
+      img.classList.add("is-zoomable");
+      img.setAttribute("tabindex", "0");
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-haspopup", "dialog");
+      img.setAttribute("aria-label", img.alt ? img.alt + " 확대 보기" : "이미지 확대 보기");
+      img.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        viaKeyboard = true;
+        open(img);
+      });
+    });
+  })();
+</script>

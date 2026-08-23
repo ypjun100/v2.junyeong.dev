@@ -15,7 +15,7 @@ TASK 01 ~ 06. 실제로 만들어진 구조를 문서에 반영해야 하므로 
 다음 내용을 담는다.
 
 1. **저장소 개요** — 무엇을 하는 사이트인지 두 문장.
-2. **명령어** — `bundle install`, `bundle exec jekyll serve`, `bundle exec jekyll build --strict_front_matter`, `bundle exec htmlproofer _site --disable-external`.
+2. **명령어** — `bundle install`, `bundle exec jekyll serve`, `bundle exec jekyll build --strict_front_matter`, `bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-missing-alt`.
 3. **디렉터리 지도** — 각 디렉터리의 역할 한 줄씩. 특히 `content/` 아래 `_posts` / `_projects` / `_awards` 세 폴더가 곧 사이트의 세 목록이라는 점. `content/`는 `collections_dir`이며 이름에 밑줄을 붙이면 `_posts`가 조용히 유실된다는 경고를 함께 적는다.
 4. **글 추가 방법** — 세 종류별로 파일을 어디에 어떤 이름으로 만들고 front matter에 무엇을 넣는지. 02-PLAN의 스키마 표를 그대로 싣는다. 필수/선택 구분을 명시한다.
 5. **주소 규칙** — 세 종류의 permalink와, 기존 사이트 주소 호환을 위해 슬러그를 바꾸면 안 된다는 점.

@@ -5,3 +5,17 @@ _site/
 .bundle/
 vendor/
 .DS_Store
+
+# In-progress drafts — visible in local `jekyll serve`, kept out of the repo.
+# Delete the line to publish the post.
+content/_posts/2026-03-21-FSD.md
+content/_posts/2026-04-25-생애-첫-미국-여행기-2.md
+
+# Font build scratch. Source TTFs are downloaded, not committed.
+.font-build/
+
+# The venv AGENTS.md tells you to make for the font script.
+.venv/
+
+# Python verification and asset scripts.
+__pycache__/

@@ -1,0 +1,702 @@
+@use "mixins" as *;
+
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: rem(40px);
+}
+
+.post__back {
+  // Blog reads "← Posts"; project and award read Korean, which IBM Plex Mono
+  // cannot draw, so those two take the system mono for the whole label.
+  font-family: var(--font-mono);
+  font-size: rem(11.5px);
+  color: var(--muted-dim);
+  text-decoration: none;
+  width: fit-content;
+
+  @include hover {
+    color: var(--accent);
+  }
+}
+
+.post__header {
+  display: flex;
+  flex-direction: column;
+  gap: rem(14px);
+  padding-bottom: rem(30px);
+  border-bottom: 1px solid var(--border);
+}
+
+.post__title {
+  margin: 0;
+  font-family: var(--font-post-title);
+  font-size: rem(27px);
+  font-weight: 700;
+  color: var(--text-strong);
+  line-height: 1.42;
+  letter-spacing: -0.015em;
+  text-wrap: pretty;
+}
+
+.post__meta {
+  display: flex;
+  gap: rem(10px);
+  flex-wrap: wrap;
+  font-family: var(--font-mono-mixed);
+  font-size: rem(11.5px);
+  color: var(--muted-dim);
+}
+
+.post__meta-sep {
+  color: var(--sep);
+}
+
+// Summary callout
+
+.post__summary {
+  display: flex;
+  flex-direction: column;
+  gap: rem(14px);
+  padding: rem(22px) rem(24px);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+
+  ul {
+    margin: 0;
+    padding-left: rem(19px);
+    display: flex;
+    flex-direction: column;
+    gap: rem(10px);
+    font-size: rem(15.5px);
+    line-height: 1.78;
+    color: var(--text-summary);
+  }
+}
+
+.post__summary-label {
+  font-family: var(--font-mono);
+  font-size: rem(11px);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+// Tags
+
+.post__tags {
+  display: flex;
+  gap: rem(8px);
+  flex-wrap: wrap;
+  padding-top: rem(26px);
+  border-top: 1px solid var(--border);
+}
+
+.post__tag {
+  font-family: var(--font-mono);
+  font-size: rem(11.5px);
+  padding: rem(5px) rem(10px);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  color: var(--muted-tag);
+}
+
+.post--project .post__back,
+.post--award .post__back {
+  font-family: var(--font-mono-mixed);
+}
+
+// Project and award header
+
+.post__desc {
+  margin: 0;
+  font-size: rem(16px);
+  line-height: 1.7;
+  color: var(--text-list);
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: rem(84px) 1fr;
+  // 9px between rows as the mockup's row containers have; 4px only separates a
+  // label from its value once they stack on a narrow screen.
+  gap: rem(9px) rem(20px);
+  margin-top: rem(9px);
+}
+
+.meta-grid__label {
+  font-family: var(--font-mono-mixed);
+  font-size: rem(11px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: rem(3px);
+}
+
+.meta-grid__value {
+  font-size: rem(14.5px);
+  line-height: 1.6;
+  color: var(--text-summary);
+}
+
+.meta-grid__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(14px);
+
+  a {
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-line);
+  }
+}
+
+// Screenshot carousel
+
+.shots {
+  display: flex;
+  flex-direction: column;
+  gap: rem(13px);
+}
+
+.shots__track {
+  display: flex;
+  align-items: flex-start;
+  border-radius: 6px;
+  // The script sets this to the image on screen; taller neighbours are clipped
+  // rather than stretching the box.
+  overflow-y: hidden;
+  transition: height 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.shots__frame {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+
+  // No fixed height and no cover: the mockup's 290px crop cut the screenshots
+  // down. The track takes the height of the tallest image instead.
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.shots--single img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+.shots__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(12px);
+  font-family: var(--font-mono);
+}
+
+.shots__nav {
+  // Larger than the mockup's 26px for an easier target; the chevron inside
+  // stays at its drawn size.
+  width: rem(30px);
+  height: rem(30px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted-tag);
+  cursor: pointer;
+
+  @include hover {
+    color: var(--accent);
+    border-color: var(--accent-border);
+  }
+}
+
+.shots__dots {
+  display: flex;
+  gap: rem(7px);
+  align-items: center;
+}
+
+.shots__dot {
+  width: rem(7px);
+  height: rem(7px);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--dot-idle);
+  cursor: pointer;
+
+  &.is-active {
+    background: var(--accent);
+  }
+}
+
+// Image lightbox
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(48px) rem(24px);
+  background: var(--overlay);
+  cursor: zoom-out;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.lightbox__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(14px);
+  max-height: 100%;
+}
+
+.lightbox__image {
+  // min-height 0 lets the image give way when a caption sits under it, so the
+  // pair fits the viewport instead of overflowing it.
+  min-height: 0;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  cursor: default;
+}
+
+.lightbox__caption {
+  flex-shrink: 0;
+  max-width: rem(620px);
+  font-family: var(--font-mono-mixed);
+  font-size: rem(12.5px);
+  line-height: 1.6;
+  word-spacing: -0.3em;
+  color: var(--muted);
+  text-align: center;
+  cursor: default;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.lightbox__close {
+  position: absolute;
+  top: rem(20px);
+  right: rem(20px);
+  width: rem(34px);
+  height: rem(34px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  // Filled, not transparent. The frame's top padding is 48px and the button
+  // runs to 54px, so a tall image -- a phone photo, most of the time -- reaches
+  // up under it and leaves the outline and the glyph sitting on whatever the
+  // picture happens to be there. Filling costs no vertical space, which padding
+  // the image down would, and on a phone that space is the image. The colour is
+  // the backdrop's, so the button only reads as a chip where it actually covers
+  // something.
+  background: var(--overlay);
+  color: var(--text-chip);
+  cursor: pointer;
+
+  @include hover {
+    color: var(--accent);
+    border-color: var(--accent-border);
+  }
+
+  // Opened by pointer: focus still moves here so Escape and Tab behave, but the
+  // ring would be answering a question the reader did not ask. Opened by
+  // keyboard, the ring stays.
+  .lightbox.is-pointer-opened &:focus-visible {
+    outline: none;
+  }
+}
+
+.is-zoomable {
+  cursor: zoom-in;
+}
+
+// Focus lands back on the opened image when the overlay closes. The ring is
+// held off for pointer sessions only, and only until focus moves on -- the
+// class comes and goes in shut() in lightbox.html.
+.post img.is-pointer-refocus:focus-visible {
+  outline: none;
+}
+
+// Rendered markdown
+// Every rule here mirrors an inline style from the design source.
+
+.post__body {
+  font-size: rem(16.5px);
+  line-height: 1.85;
+  color: var(--text-soft);
+
+  > * {
+    margin: 0 0 rem(20px);
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-post-title);
+    color: var(--text-strong);
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    margin: rem(34px) 0 rem(16px);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h1,
+  h2 {
+    font-size: rem(19px);
+    font-weight: 700;
+  }
+
+  h3,
+  h4 {
+    font-size: rem(17px);
+    font-weight: 700;
+  }
+
+  h5,
+  h6 {
+    font-size: rem(15.5px);
+    font-weight: 600;
+  }
+
+  ul,
+  ol {
+    padding-left: rem(20px);
+
+    li {
+      margin-bottom: rem(7px);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  strong {
+    color: var(--text-mid);
+    font-weight: 600;
+  }
+
+  em {
+    color: var(--text-mid);
+    font-style: normal;
+  }
+
+  blockquote {
+    margin: 0 0 rem(20px);
+    padding: rem(16px) rem(20px);
+    position: relative;
+    border: 1px solid var(--border);
+    border-left: 0;
+    // Square on the left so the accent bar can run its full height dead
+    // straight, rounded on the right like the other cards. The bar is its own
+    // layer rather than a border or an inset shadow: a thicker left border met
+    // the 1px top in a mitre that clipped the green diagonally, and an inset
+    // shadow followed the radius and bowed it.
+    border-radius: 0 6px 6px 0;
+    background: var(--surface);
+    color: var(--text-summary);
+    font-size: rem(15.5px);
+
+    &::before {
+      content: "";
+      position: absolute;
+      // 1px past each end, so the bar squares off against the outer edge of the
+      // rule above and below rather than stopping short of it.
+      top: -1px;
+      bottom: -1px;
+      left: 0;
+      width: 2px; // a rule, like the 1px border it squares off against
+      background: var(--accent);
+    }
+
+    // The paragraph inside is not a child of .post__body, so the reset there
+    // never reaches it and it keeps the UA's 1em margin, which doubles the box's
+    // apparent padding. Covers the project overview callout too.
+    > * {
+      margin: 0;
+    }
+  }
+
+  pre {
+    padding: rem(20px) rem(22px);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: rem(13.5px);
+    line-height: 1.75;
+    color: var(--text-chip);
+
+    code {
+      padding: 0;
+      background: none;
+      color: inherit;
+      font-size: inherit;
+      word-break: normal;
+    }
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: rem(14px);
+    padding: rem(2px) rem(6px);
+    border-radius: 4px;
+    background: var(--code-bg);
+    color: var(--accent-code);
+    word-break: break-all;
+  }
+
+  // Centred on the image itself, not on its paragraph: prose and an image can
+  // land in one paragraph when the markdown has no blank line between them, and
+  // centring that would drag the sentences along with it.
+  img {
+    display: block;
+    margin-inline: auto;
+    border-radius: 6px;
+  }
+
+  // The emphasis right after an image is its caption -- the convention the
+  // migrated posts were written against, where `_text_` on the line below an
+  // image describes it. Elsewhere em stays ordinary emphasis.
+  img + em {
+    display: block;
+    // mono-mixed, not mono: captions are mostly Korean and IBM Plex Mono has no
+    // Hangul, so pairing them would split a caption across two faces.
+    font-family: var(--font-mono-mixed);
+    margin-top: rem(10px);
+    font-size: rem(12.5px);
+    line-height: 1.6;
+    // A monospace space carries the same advance as any other character, and it
+    // reads wide beside Hangul that has fallen through to a broader face. Only
+    // the space is narrowed; letter-spacing stays as the body sets it.
+    word-spacing: -0.3em;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: rem(34px) 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: rem(15px);
+    display: block;
+    overflow-x: auto;
+
+    th,
+    td {
+      padding: rem(10px) rem(14px);
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      background: var(--surface);
+      color: var(--text-mid);
+      font-weight: 600;
+    }
+  }
+
+  // The ↩ in a footnote backlink is U+21A9, which none of the site's faces carry
+  // -- not even the unsubsetted Nanum Myeongjo -- so it always renders in a
+  // system fallback whose proportions run large beside the text. Sizing it down
+  // is the only lever that works regardless of which face answers.
+  .reversefootnote {
+    font-size: 0.8em;
+  }
+
+  // Rouge output, kept close to the design's flat code block.
+  .highlight {
+    .c, .c1, .cm, .cs, .cd { color: var(--muted-dim); font-style: italic; }
+    .k, .kd, .kn, .kp, .kr, .kt, .kc { color: var(--accent); }
+    .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr { color: var(--accent-code); }
+    .n, .na, .nb, .nc, .nd, .nf, .ni, .nl, .nn, .no, .nt, .nv { color: var(--text-mid); }
+    .m, .mi, .mf, .mh, .mo, .il { color: var(--text-mid); }
+    .o, .ow, .p { color: var(--text-chip); }
+  }
+}
+
+@media (max-width: 39.9375em) {
+  .post {
+    gap: rem(32px);
+  }
+
+  .post__title {
+    font-size: rem(23px);
+  }
+
+  .post__header {
+    padding-bottom: rem(24px);
+  }
+
+  .post__body {
+    font-size: rem(16px);
+  }
+}
+
+// Project and award bodies
+//
+// Body copy here carries no text-wrap: pretty -- see the break-all note in
+// _base.scss.
+//
+// The mockup shapes these as a 설명 callout followed by a 개발 내용 section of
+// marked items. The migrated markdown already has exactly that shape -- an h2
+// with a blockquote under it, then an h2 with h3 items -- so it is styled where
+// it stands instead of being restructured into front matter. Scoped to these two
+// kinds; blog posts keep the plain heading scale.
+.post--project,
+.post--award {
+  .post__body {
+    // The 설명 heading is the one followed by a blockquote. Everything else is a
+    // section divider, so :has separates them without reading the heading text.
+    h2 {
+      font-family: var(--font-ui);
+      font-size: rem(11.5px);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: rem(12px);
+      border-bottom: 1px solid var(--border);
+      margin: rem(40px) 0 rem(22px);
+
+      // This rule outranks the blog block's :first-child reset, so the leading
+      // heading kept its 40px on top of the article's own 40px gap and the
+      // carousel sat twice as far from the overview as the mockup has it.
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    h2:has(+ blockquote) {
+      // mono-mixed, not mono: the label is Korean and IBM Plex Mono has no
+      // Hangul, so it would fall through to the system face anyway.
+      font-family: var(--font-mono-mixed);
+      // Larger than the mockup's 11px, which read too small once the label sat
+      // on the system mono rather than IBM Plex Mono.
+      font-size: rem(13px);
+      font-weight: 400;
+      // The heading rule sets 1.4; the mockup leaves it at normal, and the
+      // taller box was padding the gap below the label.
+      line-height: normal;
+      color: var(--accent);
+      padding-bottom: 0;
+      border-bottom: 0;
+      // No bottom margin, and the blockquote pads instead. Two elements each
+      // with a left rule would otherwise leave a gap between the segments.
+      margin-bottom: 0;
+      padding-left: rem(20px);
+      border-left: 2px solid var(--accent-border);
+    }
+
+    // Continues the rule the label started, so the two read as one block.
+    h2 + blockquote {
+      margin: 0 0 rem(20px);
+      padding: rem(13px) 0 0 rem(20px);
+      border: 0;
+      border-left: 2px solid var(--accent-border);
+      border-radius: 0;
+      background: none;
+      font-size: rem(16.5px);
+      line-height: 1.85;
+      color: var(--text-soft);
+
+      // Carries its own left rule; the bar from the general blockquote would
+      // double it.
+      &::before {
+        content: none;
+      }
+    }
+
+    h3 {
+      position: relative;
+      padding-left: rem(14px); // rem(5px) marker + the rem(9px) that used to be the flex gap
+      font-family: var(--font-content);
+      font-size: rem(15px);
+      font-weight: 600;
+      color: var(--text-strong);
+      line-height: 1.5;
+      letter-spacing: 0;
+      margin: 0 0 rem(13px);
+
+      // Same drawn triangle as the About career items: neither webfont carries
+      // U+25B8, so it is not typed.
+      // Absolutely positioned, not a flex item. Flex would make every inline run
+      // in the title its own item, so the gap meant for the marker also opened
+      // up beside any <strong> the author used.
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.42em;
+        width: 0;
+        height: 0;
+        border-left: rem(5px) solid var(--accent);
+        border-top: rem(4px) solid transparent;
+        border-bottom: rem(4px) solid transparent;
+      }
+    }
+
+    // Size, leading and item gap are shared with .career-item__points in
+    // _about.scss so the two bullet lists read the same. Change them together.
+    h3 + ul {
+      margin: 0 0 rem(20px);
+      @include marker-bullet;
+      display: flex;
+      flex-direction: column;
+      gap: rem(8px);
+      font-size: rem(15.5px);
+      line-height: 1.8;
+      color: var(--text-soft);
+
+      li {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

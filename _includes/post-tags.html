@@ -1,0 +1,7 @@
+{%- if page.tags and page.tags.size > 0 %}
+<div class="post__tags">
+  {%- for tag in page.tags %}
+  <span class="post__tag">#{{ tag }}</span>
+  {%- endfor %}
+</div>
+{%- endif -%}

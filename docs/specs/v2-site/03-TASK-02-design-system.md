@@ -18,14 +18,14 @@ TASK 01.
    - `img { max-width: 100%; }`, `overflow-wrap: anywhere`
 3. `_includes/head.html`
    - `<meta charset>`, viewport, `{% seo %}`, 피드 링크
-   - Google Fonts preconnect + IBM Plex Mono / IBM Plex Sans KR / Noto Serif KR / Nanum Myeongjo 한 줄 요청
+   - `assets/fonts/`의 자체 호스팅 woff2 preload. 02-PLAN의 폰트 배송 절 참조
    - `assets/css/main.scss` 링크
 4. `_includes/sidebar.html` — 아바타(46px 원형), 이름, 직함, Home / About / Posts 링크, 외부 링크(GitHub · LinkedIn · 이메일). 문구는 마크업에 직접 적는다. 이름과 이메일만 `site.author`를 참조해 `_config.yml`과 어긋나지 않게 한다. 활성 링크 판정은 `page.url`과 `page.kind` 기준.
 5. `_layouts/default.html` — `<html lang="ko">` + head + 셸 컨테이너 + 사이드바 + `{{ content }}` + 푸터(`© {{ site.time | date: '%Y' }} Junyeong Yun`).
 6. `_layouts/page.html` — `default`를 상속하고 본문 컬럼만 감싼다.
-7. `_sass/_layout.scss` — 02-PLAN의 셸 치수와 세 브레이크포인트(`>= 900px`, `< 900px`, `< 640px`)를 구현한다. 시안 최상위의 `position: absolute; left: 423px; top: 12px`는 넣지 않는다.
+7. `_sass/_layout.scss` — 02-PLAN의 셸 치수와 세 브레이크포인트(`>= 900px`, `< 900px`, `< 640px`)를 구현한다. 길이는 `rem()`으로, 브레이크포인트는 `em`으로 출력해 독자의 글자 크기 설정을 따른다. 시안 최상위의 `position: absolute; left: 423px; top: 12px`는 넣지 않는다.
 8. `assets/css/main.scss` — front matter 두 줄 뒤에 `_sass` 파티션을 `@use`로 불러온다.
-9. `assets/img/avatar.png` — 시안의 `-joel-_2-3--msbu9nju-vxof.png`를 `DesignSync`로 받아 배치한다.
+9. `assets/img/avatar.jpg` — 시안의 `-joel-_2-3--msbu9nju-vxof.png`를 `DesignSync`로 받아 최종 아바타로 배치한다.
 
 ## 완료 조건
 
