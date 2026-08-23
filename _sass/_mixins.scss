@@ -16,3 +16,34 @@
     }
   }
 }
+
+// The bullet that sits under a triangle-marked title.
+//
+// The browser's own disc is placed by the engine somewhere inside the list's
+// left padding, and where exactly is not ours to set -- so it landed well right
+// of the triangle above it while the item text sat right of the title text. A
+// drawn dot puts both markers on the same edge and both runs of text on the
+// next one, which is the whole point of the pairing.
+//
+// 14px is the title's own padding: 5px of marker plus a 9px gap. The dot rides
+// a touch above the line box centre, the same lift the triangle takes.
+@mixin marker-bullet {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    position: relative;
+    padding-left: 14px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: calc(0.9em - 3px);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+  }
+}

@@ -109,7 +109,7 @@
 
 .career-item__points {
   margin: 0;
-  padding-left: 20px;
+  @include marker-bullet;
   display: flex;
   flex-direction: column;
   // Matches the bullets under 개발 내용 in a project body, which the mockup's
