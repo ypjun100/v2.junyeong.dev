@@ -4,6 +4,11 @@
   swipeable and reachable with the keyboard when the script never runs. The
   buttons and dots only drive and mirror the scroll position, and they wrap.
 
+  The track's height follows the image on screen. Letting it take the tallest
+  image instead leaves the shorter ones floating above dead space -- 2.6px in one
+  set here, 975px in another -- and object-fit: cover would crop the odd one out
+  to nothing. Without the script the track falls back to the tallest image.
+
   Chevrons are drawn, not typed: the ‹ › glyphs sit about 1.4px below the centre
   of a flex-centred button, and geometry avoids depending on font metrics.
 {%- endcomment -%}
@@ -42,12 +47,16 @@
     function index() {
       return Math.round(track.scrollLeft / track.clientWidth);
     }
+    var frames = [].slice.call(root.querySelectorAll(".shots__frame"));
+
     function paint() {
       var at = index();
       dots.forEach(function (dot, i) {
         dot.classList.toggle("is-active", i === at);
         dot.setAttribute("aria-current", i === at ? "true" : "false");
       });
+      var img = frames[at] && frames[at].firstElementChild;
+      if (img && img.offsetHeight) track.style.height = img.offsetHeight + "px";
     }
     function go(to) {
       // Wrap, so the ends are reachable in one click from either side.
@@ -67,6 +76,11 @@
     });
     track.addEventListener("scroll", paint, { passive: true });
     window.addEventListener("resize", paint);
+    // offsetHeight is 0 until an image has decoded, so measure again as they land.
+    frames.forEach(function (frame) {
+      var img = frame.firstElementChild;
+      if (img && !img.complete) img.addEventListener("load", paint);
+    });
     paint();
   })();
 </script>
