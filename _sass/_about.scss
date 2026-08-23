@@ -183,9 +183,13 @@
 .award-row {
   display: flex;
   gap: 16px;
-  // Centred rather than baseline-aligned: the date is 11.5px against a 15.5px
-  // title, and sharing a baseline leaves the smaller text sitting visibly low.
-  align-items: center;
+  // Baseline, not centre. Nanum Myeongjo declares sTypoLineGap 256 and both
+  // faces set USE_TYPO_METRICS, so centring the boxes pulls the baselines 1.6px
+  // apart; sharing a baseline is exact. The smaller items are then lifted,
+  // because on a shared baseline their optical centres still sit below the
+  // title's -- measured against the '한' glyph bounds, 1.8px for the 11.5px
+  // date and 1.3px for the 12px grade.
+  align-items: baseline;
 }
 
 .award-row__date {
@@ -194,6 +198,8 @@
   line-height: 1.5;
   color: var(--muted-dim);
   min-width: 78px;
+  position: relative;
+  top: -1.8px;
 }
 
 .award-row__title {
@@ -212,6 +218,8 @@
   font-size: 12px;
   color: var(--accent);
   white-space: nowrap;
+  position: relative;
+  top: -1.3px;
 }
 
 
