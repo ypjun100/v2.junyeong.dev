@@ -25,8 +25,8 @@ implement 단계에서 원본이 다시 필요하면 `DesignSync` 도구로 읽�
 ├── AGENTS.md
 ├── CLAUDE.md
 ├── content/                     # collections_dir. 글 3종이 여기 모인다
-│   ├── _posts/                  # 블로그 19편
-│   ├── _projects/               # 프로젝트 10편
+│   ├── _posts/                  # 블로그 19편 (+ 작성 중 2편은 .gitignore)
+│   ├── _projects/               # 프로젝트 6편
 │   └── _awards/                 # 수상 경력 6편
 ├── _layouts/
 │   ├── default.html             # <html> 셸 + 사이드바 + 본문 슬롯 + 푸터
@@ -301,7 +301,7 @@ post.html
 
 - `bundle exec jekyll build --strict_front_matter` — front matter 파싱 오류를 빌드 실패로 만든다.
 - `bundle exec htmlproofer _site --disable-external` — 내부 링크와 이미지 참조 중 깨진 것을 잡는다. 외부 링크는 네트워크 의존성 때문에 CI에서 끈다.
-- 개수 대조 — 빌드 후 `_site` 안의 `project/`, `prize/`, `posts/` 디렉터리 항목 수가 각각 10, 6, 21인지 확인한다.
+- 개수 대조 — 빌드 후 `_site` 안의 `project/`, `prize/`, `posts/` 디렉터리 항목 수가 각 컬렉션의 파일 수와 일치하는지 확인한다. 배포본 기준 개수는 `git ls-files`로 센다.
 - 반응형 육안 확인 — 375px, 768px, 1280px 폭에서 Home / About / Posts / 글 상세 네 화면.
 
 CI 워크플로는 배포 전에 build와 htmlproofer를 순서대로 돌린다.

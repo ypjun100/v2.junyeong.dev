@@ -9,9 +9,6 @@ people:
 - 기획 1명
 - 마케터 1명
 urls:
-- type: link
-  name: 프로젝트 설명
-  url: "/project/tape"
 - type: youtube
   name: 프로젝트 소개 영상
   url: https://youtu.be/PqWzZ2TTLXk?si=pIvH5BOJGXMd_dOm

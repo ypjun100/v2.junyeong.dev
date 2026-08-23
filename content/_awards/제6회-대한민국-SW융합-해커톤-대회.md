@@ -10,9 +10,6 @@ people:
 - 백엔드 1명
 - 앱 개발 1명
 urls:
-- type: link
-  name: 프로젝트 설명
-  url: "/project/tape"
 - type: website
   name: 학과 홍보 게시글
   url: https://home.sch.ac.kr/aibigdata/03/0101.jsp?mode=view&article_no=20211006091615313007&board_wrapper=%2Faibigdata%2F03%2F0101.jsp&pager.offset=80&board_no=20210716140709213028
