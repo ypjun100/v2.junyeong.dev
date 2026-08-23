@@ -8,6 +8,10 @@ baseurl: ""
 lang: ko-KR
 timezone: Asia/Seoul
 
+# First day on the job. Read by the intro block for the 경력 figure, both for
+# the server-rendered fallback and for the script that recomputes it on view.
+career_start: 2024-09-01
+
 author:
   name: Junyeong Yun
   email: ypjun100@gmail.com
