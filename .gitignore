@@ -13,3 +13,6 @@ content/_posts/2026-04-25-생애-첫-미국-여행기-2.md
 
 # Font build scratch. Source TTFs are downloaded, not committed.
 .font-build/
+
+# The venv AGENTS.md tells you to make for the font script.
+.venv/

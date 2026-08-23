@@ -13,6 +13,8 @@ bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-miss
 
 `--ignore-missing-alt`는 기존 글의 이미지 상당수에 alt가 없기 때문에 붙인다. 검사 목적은 깨진 링크와 이미지 참조를 잡는 것이다.
 
+`jekyll serve`의 감시는 `_config.yml`을 보지 않는다. 사이트 제목이나 직함처럼 설정에 있는 값을 고쳤으면 **서버를 껐다 켜야** 화면에 반영된다. 템플릿과 스타일은 그대로 두고 설정만 바꿨을 때 화면이 안 변하면 대개 이것이다.
+
 ## 디렉터리
 
 | 경로 | 역할 |
@@ -106,7 +108,7 @@ python3 -m venv .venv && .venv/bin/pip install fonttools brotli
 
 본문용 폰트는 `unicode-range`로 두 파일로 나뉜다. KS X 1001 상용 2,350자는 항상 받고, 나머지 8,822자는 그 글자가 페이지에 나올 때만 받는다. 그래서 어떤 글자도 폴백으로 떨어지지 않는다.
 
-UI 폰트(IBM Plex Sans KR)는 그 서체가 실제로 그리는 29자로만 잘려 있다. 대상은 사이드바 전체와 `section-label`·`section-head__more`·`intro__stat-label`·`chip` 요소이며, 스크립트가 이 클래스들만 훑는다. 본문은 `--font-content`로 그려지므로 글 내용이나 경력 설명 같은 긴 한글은 여기 들어가지 않는다.
+UI 폰트(IBM Plex Sans KR)는 그 서체가 실제로 그리는 30자로만 잘려 있다. 대상은 사이드바 전체와 `section-label`·`section-head__more`·`intro__stat-label`·`chip` 요소이며, 스크립트가 이 클래스들만 훑는다. 본문은 `--font-content`로 그려지므로 글 내용이나 경력 설명 같은 긴 한글은 여기 들어가지 않는다.
 
 **UI 영역에 새 한글 라벨을 넣고 스크립트를 돌리지 않으면 그 글자만 조용히 다른 서체로 렌더링된다.** 스크립트가 서브셋 글자 수를 출력하니 값이 늘었는지 확인한다.
 
