@@ -12,14 +12,13 @@
   <span class="post__meta-sep">·</span>
   <span>{{ minutes }}분 소요</span>
 
-  {%- if page.kind == 'blog' and page.categories.size > 0 %}
+  {%- comment -%}
+    Blog only. post.html reaches this include from inside its kind == 'blog'
+    branch; projects and awards get post-header-meta.html instead, so the
+    per-kind branches this used to carry could never run.
+  {%- endcomment -%}
+  {%- if page.categories.size > 0 %}
   <span class="post__meta-sep">·</span>
   <span>{{ page.categories | join: ", " }}</span>
-  {%- elsif page.kind == 'project' and page.desc %}
-  <span class="post__meta-sep">·</span>
-  <span>{{ page.desc }}</span>
-  {%- elsif page.kind == 'award' and page.prize %}
-  <span class="post__meta-sep">·</span>
-  <span class="post__meta-prize">{{ page.prize.name }}</span>
   {%- endif %}
 </div>
