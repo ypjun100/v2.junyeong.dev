@@ -434,9 +434,32 @@
     word-break: break-all;
   }
 
+  // Centred on the image itself, not on its paragraph: prose and an image can
+  // land in one paragraph when the markdown has no blank line between them, and
+  // centring that would drag the sentences along with it.
   img {
     display: block;
+    margin-inline: auto;
     border-radius: 6px;
+  }
+
+  // The emphasis right after an image is its caption -- the convention the
+  // migrated posts were written against, where `_text_` on the line below an
+  // image describes it. Elsewhere em stays ordinary emphasis.
+  img + em {
+    display: block;
+    // mono-mixed, not mono: captions are mostly Korean and IBM Plex Mono has no
+    // Hangul, so pairing them would split a caption across two faces.
+    font-family: var(--font-mono-mixed);
+    margin-top: 10px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    // A monospace space carries the same advance as any other character, and it
+    // reads wide beside Hangul that has fallen through to a broader face. Only
+    // the space is narrowed; letter-spacing stays as the body sets it.
+    word-spacing: -0.3em;
+    color: var(--muted);
+    text-align: center;
   }
 
   hr {
