@@ -316,7 +316,14 @@
   padding: 0;
   border: 1px solid var(--border-strong);
   border-radius: 4px;
-  background: transparent;
+  // Filled, not transparent. The frame's top padding is 48px and the button
+  // runs to 54px, so a tall image -- a phone photo, most of the time -- reaches
+  // up under it and leaves the outline and the glyph sitting on whatever the
+  // picture happens to be there. Filling costs no vertical space, which padding
+  // the image down would, and on a phone that space is the image. The colour is
+  // the backdrop's, so the button only reads as a chip where it actually covers
+  // something.
+  background: var(--overlay);
   color: var(--text-chip);
   cursor: pointer;
 
