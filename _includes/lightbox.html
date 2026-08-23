@@ -71,8 +71,11 @@
       document.documentElement.style.overflow = "";
       if (opener) {
         // Hand focus back to where it came from, for keyboard and screen readers.
+        // preventScroll because the image is already on screen -- the reader just
+        // closed the overlay over it -- and focusing a carousel frame without it
+        // scrolls the track to that frame.
         opener.setAttribute("tabindex", "-1");
-        opener.focus();
+        opener.focus({ preventScroll: true });
         opener = null;
       }
     }
