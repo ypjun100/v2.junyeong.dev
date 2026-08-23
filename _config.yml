@@ -79,4 +79,5 @@ exclude:
   - AGENTS.md
   - CLAUDE.md
   - docs/
+  - script/
   - vendor/
