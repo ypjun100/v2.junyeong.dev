@@ -1,0 +1,30 @@
+{%- comment -%}
+  The label/value grid under a project or award title. One grid rather than the
+  mockup's row-per-grid, so the labels line up on a single column definition.
+{%- endcomment -%}
+{%- if page.kind != 'blog' %}
+<div class="meta-grid">
+  {%- if page.kind == 'project' %}
+    {%- if page.role %}
+  <div class="meta-grid__label">담당</div>
+  <div class="meta-grid__value">{{ page.role | join: " · " }}</div>
+    {%- endif %}
+    {%- if page.skills and page.skills.size > 0 %}
+  <div class="meta-grid__label">기술 스택</div>
+  <div class="meta-grid__value">{{ page.skills | join: " · " }}</div>
+    {%- endif %}
+  {%- elsif page.prize %}
+  <div class="meta-grid__label">수상</div>
+  <div class="meta-grid__value">{{ page.prize.name }}</div>
+  {%- endif %}
+
+  {%- if page.urls and page.urls.size > 0 %}
+  <div class="meta-grid__label">링크</div>
+  <div class="meta-grid__value meta-grid__links">
+    {%- for url in page.urls %}
+    <a href="{{ url.url | relative_url }}"{% if url.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ url.name }}</a>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+</div>
+{%- endif -%}

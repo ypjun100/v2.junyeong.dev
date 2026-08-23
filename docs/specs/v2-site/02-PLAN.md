@@ -38,8 +38,8 @@ implement 단계에서 원본이 다시 필요하면 `DesignSync` 도구로 읽�
 │   ├── intro-block.html         # 대표 문구 · 지표 2칸 (Home/About 공용)
 │   ├── post-meta.html           # 날짜 · 읽기 시간 · 카테고리
 │   ├── post-summary.html        # 요약 콜아웃 (front matter에 summary가 있을 때만)
-│   ├── post-extras.html         # 스킬 칩 · 참여자 · 외부 링크 · 수상 등급
-│   ├── gallery.html             # 이미지 모음
+│   ├── post-header-meta.html    # 담당 · 기술 스택 · 수상 · 링크 라벨 그리드
+│   ├── carousel.html            # 스크롤 스냅 이미지 캐러셀
 │   └── post-tags.html
 ├── _sass/
 │   ├── _tokens.scss             # CSS 커스텀 프로퍼티 전체
@@ -128,7 +128,8 @@ date: YYYY-MM-DD         # 필수 (이관 시 파일명 날짜에서 채움)
 desc: string             # About 목록의 한 줄 설명
 urls:                    # 선택. type은 github|news|website|link|youtube
   - { type: github, name: Github, url: https://... }
-skills: [string]         # 선택. 스킬 칩
+role: [string]           # 선택. 헤더의 담당 행
+skills: [string]         # 선택. 헤더의 기술 스택 행
 people: [string]         # 선택
 images: [string]         # 선택. 기존 carousels[].images[].image를 평탄화한 경로 배열
 summary: [string]        # 선택
@@ -208,6 +209,8 @@ summary: [string]        # 선택
 | `--accent` | `#6fd88c` | 강조, 링크 |
 | `--accent-hover` | `#9aebae` | 링크 호버 |
 | `--accent-code` | `#9fe6b4` | 인라인 코드 글자 |
+| `--accent-border` | `rgba(111,216,140,0.4)` | 개요 블록 세로선, 캐러셀 버튼 호버 |
+| `--dot-idle` | `#2f3743` | 캐러셀 비활성 점 |
 | `--font-ui` | `'IBM Plex Sans KR', sans-serif` | 사이드바, 지표 라벨 |
 | `--font-content` | `'Nanum Myeongjo', serif` | 본문 전반, Home/About 제목 |
 | `--font-post-title` | `'Nanum Myeongjo', serif` | 글 제목, heading |
@@ -257,22 +260,26 @@ IBM Plex Mono에는 한글이 없고 IBM Plex 계열에 Mono 한글판도 없다
 ## `post.html` 렌더링 흐름
 
 ```
-post.html
- ├─ 뒤로가기 링크        kind == blog ? "← Posts" : "← About"
+post.html                       kind == blog        kind == project / award
+ ├─ 뒤로가기 링크               ← Posts             ← 프로젝트 / ← 수상 경력
  ├─ header
- │   ├─ h1  (page.title)
- │   └─ post-meta.html   날짜 · 읽기 시간 · (blog: categories | project: desc | award: prize.name)
- ├─ post-summary.html    page.summary 있을 때만
- ├─ post-extras.html     kind != blog 일 때
- │   ├─ 외부 링크 행      page.urls
- │   ├─ 참여자           page.people
- │   └─ 스킬 칩          page.skills
- ├─ gallery.html         page.images 있을 때
- ├─ article {{ content }}
- └─ post-tags.html       page.tags 있을 때
+ │   ├─ h1                      page.title          page.title
+ │   ├─ post__desc              —                   page.desc (project)
+ │   ├─ post-meta.html          날짜·읽기시간·분류   —
+ │   └─ post-header-meta.html   —                   담당·기술 스택·수상·링크
+ ├─ post-summary.html           page.summary 있을 때만
+ ├─ carousel.html               —                   page.images 있을 때만
+ ├─ post__body {{ content }}    일반 제목 크기       개요 블록 + 항목 섹션
+ └─ post-tags.html              page.tags 있을 때만
 ```
 
-수상 등급은 헤더 메타의 세 번째 항목이 강조색으로 표시하며, 별도의 배지를 두지 않는다. 한 화면에 같은 값을 두 번 그리지 않기 위해서다.
+프로젝트와 수상 경력은 블로그 글과 헤더가 다르다. 제목 아래에 `desc` 한 줄(프로젝트만)과 라벨/값 그리드가 오고, 그 아래 이미지 캐러셀이 붙는다. 그리드는 시안의 행별 grid 대신 하나의 grid로 만들어 라벨 열이 한 정의로 정렬되게 한다.
+
+캐러셀은 스크롤 스냅 트랙이다. 스크립트가 transform을 소유하지 않으므로 JS가 없어도 좌우로 넘겨 볼 수 있고, 버튼과 점은 스크롤 위치를 움직이고 되비추기만 한다. 이미지가 한 장이면 컨트롤을 그리지 않는다.
+
+본문은 마크다운 구조를 그대로 읽어 시안의 두 덩어리를 만든다. `h2:has(+ blockquote)`로 개요 블록을, 나머지 `h2`로 섹션 라벨을, `h3`와 뒤따르는 목록으로 항목을 구성한다. 콘텐츠를 front matter로 옮기지 않아도 되고 문구를 문자열로 비교하지도 않는다. 이 규칙은 `.post--project`와 `.post--award`에만 걸리며 블로그 글은 일반 제목 크기를 유지한다.
+
+`people`은 시안 헤더에 없어 현재 표시되지 않는다. 데이터는 front matter에 남아 있다.
 
 `content` 안의 마크다운은 `_post.scss`가 요소 선택자로 스타일링한다. 시안이 각 요소에 붙여 둔 인라인 스타일을 `h2`, `p`, `pre`, `code`, `ul`, `strong`, `em`, `blockquote`, `img`, `mark`, `table` 선택자로 옮긴다. 기존 글이 `<mark>`와 `>` 인용을 자주 쓰므로 두 요소는 반드시 다크 톤 스타일을 갖는다.
 

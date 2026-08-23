@@ -5,6 +5,8 @@
 }
 
 .post__back {
+  // Blog reads "← Posts"; project and award read Korean, which IBM Plex Mono
+  // cannot draw, so those two take the system mono for the whole label.
   font-family: var(--font-mono);
   font-size: 11.5px;
   color: var(--muted-dim);
@@ -84,64 +86,6 @@
   color: var(--accent);
 }
 
-// Project and award extras
-
-.post__extras {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: -12px;
-}
-
-.post__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  font-size: 13.5px;
-}
-
-.post__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--muted-dim);
-
-  a {
-    text-decoration: none;
-    color: var(--text-mid);
-
-    &:hover {
-      color: var(--accent);
-    }
-  }
-}
-
-.post__people {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 13.5px;
-  color: var(--muted-dim);
-}
-
-.link-icon {
-  flex-shrink: 0;
-  display: block;
-}
-
-.post__gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-
-  img {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    display: block;
-  }
-}
-
 // Tags
 
 .post__tags {
@@ -159,6 +103,137 @@
   border: 1px solid var(--border-strong);
   border-radius: 4px;
   color: var(--muted-tag);
+}
+
+.post--project .post__back,
+.post--award .post__back {
+  font-family: var(--font-mono-mixed);
+}
+
+// Project and award header
+
+.post__desc {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-list);
+  text-wrap: pretty;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 4px 20px;
+  margin-top: 9px;
+}
+
+.meta-grid__label {
+  font-family: var(--font-mono-mixed);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 3px;
+}
+
+.meta-grid__value {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-summary);
+}
+
+.meta-grid__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  a {
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-line);
+  }
+}
+
+// Screenshot carousel
+
+.shots {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.shots__track {
+  display: flex;
+  height: 290px;
+  border-radius: 6px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.shots__frame {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: start;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.shots__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+}
+
+.shots__nav {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted-tag);
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent-border);
+  }
+}
+
+.shots__dots {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.shots__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--dot-idle);
+  cursor: pointer;
+
+  &.is-active {
+    background: var(--accent);
+  }
 }
 
 // Rendered markdown
@@ -348,5 +423,99 @@
 
   .post__body {
     font-size: 16px;
+  }
+}
+
+// Project and award bodies
+//
+// The mockup shapes these as a 설명 callout followed by a 개발 내용 section of
+// marked items. The migrated markdown already has exactly that shape -- an h2
+// with a blockquote under it, then an h2 with h3 items -- so it is styled where
+// it stands instead of being restructured into front matter. Scoped to these two
+// kinds; blog posts keep the plain heading scale.
+.post--project,
+.post--award {
+  .post__body {
+    // The 설명 heading is the one followed by a blockquote. Everything else is a
+    // section divider, so :has separates them without reading the heading text.
+    h2 {
+      font-family: var(--font-ui);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin: 40px 0 22px;
+    }
+
+    h2:has(+ blockquote) {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--accent);
+      padding-bottom: 0;
+      border-bottom: 0;
+      margin-bottom: 13px;
+      padding-left: 20px;
+      border-left: 2px solid var(--accent-border);
+    }
+
+    // Continues the rule the label started, so the two read as one block.
+    h2 + blockquote {
+      margin: 0 0 20px;
+      padding: 0 0 0 20px;
+      border: 0;
+      border-left: 2px solid var(--accent-border);
+      border-radius: 0;
+      background: none;
+      font-size: 16.5px;
+      line-height: 1.85;
+      color: var(--text-soft);
+      text-wrap: pretty;
+    }
+
+    h3 {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-family: var(--font-content);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-strong);
+      line-height: 1.5;
+      letter-spacing: 0;
+      margin: 0 0 13px;
+
+      // Same drawn triangle as the About career items: neither webfont carries
+      // U+25B8, so it is not typed.
+      &::before {
+        content: "";
+        flex-shrink: 0;
+        width: 0;
+        height: 0;
+        margin-top: 0.42em;
+        border-left: 5px solid var(--accent);
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+      }
+    }
+
+    h3 + ul {
+      margin: 0 0 20px;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: var(--text-lead);
+
+      li {
+        margin-bottom: 0;
+        text-wrap: pretty;
+      }
+    }
   }
 }

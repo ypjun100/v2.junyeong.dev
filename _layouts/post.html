@@ -2,21 +2,29 @@
 layout: default
 ---
 
-<article class="post">
+<article class="post post--{{ page.kind }}">
   {%- if page.kind == 'blog' %}
   <a class="post__back" href="{{ '/posts/' | relative_url }}">← Posts</a>
+  {%- elsif page.kind == 'project' %}
+  <a class="post__back" href="{{ '/about/' | relative_url }}">← 프로젝트</a>
   {%- else %}
-  <a class="post__back" href="{{ '/about/' | relative_url }}">← About</a>
+  <a class="post__back" href="{{ '/about/' | relative_url }}">← 수상 경력</a>
   {%- endif %}
 
   <header class="post__header">
     <h1 class="post__title">{{ page.title }}</h1>
-    {%- include post-meta.html -%}
+    {%- if page.kind == 'blog' -%}
+      {%- include post-meta.html -%}
+    {%- else -%}
+      {%- if page.desc %}
+    <p class="post__desc">{{ page.desc }}</p>
+      {%- endif -%}
+      {%- include post-header-meta.html -%}
+    {%- endif %}
   </header>
 
   {%- include post-summary.html -%}
-  {%- include post-extras.html -%}
-  {%- include gallery.html -%}
+  {%- include carousel.html -%}
 
   <div class="post__body">
     {{ content }}
