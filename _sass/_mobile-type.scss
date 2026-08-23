@@ -1,0 +1,98 @@
+@use "sass:math";
+
+// Mobile type scale
+//
+// Every size on the site is authored in px, so there is no root value to turn.
+// This restates each step at the phone breakpoint multiplied by $scale, which is
+// the one number to tune. Sizes land on the half-pixel grid the rest of the
+// stylesheet already uses.
+//
+// It lives in its own file, loaded last in main.scss, because it has to outrank
+// the per-file 639px blocks -- three of which pull the other way. The headline
+// drops 40 -> 28 there, the post title 27 -> 23 and blog body copy 16.5 -> 16.
+// Those reduced figures are what gets scaled here, not the desktop ones.
+
+$scale: 1.08;
+
+// Reading text stops here. Scaling took the blog body and the project 설명
+// callout past what the author wants to read on a phone.
+$cap: 16.5px;
+
+@function step($size) {
+  @return math.div(math.round($size * $scale * 2), 2);
+}
+
+// Headings scale without the cap -- capping them would flatten a 30px headline
+// into body copy.
+$headings: (
+  28px: (".intro__headline"),
+  23px: (".post__title"),
+  19px: (".post__body h1,.post__body h2"),
+  17px: (".post__body h3,.post__body h4"),
+);
+
+$body: (
+  16.5px: (
+    ".career__company",
+    ".post--project .post__body h2+blockquote,.post--award .post__body h2+blockquote",
+  ),
+  16px: (".post__body", ".post__desc", ".posts__intro", ".recent__title"),
+  15.5px: (
+    ".award-row__title",
+    ".career-item__points",
+    ".career__lead",
+    ".home__about",
+    ".post--project .post__body h3+ul,.post--award .post__body h3+ul",
+    ".post-row__title",
+    ".post__body blockquote",
+    ".post__body h5,.post__body h6",
+    ".post__summary ul",
+    ".project-row__desc",
+    ".project-row__name",
+  ),
+  15px: (
+    ".career-item__title",
+    ".intro__stat-value",
+    ".post--project .post__body h3,.post--award .post__body h3",
+    ".post__body table",
+    ".recent__excerpt",
+  ),
+  14.5px: (".meta-grid__value", ".sidebar__nav"),
+  14px: (".career__position", ".post__body code", ".sidebar__name"),
+  13.5px: (".post__body pre"),
+  13px: (
+    ".post--project .post__body h2:has(+blockquote),.post--award .post__body h2:has(+blockquote)",
+  ),
+  12.5px: (".lightbox__caption", ".post__body img+em"),
+  12px: (".award-row__prize", ".chips", ".posts__year-label"),
+  11.5px: (
+    ".award-row__date",
+    ".career__period",
+    ".post--project .post__body h2,.post--award .post__body h2",
+    ".post-row__date",
+    ".post__back",
+    ".post__meta",
+    ".post__tag",
+    ".recent__meta",
+    ".section-head__more",
+    ".section-label",
+    ".sidebar__links",
+    ".sidebar__role",
+    ".site-footer",
+  ),
+  11px: (".intro__stat-label", ".meta-grid__label", ".post__summary-label"),
+);
+
+@media (max-width: 639px) {
+  @each $size, $selectors in $headings {
+    #{$selectors} {
+      font-size: step($size);
+    }
+  }
+
+  @each $size, $selectors in $body {
+    #{$selectors} {
+      font-size: math.min(step($size), $cap);
+    }
+  }
+}
