@@ -1,8 +1,11 @@
-{%- if page.images and page.images.size > 0 %}
+{%- if page.images and page.images.size > 1 %}
 {%- comment -%}
   A scroll-snap track rather than a transform the script owns, so the images stay
   swipeable and reachable with the keyboard when the script never runs. The
-  buttons and dots only drive and mirror the scroll position.
+  buttons and dots only drive and mirror the scroll position, and they wrap.
+
+  Chevrons are drawn, not typed: the ‹ › glyphs sit about 1.4px below the centre
+  of a flex-centred button, and geometry avoids depending on font metrics.
 {%- endcomment -%}
 <div class="shots" data-shots>
   <div class="shots__track" data-shots-track tabindex="0">
@@ -13,17 +16,19 @@
     {%- endfor %}
   </div>
 
-  {%- if page.images.size > 1 %}
   <div class="shots__controls">
-    <button class="shots__nav" type="button" data-shots-prev aria-label="이전 이미지">&lsaquo;</button>
+    <button class="shots__nav" type="button" data-shots-prev aria-label="이전 이미지">
+      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="M6 1 1.5 6 6 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <div class="shots__dots">
       {%- for image in page.images %}
       <button class="shots__dot" type="button" data-shots-dot aria-label="{{ forloop.index }}번 이미지"></button>
       {%- endfor %}
     </div>
-    <button class="shots__nav" type="button" data-shots-next aria-label="다음 이미지">&rsaquo;</button>
+    <button class="shots__nav" type="button" data-shots-next aria-label="다음 이미지">
+      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" aria-hidden="true"><path d="m1 1 4.5 5L1 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
   </div>
-  {%- endif %}
 </div>
 
 <script>
@@ -32,7 +37,7 @@
     if (!root) return;
     var track = root.querySelector("[data-shots-track]");
     var dots = [].slice.call(root.querySelectorAll("[data-shots-dot]"));
-    if (!track || !dots.length) return;
+    if (!track || dots.length < 2) return;
 
     function index() {
       return Math.round(track.scrollLeft / track.clientWidth);
@@ -45,21 +50,30 @@
       });
     }
     function go(to) {
-      track.scrollTo({ left: to * track.clientWidth, behavior: "smooth" });
+      // Wrap, so the ends are reachable in one click from either side.
+      var n = dots.length;
+      var target = ((to % n) + n) % n;
+      track.scrollTo({ left: target * track.clientWidth, behavior: "smooth" });
     }
 
     dots.forEach(function (dot, i) {
       dot.addEventListener("click", function () { go(i); });
     });
     root.querySelector("[data-shots-prev]").addEventListener("click", function () {
-      go(Math.max(0, index() - 1));
+      go(index() - 1);
     });
     root.querySelector("[data-shots-next]").addEventListener("click", function () {
-      go(Math.min(dots.length - 1, index() + 1));
+      go(index() + 1);
     });
     track.addEventListener("scroll", paint, { passive: true });
     window.addEventListener("resize", paint);
     paint();
   })();
 </script>
+
+{%- elsif page.images and page.images.size == 1 %}
+{%- comment -%} One image needs no track and no controls. {%- endcomment -%}
+<div class="shots shots--single">
+  <img src="{{ page.images[0] | relative_url }}" alt="{{ page.title }}" loading="lazy">
+</div>
 {%- endif -%}
