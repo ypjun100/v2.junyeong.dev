@@ -566,9 +566,8 @@
     }
 
     h3 {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
+      position: relative;
+      padding-left: 14px; // 5px marker + the 9px that used to be the flex gap
       font-family: var(--font-content);
       font-size: 15px;
       font-weight: 600;
@@ -579,12 +578,16 @@
 
       // Same drawn triangle as the About career items: neither webfont carries
       // U+25B8, so it is not typed.
+      // Absolutely positioned, not a flex item. Flex would make every inline run
+      // in the title its own item, so the gap meant for the marker also opened
+      // up beside any <strong> the author used.
       &::before {
         content: "";
-        flex-shrink: 0;
+        position: absolute;
+        left: 0;
+        top: 0.42em;
         width: 0;
         height: 0;
-        margin-top: 0.42em;
         border-left: 5px solid var(--accent);
         border-top: 4px solid transparent;
         border-bottom: 4px solid transparent;
