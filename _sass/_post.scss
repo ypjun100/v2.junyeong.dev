@@ -550,6 +550,14 @@
     }
   }
 
+  // The ↩ in a footnote backlink is U+21A9, which none of the site's faces carry
+  // -- not even the unsubsetted Nanum Myeongjo -- so it always renders in a
+  // system fallback whose proportions run large beside the text. Sizing it down
+  // is the only lever that works regardless of which face answers.
+  .reversefootnote {
+    font-size: 0.8em;
+  }
+
   // Rouge output, kept close to the design's flat code block.
   .highlight {
     .c, .c1, .cm, .cs, .cd { color: var(--muted-dim); font-style: italic; }
