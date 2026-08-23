@@ -110,9 +110,13 @@
   padding-left: 20px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 14.5px;
-  line-height: 1.65;
+  // Matches the bullets under 개발 내용 in a project body, which the mockup's
+  // 14.5px / 1.65 read tighter than. The three values move together -- size,
+  // leading and item gap -- so they are kept next to each other here and in
+  // the h3 + ul rule in _post.scss.
+  gap: 8px;
+  font-size: 15.5px;
+  line-height: 1.8;
   color: var(--text-lead);
 
   li {

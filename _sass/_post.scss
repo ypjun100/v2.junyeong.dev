@@ -678,6 +678,8 @@
       }
     }
 
+    // Size, leading and item gap are shared with .career-item__points in
+    // _about.scss so the two bullet lists read the same. Change them together.
     h3 + ul {
       margin: 0 0 20px;
       padding-left: 20px;
