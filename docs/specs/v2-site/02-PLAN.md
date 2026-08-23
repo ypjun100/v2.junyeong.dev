@@ -191,11 +191,10 @@ summary: [string]        # 선택
 | `--text` | `#b3bcc8` | 본문 기본 |
 | `--text-strong` | `#eaeff5` | 제목, 강조 |
 | `--text-mid` | `#dbe2ea` | 목록 항목 제목, 지표 값 |
-| `--text-soft` | `#aab3bf` | 글 본문 |
+| `--text-soft` | `#aab3bf` | 읽는 텍스트 전반 — 글 본문, 소개 문단, 경력·프로젝트 불릿 |
 | `--text-summary` | `#a7b0bc` | 요약 콜아웃 |
 | `--text-chip` | `#9aa4b1` | 칩, 코드 블록 |
 | `--text-list` | `#929ba8` | Posts 인트로 |
-| `--text-lead` | `#98a2af` | 경력 요약 문단, 경력 성과 불릿 |
 | `--muted` | `#6b7583` | 섹션 라벨, 보조 텍스트 |
 | `--muted-dim` | `#5f6875` | 날짜, 메타 |
 | `--muted-excerpt` | `#78818e` | Home 발췌 |
