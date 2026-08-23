@@ -65,7 +65,9 @@
 .career-item {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  // Wider than the mockup's 9px: the marked title reads as a heading for the
+  // list under it, and needed more air to sit apart from it.
+  gap: 13px;
   padding: 18px 0;
   border-top: 1px solid var(--border-footer);
 
@@ -111,7 +113,7 @@
   gap: 6px;
   font-size: 14.5px;
   line-height: 1.65;
-  color: var(--text-detail);
+  color: var(--text-lead);
 
   li {
     text-wrap: pretty;

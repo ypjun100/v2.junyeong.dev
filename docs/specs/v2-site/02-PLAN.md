@@ -197,8 +197,7 @@ summary: [string]        # 선택
 | `--text-summary` | `#a7b0bc` | 요약 콜아웃 |
 | `--text-chip` | `#9aa4b1` | 칩, 코드 블록 |
 | `--text-list` | `#929ba8` | Posts 인트로 |
-| `--text-lead` | `#98a2af` | 경력 요약 문단 |
-| `--text-detail` | `#838d9a` | 경력 성과 불릿 |
+| `--text-lead` | `#98a2af` | 경력 요약 문단, 경력 성과 불릿 |
 | `--muted` | `#6b7583` | 섹션 라벨, 보조 텍스트 |
 | `--muted-dim` | `#5f6875` | 날짜, 메타 |
 | `--muted-excerpt` | `#78818e` | Home 발췌 |
