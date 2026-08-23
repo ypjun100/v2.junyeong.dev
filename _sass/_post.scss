@@ -396,8 +396,11 @@
     color: var(--text-summary);
     font-size: 15.5px;
 
-    > *:last-child {
-      margin-bottom: 0;
+    // The paragraph inside is not a child of .post__body, so the reset there
+    // never reaches it and it keeps the UA's 1em margin, which doubles the box's
+    // apparent padding. Covers the project overview callout too.
+    > * {
+      margin: 0;
     }
   }
 
@@ -556,13 +559,6 @@
       line-height: 1.85;
       color: var(--text-soft);
       text-wrap: pretty;
-
-      // The paragraph inside is not a child of .post__body, so the reset there
-      // never reached it and it kept the UA's 1em top margin -- which is what
-      // was widening this gap, not the padding.
-      > * {
-        margin: 0;
-      }
     }
 
     h3 {
