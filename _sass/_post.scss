@@ -268,12 +268,39 @@
   }
 }
 
-.lightbox__image {
-  max-width: 100%;
+.lightbox__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
   max-height: 100%;
+}
+
+.lightbox__image {
+  // min-height 0 lets the image give way when a caption sits under it, so the
+  // pair fits the viewport instead of overflowing it.
+  min-height: 0;
+  max-width: 100%;
   object-fit: contain;
   border-radius: 6px;
   cursor: default;
+}
+
+.lightbox__caption {
+  flex-shrink: 0;
+  max-width: 620px;
+  font-family: var(--font-mono-mixed);
+  font-size: 12.5px;
+  line-height: 1.6;
+  word-spacing: -0.3em;
+  color: var(--muted);
+  text-align: center;
+  cursor: default;
+
+  &[hidden] {
+    display: none;
+  }
 }
 
 .lightbox__close {
@@ -296,10 +323,26 @@
     color: var(--accent);
     border-color: var(--accent-border);
   }
+
+  // Opened by pointer: focus still moves here so Escape and Tab behave, but the
+  // ring would be answering a question the reader did not ask. Opened by
+  // keyboard, the ring stays.
+  .lightbox.is-pointer-opened &:focus-visible {
+    outline: none;
+  }
 }
 
 .is-zoomable {
   cursor: zoom-in;
+}
+
+// Closing the lightbox hands focus back to the image it came from, which the
+// browser can read as keyboard navigation and ring in the accent colour. These
+// carry tabindex="-1" and so are only ever focused by that script -- nobody can
+// tab to them, so the ring says nothing and only the announcement matters.
+.post img[tabindex="-1"]:focus,
+.post img[tabindex="-1"]:focus-visible {
+  outline: none;
 }
 
 // Rendered markdown

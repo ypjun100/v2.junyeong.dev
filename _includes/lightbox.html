@@ -1,12 +1,15 @@
 {%- comment -%}
-  Opens any image in the article at viewport size. The markup is inert until the
-  script wires it up, so with JavaScript off the images simply stay inline rather
-  than becoming dead links.
+  Opens any image in the article at viewport size, carrying its caption along.
+  The markup is inert until the script wires it up, so with JavaScript off the
+  images simply stay inline rather than becoming dead links.
 {%- endcomment -%}
 <div class="lightbox" data-lightbox hidden>
   <button class="lightbox__close" type="button" data-lightbox-close aria-label="닫기">
     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="m1.5 1.5 12 12m0-12-12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
   </button>
+  <figure class="lightbox__figure" data-lightbox-figure>
+    <figcaption class="lightbox__caption" data-lightbox-caption hidden></figcaption>
+  </figure>
 </div>
 
 <script>
@@ -15,32 +18,56 @@
     var article = document.querySelector(".post");
     if (!box || !article) return;
 
+    var figure = box.querySelector("[data-lightbox-figure]");
+    var caption = box.querySelector("[data-lightbox-caption]");
+    var close = box.querySelector("[data-lightbox-close]");
+
     // Built here rather than in the markup: an img with no src is invalid, and
     // the link checker rightly flags it on every page.
     var full = document.createElement("img");
     full.className = "lightbox__image";
     full.alt = "";
-    box.appendChild(full);
+    figure.insertBefore(full, caption);
 
-    var close = box.querySelector("[data-lightbox-close]");
     var opener = null;
+
+    // Focus has to move into the overlay when it opens, but a mouse user should
+    // not be handed a focus ring for it. Track how the page was last driven and
+    // let the class below suppress the ring only in the pointer case; a keyboard
+    // user still sees where focus went.
+    var viaKeyboard = false;
+    document.addEventListener("keydown", function () { viaKeyboard = true; }, true);
+    document.addEventListener("pointerdown", function () { viaKeyboard = false; }, true);
 
     // Body images and both shapes the carousel can take.
     var SOURCES = ".post__body img, .shots__frame img, .shots--single img";
 
+    function captionFor(img) {
+      // The convention the posts are written against: the emphasis right after
+      // an image is its caption. Carousel images come from front matter and
+      // have none.
+      var next = img.nextElementSibling;
+      return next && next.tagName === "EM" ? next.innerHTML : "";
+    }
+
     function open(img) {
       full.src = img.currentSrc || img.src;
       full.alt = img.alt || "";
+      var text = captionFor(img);
+      caption.innerHTML = text;
+      caption.hidden = !text;
       box.hidden = false;
       // Keep the page from scrolling behind the overlay.
       document.documentElement.style.overflow = "hidden";
       opener = img;
+      box.classList.toggle("is-pointer-opened", !viaKeyboard);
       close.focus();
     }
 
     function shut() {
       box.hidden = true;
       full.removeAttribute("src");
+      caption.innerHTML = "";
       document.documentElement.style.overflow = "";
       if (opener) {
         // Hand focus back to where it came from, for keyboard and screen readers.
@@ -60,8 +87,9 @@
 
     close.addEventListener("click", shut);
     box.addEventListener("click", function (e) {
-      // Anywhere but the image itself closes.
-      if (e.target === full) return;
+      // The image and the caption are inert -- the caption so its links still
+      // work. Anywhere else closes.
+      if (e.target === full || caption.contains(e.target)) return;
       shut();
     });
     document.addEventListener("keydown", function (e) {
