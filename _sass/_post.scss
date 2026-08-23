@@ -432,12 +432,30 @@
   blockquote {
     margin: 0 0 20px;
     padding: 16px 20px;
+    position: relative;
     border: 1px solid var(--border);
-    border-left: 2px solid var(--accent);
+    border-left: 0;
+    // Square on the left so the accent bar can run its full height dead
+    // straight, rounded on the right like the other cards. The bar is its own
+    // layer rather than a border or an inset shadow: a thicker left border met
+    // the 1px top in a mitre that clipped the green diagonally, and an inset
+    // shadow followed the radius and bowed it.
     border-radius: 0 6px 6px 0;
     background: var(--surface);
     color: var(--text-summary);
     font-size: 15.5px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      // 1px past each end, so the bar squares off against the outer edge of the
+      // rule above and below rather than stopping short of it.
+      top: -1px;
+      bottom: -1px;
+      left: 0;
+      width: 2px;
+      background: var(--accent);
+    }
 
     // The paragraph inside is not a child of .post__body, so the reset there
     // never reaches it and it keeps the UA's 1em margin, which doubles the box's
@@ -625,6 +643,12 @@
       line-height: 1.85;
       color: var(--text-soft);
       text-wrap: pretty;
+
+      // Carries its own left rule; the bar from the general blockquote would
+      // double it.
+      &::before {
+        content: none;
+      }
     }
 
     h3 {
