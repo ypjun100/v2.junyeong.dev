@@ -37,7 +37,6 @@ TASK 02, TASK 03.
     - `ul`, `ol` padding-left 20px, 항목 간 7px
     - `strong` `--text-mid` / 600, `em` `--text-mid` / `font-style: normal`
     - `blockquote` 좌측 강조색 보더 + `--surface` 배경. 기존 글이 요약에 `>`를 자주 쓴다.
-    - `mark` 강조색 계열 배경 + 밝은 글자. 기존 프로젝트 글이 핵심 문장에 `<mark>`를 쓴다.
     - `table`, `hr`, `img`, `a`
     - Rouge 하이라이트 클래스는 시안 코드 블록의 톤(`--text-chip` 본문, `--muted-dim` 주석)에 맞춰 최소한으로만 색을 준다.
 11. 뒤로가기 링크 — `kind == blog`이면 `← Posts`(`/posts/`), 아니면 `← About`(`/about/`).

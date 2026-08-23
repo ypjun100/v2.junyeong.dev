@@ -419,16 +419,6 @@
     font-style: normal;
   }
 
-  // The old blog used <s> as a highlight rather than a strikethrough.
-  s,
-  mark {
-    text-decoration: none;
-    background: var(--accent-soft);
-    color: var(--text-mid);
-    border-radius: 4px;
-    padding: 2px 4px;
-  }
-
   blockquote {
     margin: 0 0 20px;
     padding: 16px 20px;

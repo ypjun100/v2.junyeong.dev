@@ -15,7 +15,7 @@ TASK 01.
 1. `~/project/blog.junyeong.dev/_posts/*.md` 21개 중 작성이 끝난 19개를 `content/_posts/`로 복사한다. 파일명(`YYYY-MM-DD-<slug>.md`)을 바꾸지 않는다. 기존 주소가 슬러그에 묶여 있다.
 2. `pin`, `math`, `mermaid`, `image`를 제거한다. `title`, `date`, `categories`, `tags`만 남긴다. `image`는 Chirpy의 대표 이미지 필드로 v2에서는 쓰지 않는다.
 3. 본문에서 Chirpy 전용 문법(`{: .prompt-tip }`, `{: .prompt-warning }` 등)을 제거한다. 이 지시자는 바로 위 인용문에 붙는 것이라 줄만 지우면 일반 인용문이 된다. 지시자가 인용문 안에 `> {: .prompt-info }` 형태로 들어간 경우도 있으므로 두 형태를 모두 잡는다.
-4. `<s>`를 형광펜으로 바꾸는 인라인 `<style>` 블록을 제거한다. `s` 스타일은 `_post.scss`가 한 번만 정의한다.
+4. `<s>`를 형광펜으로 바꾸는 인라인 `<style>` 블록을 제거한다. `s` 스타일은 `_post.scss`가 한 번만 정의한다. (이후 형광펜을 없애면서 `<s>` 50개를 `**굵게**`로 바꾸고 `s` 스타일도 지웠다.)
 5. `~/project/blog.junyeong.dev/imgs/`를 `imgs/`로 복사한다. 본문이 `/imgs/YYYY-MM-DD/...` 형태로 참조하므로 경로 구조를 그대로 유지한다.
 
 저자가 아직 쓰고 있는 두 편은 저장소에 넣지 않는다. `2026-03-21-FSD.md`와 `2026-04-25-생애-첫-미국-여행기-2.md`이며, 워킹 트리에는 두고 `.gitignore`로 제외해 로컬에서만 미리 볼 수 있게 한다. 글이 완성되면 `.gitignore`의 해당 줄을 지우는 것으로 공개된다.
