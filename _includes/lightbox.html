@@ -3,7 +3,7 @@
   The markup is inert until the script wires it up, so with JavaScript off the
   images simply stay inline rather than becoming dead links.
 {%- endcomment -%}
-<div class="lightbox" data-lightbox hidden>
+<div class="lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="이미지 확대 보기" hidden>
   <button class="lightbox__close" type="button" data-lightbox-close aria-label="닫기">
     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="m1.5 1.5 12 12m0-12-12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
   </button>
@@ -69,12 +69,12 @@
       full.removeAttribute("src");
       caption.innerHTML = "";
       document.documentElement.style.overflow = "";
+      box.classList.remove("is-pointer-opened");
       if (opener) {
         // Hand focus back to where it came from, for keyboard and screen readers.
         // preventScroll because the image is already on screen -- the reader just
         // closed the overlay over it -- and focusing a carousel frame without it
         // scrolls the track to that frame.
-        opener.setAttribute("tabindex", "-1");
         opener.focus({ preventScroll: true });
         opener = null;
       }
@@ -96,11 +96,51 @@
       shut();
     });
     document.addEventListener("keydown", function (e) {
-      if (!box.hidden && e.key === "Escape") shut();
+      if (box.hidden) return;
+
+      if (e.key === "Escape") {
+        shut();
+        return;
+      }
+
+      // Keep keyboard focus inside the modal. Captions may contain links, so
+      // collect the live set each time rather than assuming the close button is
+      // the overlay's only control.
+      if (e.key === "Tab") {
+        var focusable = Array.prototype.slice.call(
+          box.querySelectorAll("button:not([disabled]), a[href], [tabindex]:not([tabindex=\"-1\"])")
+        ).filter(function (node) {
+          return !node.hidden && node.getClientRects().length > 0;
+        });
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (!first) {
+          e.preventDefault();
+          close.focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     });
 
     article.querySelectorAll(SOURCES).forEach(function (img) {
-      if (!img.closest("a")) img.classList.add("is-zoomable");
+      if (img.closest("a")) return;
+
+      img.classList.add("is-zoomable");
+      img.setAttribute("tabindex", "0");
+      img.setAttribute("role", "button");
+      img.setAttribute("aria-haspopup", "dialog");
+      img.setAttribute("aria-label", img.alt ? img.alt + " 확대 보기" : "이미지 확대 보기");
+      img.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        viaKeyboard = true;
+        open(img);
+      });
     });
   })();
 </script>

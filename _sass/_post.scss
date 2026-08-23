@@ -340,15 +340,6 @@
   cursor: zoom-in;
 }
 
-// Closing the lightbox hands focus back to the image it came from, which the
-// browser can read as keyboard navigation and ring in the accent colour. These
-// carry tabindex="-1" and so are only ever focused by that script -- nobody can
-// tab to them, so the ring says nothing and only the announcement matters.
-.post img[tabindex="-1"]:focus,
-.post img[tabindex="-1"]:focus-visible {
-  outline: none;
-}
-
 // Rendered markdown
 // Every rule here mirrors an inline style from the design source.
 
