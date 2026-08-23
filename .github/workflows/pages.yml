@@ -3,7 +3,6 @@ name: Deploy site
 on:
   push:
     branches: [main]
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,10 +10,9 @@ permissions:
   pages: write
   id-token: write
 
-# Deploys serialize per ref and a running one finishes rather than being
-# cancelled mid-publish. Pull request builds get their own lane.
+# Let a running deploy finish rather than cancelling it mid-publish.
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pages
   cancel-in-progress: false
 
 jobs:
@@ -54,8 +52,6 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
 
   deploy:
-    # Pull requests build and verify only; publishing stays on main.
-    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:

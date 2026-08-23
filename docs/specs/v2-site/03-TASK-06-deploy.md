@@ -12,11 +12,11 @@ TASK 01 ~ 05.
 
 1. `CNAME` — `v2.junyeong.dev` 한 줄.
 2. `.github/workflows/pages.yml`
-   - 트리거: `push`(`main`), `pull_request`, `workflow_dispatch`
+   - 트리거: `push`(`main`), `workflow_dispatch`
    - 권한: `contents: read`, `pages: write`, `id-token: write`
-   - `concurrency`는 `pages-${{ github.ref }}` 그룹에 `cancel-in-progress: false`. 배포는 ref 단위로 직렬화되고 PR 빌드는 자기 레인을 갖는다.
+   - `concurrency: { group: pages, cancel-in-progress: false }`
    - build 잡: `actions/checkout` → `ruby/setup-ruby`(`bundler-cache: true`) → `actions/configure-pages` → `bundle exec jekyll build --strict_front_matter` → `bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-missing-alt` → 개수 대조(각 컬렉션의 `git ls-files` 파일 수와 `_site`의 페이지 수) → `actions/upload-pages-artifact`
-   - deploy 잡: `actions/deploy-pages`, `environment: github-pages`. `pull_request` 이벤트에서는 건너뛴다.
+   - deploy 잡: `actions/deploy-pages`, `environment: github-pages`
 3. `_config.yml`의 `url`이 `https://v2.junyeong.dev`인지 확인한다.
 4. `README.md` — 사이트 소개, 로컬 실행 명령, 배포 방식 세 문단.
 

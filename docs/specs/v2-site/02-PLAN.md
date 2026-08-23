@@ -324,7 +324,7 @@ post.html                       kind == blog        kind == project / award
 - 개수 대조 — 빌드 후 `_site` 안의 `project/`, `prize/`, `posts/` 디렉터리 항목 수가 각 컬렉션의 파일 수와 일치하는지 확인한다. 배포본 기준 개수는 `git ls-files`로 센다.
 - 반응형 육안 확인 — 375px, 768px, 1280px 폭에서 Home / About / Posts / 글 상세 네 화면.
 
-CI 워크플로는 push와 pull request에서 build, htmlproofer, 개수 대조를 순서대로 돌린다. 배포는 `main` 푸시에서만 일어난다.
+CI 워크플로는 배포 전에 build, htmlproofer, 개수 대조를 순서대로 돌린다.
 
 ## 태스크 분할
 
