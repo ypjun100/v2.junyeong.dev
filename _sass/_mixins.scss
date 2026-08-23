@@ -1,3 +1,20 @@
+@use "sass:math";
+
+// Design values are written in px, which is how the mockup states them and how
+// they are easiest to reason about. This turns them into rem on the way out so
+// they follow the reader's own text size instead of pinning it.
+//
+// 16px is the browser default root size, so rem(16px) is 1rem and nothing moves
+// for a reader who has not changed anything. Someone who has set their base to
+// 20px gets everything a quarter larger, together, rather than text growing
+// inside boxes that stay put.
+//
+// Hairlines stay in px on purpose: a 1px rule is a 1px rule at any text size,
+// and scaling it just makes borders fat.
+@function rem($px) {
+  @return math.div($px, 16px) * 1rem;
+}
+
 // Hover styles, but only where hovering is a thing the device can do.
 //
 // A tap on a touch screen leaves :hover applied to whatever was tapped until
@@ -33,15 +50,15 @@
 
   li {
     position: relative;
-    padding-left: 14px;
+    padding-left: rem(14px);
 
     &::before {
       content: "";
       position: absolute;
       left: 0;
-      top: calc(0.9em - 3px);
-      width: 4px;
-      height: 4px;
+      top: calc(0.9em - #{rem(3px)});
+      width: rem(4px);
+      height: rem(4px);
       border-radius: 50%;
       background: currentColor;
     }

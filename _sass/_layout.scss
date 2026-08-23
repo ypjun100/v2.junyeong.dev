@@ -8,49 +8,49 @@
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding: 76px 28px 110px;
+  padding: rem(76px) rem(28px) rem(110px);
 }
 
 .shell__inner {
   width: 100%;
-  max-width: 940px;
+  max-width: rem(940px);
   display: flex;
   align-items: flex-start;
-  gap: 76px;
+  gap: rem(76px);
 }
 
 .shell__main {
   flex: 1;
   min-width: 0;
-  max-width: 620px;
+  max-width: rem(620px);
   display: flex;
   flex-direction: column;
-  gap: 64px;
+  gap: rem(64px);
 }
 
 // Sidebar
 
 .sidebar {
-  width: 168px;
+  width: rem(168px);
   flex-shrink: 0;
   position: sticky;
-  top: 76px;
+  top: rem(76px);
   font-family: var(--font-ui);
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: rem(22px);
 }
 
 .sidebar__identity {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 22px;
+  gap: rem(22px);
 }
 
 .sidebar__avatar {
-  width: 46px;
-  height: 46px;
+  width: rem(46px);
+  height: rem(46px);
   border-radius: 50%;
   object-fit: cover;
   background: var(--surface);
@@ -60,11 +60,11 @@
 .sidebar__names {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: rem(5px);
 }
 
 .sidebar__name {
-  font-size: 14px;
+  font-size: rem(14px);
   font-weight: 700;
   letter-spacing: 0.09em;
   color: var(--text-strong);
@@ -72,7 +72,7 @@
 }
 
 .sidebar__role {
-  font-size: 11.5px;
+  font-size: rem(11.5px);
   letter-spacing: 0.04em;
   color: var(--muted);
 }
@@ -80,9 +80,9 @@
 .sidebar__nav {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  font-size: 14.5px;
-  margin-top: 4px;
+  gap: rem(7px);
+  font-size: rem(14.5px);
+  margin-top: rem(4px);
 
   a {
     color: var(--muted);
@@ -104,9 +104,9 @@
 .sidebar__links {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 11.5px;
-  margin-top: 8px;
+  gap: rem(6px);
+  font-size: rem(11.5px);
+  margin-top: rem(8px);
 
   a {
     color: var(--muted);
@@ -130,7 +130,7 @@
 
 .section-label {
   font-family: var(--font-ui);
-  font-size: 11.5px;
+  font-size: rem(11.5px);
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -139,7 +139,7 @@
 
 // A label sitting on its own rule, used by every About section.
 .section-bar {
-  padding-bottom: 12px;
+  padding-bottom: rem(12px);
   border-bottom: 1px solid var(--border);
 }
 
@@ -148,14 +148,14 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 14px;
+  gap: rem(16px);
+  padding-bottom: rem(14px);
   border-bottom: 1px solid var(--border);
-  margin-bottom: 22px;
+  margin-bottom: rem(22px);
 
   &__more {
     font-family: var(--font-ui);
-    font-size: 11.5px;
+    font-size: rem(11.5px);
     color: var(--muted);
     text-decoration: none;
     white-space: nowrap;
@@ -168,23 +168,23 @@
 
 
 .site-footer {
-  margin-top: 24px;
-  padding-top: 22px;
+  margin-top: rem(24px);
+  padding-top: rem(22px);
   border-top: 1px solid var(--border-footer);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: rem(16px);
   flex-wrap: wrap;
-  font-size: 11.5px;
+  font-size: rem(11.5px);
   color: var(--muted-footer);
 }
 
 // Below 900px the sidebar becomes a header row above the content.
 
-@media (max-width: 899px) {
+@media (max-width: 56.1875em) {
   .shell {
-    padding: 56px 24px 84px;
+    padding: rem(56px) rem(24px) rem(84px);
   }
 
   // stretch, not the flex-start inherited from the desktop row: in a column
@@ -193,12 +193,12 @@
   .shell__inner {
     flex-direction: column;
     align-items: stretch;
-    gap: 40px;
+    gap: rem(40px);
   }
 
   .shell__main {
     max-width: 100%;
-    gap: 52px;
+    gap: rem(52px);
   }
 
   // The profile card and the outbound links share the first line at opposite
@@ -212,21 +212,21 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
+    gap: rem(16px);
   }
 
   .sidebar__identity {
     order: 1;
     flex-direction: row;
     align-items: center;
-    gap: 12px;
+    gap: rem(12px);
     min-width: 0;
   }
 
   .sidebar__links {
     order: 2;
     flex-direction: row;
-    gap: 14px;
+    gap: rem(14px);
     margin-top: 0;
   }
 
@@ -234,7 +234,7 @@
     order: 3;
     flex: 1 1 100%;
     flex-direction: row;
-    gap: 18px;
+    gap: rem(18px);
     margin-top: 0;
   }
 
@@ -247,12 +247,12 @@
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 39.9375em) {
   .shell {
-    padding: 44px 20px 72px;
+    padding: rem(44px) rem(20px) rem(72px);
   }
 
   .shell__main {
-    gap: 44px;
+    gap: rem(44px);
   }
 }

@@ -91,7 +91,11 @@ bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-miss
 
 색과 서체는 `_sass/_tokens.scss`의 CSS 커스텀 프로퍼티로만 다룬다. 템플릿에 인라인 스타일을 넣지 않고, SCSS에 리터럴 hex를 쓰지 않는다. 새 색이 필요하면 토큰을 먼저 추가한다.
 
-시각 기준은 Claude Design 프로젝트 `73d527ff-67e3-41c5-8af1-2401d3b37e1c`의 `Junyeong Site.dc.html`이며 `DesignSync` 도구로 읽을 수 있다. 시안에 없는 화면 폭 대응은 `_sass/_layout.scss`의 900px·640px 브레이크포인트를 따른다.
+시각 기준은 Claude Design 프로젝트 `73d527ff-67e3-41c5-8af1-2401d3b37e1c`의 `Junyeong Site.dc.html`이며 `DesignSync` 도구로 읽을 수 있다. 시안에 없는 화면 폭 대응은 `_sass/_layout.scss`의 900px·640px 브레이크포인트를 따른다. 브레이크포인트는 `em`으로 적혀 있어 기본 글자 크기를 키운 독자에게는 더 일찍 접힌다.
+
+**길이는 `rem()`으로 감싼다.** 값은 시안대로 px로 쓰되 `padding: rem(20px)`처럼 적으면 함수가 rem으로 바꿔 내보낸다. 그래야 독자가 기기에서 키운 글자 크기를 글씨만이 아니라 여백과 상자까지 함께 따라간다. `_sass/_mixins.scss`에 있고 각 파티셜이 `@use "mixins" as *`로 가져다 쓴다.
+
+px 그대로 두는 것은 **선**뿐이다. `border`, `outline`, `border-radius`, 밑줄 두께, 그리고 선 노릇을 하는 1~2px짜리 `width`가 여기 해당한다. 1px 선은 글자가 커져도 1px 선이고, 같이 키우면 테두리만 두꺼워진다. 삼각형 마커처럼 `border`로 그린 *도형*은 반대로 `rem()`을 쓴다.
 
 ## 폰트
 

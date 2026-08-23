@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "mixins" as *;
 
 // Mobile type scale
 //
@@ -16,10 +17,12 @@ $scale: 1.08;
 
 // Reading text stops here. Scaling took the blog body and the project 설명
 // callout past what the author wants to read on a phone.
-$cap: 16.5px;
+$cap: 16.5px; // compared against step() output, converted below
 
+// Rounds to the half-pixel grid the rest of the stylesheet uses, then hands the
+// result to rem() so the phone scale rides the reader's text size too.
 @function step($size) {
-  @return math.div(math.round($size * $scale * 2), 2);
+  @return rem(math.div(math.round($size * $scale * 2), 2));
 }
 
 // Headings scale without the cap -- capping them would flatten a 30px headline
@@ -83,7 +86,7 @@ $body: (
   11px: (".intro__stat-label", ".meta-grid__label", ".post__summary-label"),
 );
 
-@media (max-width: 639px) {
+@media (max-width: 39.9375em) {
   @each $size, $selectors in $headings {
     #{$selectors} {
       font-size: step($size);
@@ -92,7 +95,7 @@ $body: (
 
   @each $size, $selectors in $body {
     #{$selectors} {
-      font-size: math.min(step($size), $cap);
+      font-size: math.min(step($size), rem($cap));
     }
   }
 }
