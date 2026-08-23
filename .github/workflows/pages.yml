@@ -3,6 +3,7 @@ name: Deploy site
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -10,9 +11,10 @@ permissions:
   pages: write
   id-token: write
 
-# Let a running deploy finish rather than cancelling it mid-publish.
+# Deploys serialize per ref and a running one finishes rather than being
+# cancelled mid-publish. Pull request builds get their own lane.
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -36,9 +38,24 @@ jobs:
       - name: Check links and images
         run: bundle exec htmlproofer _site --disable-external --allow-hash-href --ignore-missing-alt
 
+      # A bad collections_dir builds green with every post silently dropped, and
+      # htmlproofer cannot miss links in pages that were never written. Counting
+      # built pages against the collections is the check that catches it.
+      - name: Check page counts against the collections
+        run: |
+          check() {
+            echo "$1: source $2, built $3"
+            test "$2" -eq "$3"
+          }
+          check posts    "$(git ls-files 'content/_posts/*.md'    | wc -l)" "$(find _site/posts   -mindepth 2 -name index.html | wc -l)"
+          check projects "$(git ls-files 'content/_projects/*.md' | wc -l)" "$(find _site/project -type f -name '*.html'      | wc -l)"
+          check awards   "$(git ls-files 'content/_awards/*.md'   | wc -l)" "$(find _site/prize   -type f -name '*.html'      | wc -l)"
+
       - uses: actions/upload-pages-artifact@v3
 
   deploy:
+    # Pull requests build and verify only; publishing stays on main.
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:

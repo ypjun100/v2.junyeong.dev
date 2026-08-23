@@ -142,5 +142,5 @@ python3 script/strip-gain-maps.py --write    # 잘라낸다
 
 1. `bundle exec jekyll build --strict_front_matter`가 경고 없이 통과한다.
 2. `htmlproofer`가 통과한다.
-3. 세 컬렉션의 파일 개수와 `_site/posts`·`_site/project`·`_site/prize`의 페이지 개수가 일치한다. `collections_dir` 설정이 어긋나도 빌드는 성공하므로 이 대조가 유일한 방어선이다. 배포본 기준 개수는 `git ls-files content/_posts | wc -l`로 센다. 로컬에는 `.gitignore`로 제외한 작성 중인 글이 섞여 있다.
+3. 세 컬렉션의 파일 개수와 `_site/posts`·`_site/project`·`_site/prize`의 페이지 개수가 일치한다. `collections_dir` 설정이 어긋나도 빌드는 성공하므로 이 대조가 유일한 방어선이다. CI도 배포 전에 같은 대조를 한다. 배포본 기준 개수는 `git ls-files content/_posts | wc -l`로 센다. 로컬에는 `.gitignore`로 제외한 작성 중인 글이 섞여 있다.
 4. 375px, 768px, 1280px에서 Home·About·Posts·글 상세를 눈으로 확인한다.
