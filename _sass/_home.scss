@@ -82,6 +82,12 @@
   p {
     margin: 0;
   }
+
+  // Same emphasis as the About career points and article bodies.
+  strong {
+    color: var(--text-mid);
+    font-weight: 600;
+  }
 }
 
 // Recent posts
