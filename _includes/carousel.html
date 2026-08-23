@@ -62,7 +62,24 @@
       // Wrap, so the ends are reachable in one click from either side.
       var n = dots.length;
       var target = ((to % n) + n) % n;
+      moved = true;
       track.scrollTo({ left: target * track.clientWidth, behavior: "smooth" });
+    }
+
+    // Nothing here scrolls the track at load, but the browser does. Scroll
+    // offsets of scrollable elements are persisted and handed back, and on iOS
+    // Safari a project page served from the back/forward cache opens on whatever
+    // image was last on screen rather than the first. Claim the first image
+    // until the reader moves it themselves.
+    var moved = false;
+    ["pointerdown", "touchstart", "wheel", "keydown"].forEach(function (type) {
+      track.addEventListener(type, function () { moved = true; }, { passive: true });
+    });
+
+    function reset() {
+      if (moved) return;
+      track.scrollLeft = 0;
+      paint();
     }
 
     dots.forEach(function (dot, i) {
@@ -81,7 +98,17 @@
       var img = frame.firstElementChild;
       if (img && !img.complete) img.addEventListener("load", paint);
     });
-    paint();
+
+    reset();
+    // Restoration lands after this inline script has run, so take the position
+    // back once the page settles and again whenever it returns from the cache.
+    window.addEventListener("load", reset);
+    window.addEventListener("pageshow", function (e) {
+      if (e.persisted) {
+        moved = false;
+        reset();
+      }
+    });
   })();
 </script>
 
