@@ -340,6 +340,13 @@
   cursor: zoom-in;
 }
 
+// Focus lands back on the opened image when the overlay closes. The ring is
+// held off for pointer sessions only, and only until focus moves on -- the
+// class comes and goes in shut() in lightbox.html.
+.post img.is-pointer-refocus:focus-visible {
+  outline: none;
+}
+
 // Rendered markdown
 // Every rule here mirrors an inline style from the design source.
 

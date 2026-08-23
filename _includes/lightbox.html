@@ -65,6 +65,7 @@
     }
 
     function shut() {
+      var pointerSession = box.classList.contains("is-pointer-opened");
       box.hidden = true;
       full.removeAttribute("src");
       caption.innerHTML = "";
@@ -75,6 +76,20 @@
         // preventScroll because the image is already on screen -- the reader just
         // closed the overlay over it -- and focusing a carousel frame without it
         // scrolls the track to that frame.
+        //
+        // In a pointer session the handback must not paint a focus ring on the
+        // image. Escape counts as keyboard interaction to the browser's own
+        // focus-visible heuristic, so click-to-open plus Escape-to-close would
+        // ring the image the reader was just looking at. The class holds the
+        // ring off only until focus moves on; a keyboard session keeps it,
+        // since the ring is how that reader sees where they are.
+        if (pointerSession) {
+          var img = opener;
+          img.classList.add("is-pointer-refocus");
+          img.addEventListener("blur", function () {
+            img.classList.remove("is-pointer-refocus");
+          }, { once: true });
+        }
         opener.focus({ preventScroll: true });
         opener = null;
       }
