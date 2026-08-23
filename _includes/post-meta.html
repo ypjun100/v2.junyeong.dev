@@ -2,10 +2,11 @@
   Reading time counts characters, not words: Korean packs far more meaning per
   어절 than English does per word, so a word count reads far too fast. 500
   characters per minute is the usual figure for Korean prose. strip_html keeps
-  markup out of the count, and the trailing plus rounds up and floors at 1분.
+  markup out of the count; adding 499 before integer division rounds up without
+  overcounting exact multiples, and at_least floors an empty post at 1분.
 {%- endcomment -%}
 {%- assign chars = content | strip_html | strip_newlines | size -%}
-{%- assign minutes = chars | divided_by: 500 | plus: 1 -%}
+{%- assign minutes = chars | plus: 499 | divided_by: 500 | at_least: 1 -%}
 
 <div class="post__meta">
   <span>{{ page.date | date: "%Y.%m.%d" }}</span>
