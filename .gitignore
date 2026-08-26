@@ -19,3 +19,9 @@ content/_posts/2026-04-25-생애-첫-미국-여행기-2.md
 
 # Python verification and asset scripts.
 __pycache__/
+
+# Task specs. Written and read locally; not part of the published repo.
+docs/specs/
+
+# Paseo workspace config. Machine-local.
+paseo.json
