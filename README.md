@@ -1,4 +1,4 @@
-# junyeong.dev
+# [junyeong.dev](https://junyeong.dev)
 
 개인 포트폴리오 겸 기술 블로그입니다. 글은 모두 `content/` 아래의 마크다운 파일에서 읽어 옵니다.
 
